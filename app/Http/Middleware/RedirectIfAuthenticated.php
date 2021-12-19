@@ -23,7 +23,18 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                if (auth()->user()->hasRole('bungadavi')) {
+                    return redirect()->route('bungadavi.dashboard');
+                } else if (auth()->user()->hasRole('corporate')) {
+                    return redirect()->route('corporate.dashboard');
+                } else if (auth()->user()->hasRole('affiliate')) {
+                    return redirect()->route('affiliate.dashboard');
+                } else if (auth()->user()->hasRole('superadmin')) {
+                    return redirect()->intended(RouteServiceProvider::HOME);
+                } else {
+                    return redirect()->back();
+                }
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
 

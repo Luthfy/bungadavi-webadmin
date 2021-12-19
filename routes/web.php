@@ -21,4 +21,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
 require __DIR__.'/auth.php';
+require __DIR__.'/bungadavi/web.php';
+require __DIR__.'/corporate/web.php';
+require __DIR__.'/affiliate/web.php';

@@ -15,9 +15,23 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($type = null)
     {
-        return view('auth.login');
+        if ($type == null) {
+            return redirect()->route('login', ['type' => 'admin']);
+        }
+
+        if ($type == 'superadmin') {
+            return view('auth.login'); 
+        } elseif ($type == 'admin') {
+            return view('auth.login_admin'); 
+        } else if ($type == 'corporate') {
+            return view('auth.login_corporate'); 
+        } else if ($type == 'florist') {
+            return view('auth.login_florist'); 
+        } else {
+            return redirect()->route('login', ['type' => 'admin']);
+        }
     }
 
     /**
@@ -32,7 +46,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (auth()->user()->hasRole('bungadavi')) {
+            return redirect()->route('bungadavi.dashboard');
+        } else if (auth()->user()->hasRole('corporate')) {
+            return redirect()->route('corporate.dashboard');
+        } else if (auth()->user()->hasRole('affiliate')) {
+            return redirect()->route('affiliate.dashboard');
+        } else if (auth()->user()->hasRole('superadmin')) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else {
+            return redirect()->back();
+        }
+
     }
 
     /**
