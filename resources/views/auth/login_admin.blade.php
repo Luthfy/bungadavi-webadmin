@@ -47,7 +47,7 @@
 							<p class="account-subtitle">Access to our dashboard</p>
 
 							<!-- Account Form -->
-                            {!! Form::open(['route' => 'login', 'method' => 'post']) !!}
+                            {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
 								<div class="form-group">
 									<label>Email Address</label>
 									<input class="form-control" type="text" type="email" name="email" required autofocus>

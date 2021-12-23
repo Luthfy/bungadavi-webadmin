@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Betler Multipurpose Forms HTML Template">
     <meta name="author" content="Ansonika">
-    <title><?= $title ?? '' ?></title>
+    <title><?= $title ?? config('app.name') ?></title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="theme_client/img/favicon.ico" type="image/x-icon">
@@ -36,9 +36,9 @@
 
 	<div class="container-fluid p-0">
 	    <div class="row no-gutters row-height">
-	        <div class="col-lg-6 background-image" data-background="url(theme_client/img/bg.jpg)">
+	        <div class="col-lg-6 background-image" data-background="{{url('theme_client/img/bg.jpg')}}">
 	            <div class="content-left-wrapper opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
-	                <a href="{{ 'login-florist' }}" id="logo"><img src="theme_client/img/bungadavi-logo.png" alt="" width="200" height="70"></a>
+	                <a href="{{ 'login-florist' }}" id="logo"><img src="{{url('theme_client/img/bungadavi-logo.png')}}" alt="" width="200" height="70"></a>
 
 	                <div>
 	                    <h1>Bunga Davi</h1>

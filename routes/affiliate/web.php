@@ -3,13 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'prefix' => 'affiliate', 
-    'as' => 'affiliate.', 
+    'prefix' => 'affiliate',
+    'as' => 'affiliate.',
     'middleware' =>['web', 'role:affiliate']
 ], function () {
 
     Route::get('dashboard', function () {
-        return 'testing';
+        return view('affiliate.dashboard');
     })->name('dashboard');
-    
+
 });
