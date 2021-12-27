@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Courier\CourierController;
 use App\Http\Controllers\Bungadavi\DashboardController;
 use App\Http\Controllers\Bungadavi\Stock\ShopController;
 use App\Http\Controllers\Bungadavi\Stock\SplitController;
@@ -98,4 +99,18 @@ Route::group([
     Route::resource('opnames', OpnameController::class)->names('opnames');
     Route::resource('shops', ShopController::class)->names('shops');
     Route::resource('splits', SplitController::class)->names('splits');
+
+    // Courier
+    Route::resource('courier', CourierController::class)->names('couriers');
+
+    // Route::get('create_courier', [CourierController::class, 'form_create']);
+    // Route::get('courier_list',[CourierController::class, 'index']);
+    // Route::get('courier_list_ajax',[CourierController::class, 'dataAjaxCourier']);
+    // Route::post('save_courier',[CourierController::class, 'save_courier']);
+    // Route::get('courier_detail/{uuid}', [CourierController::class, 'detail_courier']);
+    // Route::put('update_courier', [CourierController::class, 'update_courier']);
+    // Route::get('courier_task', [CourierController::class, 'courier_task']);
+    // Route::get('courier_task_detail/{uuid}', [CourierController::class, 'courier_task_detail']);
+    // Route::put('update_courier_task', [CourierController::class, 'update_courier_task']);
+
 });

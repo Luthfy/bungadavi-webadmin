@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Bungadavi\Product;
 
+use App\Models\Stock\Stock;
 use Illuminate\Http\Request;
+use App\Models\Location\City;
+use App\Models\BasicSetting\Color;
+use App\Models\Customer\Affiliate;
 use App\Http\Controllers\Controller;
+use App\Models\BasicSetting\Currency;
 use App\DataTables\Product\ProductDataTable;
 use App\Http\Requests\ProductControl\ProductRequest;
-
 
 class ProductController extends Controller
 {
@@ -22,11 +26,11 @@ class ProductController extends Controller
             'subtitle'      => 'Product List',
             'description'   => 'For Management Product and Stocks',
             'breadcrumb'    => ['Product Management', 'Product List'],
-            'button'        => ['name' => 'Add Product', 'link' => 'products.create'],
+            'button'        => ['name' => 'Add Product', 'link' => 'bungadavi.products.create'],
             'guard'         => auth()->user()->group
         ];
 
-        return $datatables->render('backend.commons.datatable', $data);
+        return $datatables->render('commons.datatable', $data);
     }
 
     /**
@@ -43,15 +47,20 @@ class ProductController extends Controller
             'breadcrumb'    => ['Product Management', 'Form Product'],
             'guard'         => auth()->user()->group,
             'data'          => null,
-            'printModeType' => PrintModeType::getValues(),
-            'currencies'    => Currency::pluck('name', 'id'),
-            'colors'        => Color::pluck('name', 'id'),
-            'stocks'        => Stock::pluck('name_stock', 'uuid'),
-            'florist'       => Florist::pluck('fullname', 'uuid'),
-            'cities'        => City::pluck('name', 'id')
+            'printModeType' => [
+                                    '0' => 'A5 Potrait Bottom',
+                                    '1' => 'A5 Potrait Center',
+                                    '2' => 'A4 Landscape Center',
+                                ],
+            'currencies'    => Currency::pluck('name', 'id') ?? [],
+            'colors'        => Color::pluck('name', 'id') ?? [],
+            'stocks'        => Stock::pluck('name_stock', 'uuid') ?? [],
+            // 'florist'       => Affiliate::pluck('fullname', 'uuid') ?? [],
+            'florist'       => [],
+            'cities'        => City::pluck('name', 'id') ?? []
         ];
 
-        return view('backend.products.form', $data);
+        return view('bungadavi.products.form', $data);
     }
 
     /**
