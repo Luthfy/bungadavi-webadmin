@@ -73,6 +73,8 @@ Route::group([
         // ajax
         Route::get('category/ajax', [CategoryController::class, 'getCategories'])->name('categories.ajax.list');
         Route::get('subcategory/ajax', [SubCategoryController::class, 'getSubCategories'])->name('subcategories.ajax.list');
+        Route::get('deliveryremark/ajax', [DeliveryRemarkController::class, 'list'])->names('deliveryremark.ajax.list');
+
         // web
         Route::resource('unit', UnitController::class)->names('unit');
         Route::resource('currency', CurrencyController::class)->names('currency');

@@ -400,7 +400,7 @@
     {
         $.ajax({
             url : urlAbsolute,
-            type : 'get',
+            type : 'GET',
             success: (result) => {
                 let html = "";
                 result.forEach((res) => {
@@ -415,7 +415,7 @@
     {
         $.ajax({
             url : urlAbsolute,
-            type : 'get',
+            type : 'GET',
             success: (result) => {
                 let html = "";
                 result.forEach((res) => {
@@ -452,7 +452,8 @@
     }
 
     function uploadFiles()
-    {$('#form-product').submit((e) => {
+    {
+        $('#form-product').submit((e) => {
         e.preventDefault();
 
         var data = {
@@ -680,10 +681,10 @@
 
 
     $(document).ready(function (e) {
-        let urlStocks = "{{url('admin/stocks/ajax')}}";
+        let urlStocks = "{{url('bungadavi.subcategories.ajax.list')}}";
         getStocksAjax(urlStocks)
 
-        let urlCategories = "{{url('admin/basicsetting/category/ajax')}}";
+        let urlCategories = "{{ route('bungadavi.categories.ajax.list')}}";
         getCategoriesAjaxProduct(urlCategories)
 
         $('.summernote').summernote({

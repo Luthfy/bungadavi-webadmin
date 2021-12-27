@@ -17,6 +17,7 @@ use Database\Seeders\Location\ProvinceSeeder;
 use Database\Seeders\BasicSetting\ColorSeeder;
 use Database\Seeders\BasicSetting\CategorySeeder;
 use Database\Seeders\BasicSetting\CurrencySeeder;
+use Database\Seeders\ProductControl\ProductSeeder;
 use Database\Seeders\BasicSetting\SubcategorySeeder;
 
 class DatabaseSeeder extends Seeder
@@ -47,13 +48,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ZipCodeSeeder::class);
 
         if (config('app.env') != 'production') {
-
             $this->call(StockSeeder::class);
-            // $this->call(ProductSeeder::class);
+            $this->call(ProductSeeder::class);
         }
 
-        // \App\Models\User::factory(10)->create()->assignRole('bungadavi');
-        // \App\Models\Customer\Admin\Corporate::factory(10)->create();
-        // \App\Models\Customer\Admin\Florist::factory(10)->create();
     }
 }
