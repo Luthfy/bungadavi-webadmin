@@ -26,5 +26,3 @@ require __DIR__.'/auth.php';
 require __DIR__.'/bungadavi/web.php';
 require __DIR__.'/corporate/web.php';
 require __DIR__.'/affiliate/web.php';
-require __DIR__.'/location/web.php';
-require __DIR__.'/basicsetting/web.php';
