@@ -127,11 +127,11 @@ class ShopController extends Controller
             $stock  = Stock::find($request->stocks_uuid);
             $stock->update(['qty_stock' => (int) $stock->qty_stock + ((int) $request->qty_stock_shop - (int) $request->reject_stock_shop)]);
         } else {
-            // $shop->total_price_stock_shop = $request->total_price_stock_shop;
-            // $shop->qty_stock_shop    = $request->qty_stock_shop;
-            // $shop->reject_stock_shop = $request->reject_stock_shop;
-            // $shop->notes_stock_shop  = $request->notes_stock_shop;
-            // $shop->save();
+            $shop->total_price_stock_shop = $request->total_price_stock_shop;
+            $shop->qty_stock_shop    = $request->qty_stock_shop;
+            $shop->reject_stock_shop = $request->reject_stock_shop;
+            $shop->notes_stock_shop  = $request->notes_stock_shop;
+            $shop->save();
 
             $stock  = Stock::find($request->stocks_uuid);
             $stock->update(
