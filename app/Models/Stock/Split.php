@@ -4,7 +4,7 @@ namespace App\Models\Stock;
 
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
-use App\Models\Product\Stock;
+use App\Models\Stock\Stock;
 use App\Models\BasicSetting\Unit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
