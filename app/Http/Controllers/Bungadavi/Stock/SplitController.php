@@ -156,7 +156,11 @@ class SplitController extends Controller
     {
         $split = Split::findOrFail($id);
 
-        Stock::find($split->stock_fraction_uuid)->forceDelete();
+        $stock = Stock::find($split->stock_fraction_uuid);
+        if ($stock != null) {
+            $stock->forceDelete();
+        }
+
         return $split->delete();
     }
 }

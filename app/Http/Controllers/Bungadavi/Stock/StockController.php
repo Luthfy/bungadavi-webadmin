@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bungadavi\Stock;
 
+use App\Models\Stock\Split;
 use App\Models\Stock\Stock;
 use Illuminate\Support\Str;
 use App\Models\BasicSetting\Unit;
@@ -11,10 +12,6 @@ use App\Http\Requests\Stock\StockRequest;
 
 class StockController extends Controller
 {
-    public function __construct()
-    {
-
-    }
 
     public function index(StockDataTable $datatables)
     {
@@ -113,6 +110,10 @@ class StockController extends Controller
     public function destroy($id)
     {
         $stock = Stock::findOrFail($id);
+        if ($stock->type_stock == 2) {
+            Split::where('stock_original_uuid', $stock->uuid)->delete();
+        }
+
         return $stock->delete();
     }
 
