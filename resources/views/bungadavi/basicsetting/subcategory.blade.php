@@ -58,12 +58,23 @@
                             {!! Form::number('priority', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
+                    @if ($data == null)
                     <div class="form-group row pb-4">
                         <label class="col-form-label col-sm-12 col-md-2">Photo <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
                             {!! Form::file('photo', ["accept" => "image/*"]) !!}
                         </div>
                     </div>
+                    @else
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Photo <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 col-md-10">
+                            <img src="{{ asset('storage/'.$data->photo) }}" height="200px" width="250" style="margin-bottom: 2rem">
+                            <br>
+                            {!! Form::file('photo', ["accept" => "image/*"]) !!}
+                        </div>
+                    </div>
+                    @endif
                     <div class="form-group row pb-4">
                         <label class="col-form-label col-sm-12 col-md-2">Is Active <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">

@@ -70,7 +70,7 @@
             <li><a href="{{ route('bungadavi.cardmessagecategory.index') }}">Card Message Category</a></li>
             <li><a href="{{ route('bungadavi.cardmessagesubcategory.index') }}">Card Message Sub Category</a></li>
             <li><a href="{{ route('bungadavi.timeslot.index') }}">Time Slot</a></li>
-            <li><a href="{{ url('admin/') }}">Delivery Remark</a></li>
+            <li><a href="{{ route('bungadavi.deliveryremark.index') }}">Delivery Remark</a></li>
             <li><a href="{{ url('admin/') }}">Message Group</a></li>
             <li><a href="{{ url('admin/') }}">Icon Social Media</a></li>
             <li><a href="{{ url('admin/') }}">Testimonial</a></li>
