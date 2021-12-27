@@ -78,13 +78,20 @@
     </li>
 
     <li class="submenu">
-        <a href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size: 1.2em !important;"></i>
-            <span> Product Control</span> <span class="menu-arrow"></span></a>
+        <a href="#"><i class="fa fa-archive" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+            <span> Stock Control</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
             <li><a href="{{ route('bungadavi.stocks.index') }}">Stock</a></li>
             <li><a href="{{ route('bungadavi.shops.index') }}">Stock Shop</a></li>
             <li><a href="{{ route('bungadavi.opnames.index') }}">Stock Opname</a></li>
             <li><a href="{{ route('bungadavi.splits.index') }}">Stock Split</a></li>
+        </ul>
+    </li>
+
+    <li class="submenu">
+        <a href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+            <span> Product Control</span> <span class="menu-arrow"></span></a>
+        <ul style="display: none;">
             <li><a href="{{ route('bungadavi.products.index') }}">Product</a></li>
         </ul>
     </li>
