@@ -1,4 +1,4 @@
-@extends('backend.layouts.admin')
+@extends('layouts.bungadavi')
 
 @section('body')
 <div class="content container-fluid">
@@ -18,7 +18,7 @@
     </div>
     <!-- /Page Header -->
 
-    @include('backend.commons.message')
+    @include('commons.message')
 
     <div class="row">
         <div class="col-lg-12 col-xl-12">
