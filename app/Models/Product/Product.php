@@ -4,11 +4,12 @@ namespace App\Models\Product;
 
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
-use App\Models\Product\Stock;
-use App\Models\BasicSetting\Color;
-use App\Models\BasicSetting\Category;
+use App\Models\Product\Material;
+use App\Models\Product\Reference;
+use App\Models\Product\ProductColor;
+use App\Models\Product\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\BasicSetting\SubCategory;
+use App\Models\Product\ProductSubCategory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

@@ -1,19 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Courier\CourierController;
 use App\Http\Controllers\Bungadavi\DashboardController;
 use App\Http\Controllers\Bungadavi\Stock\ShopController;
 use App\Http\Controllers\Bungadavi\Stock\SplitController;
 use App\Http\Controllers\Bungadavi\Stock\StockController;
 use App\Http\Controllers\Bungadavi\Stock\OpnameController;
 use App\Http\Controllers\Bungadavi\Location\CityController;
+use App\Http\Controllers\Bungadavi\Client\FloristController;
+use App\Http\Controllers\Bungadavi\Client\PersonalController;
 use App\Http\Controllers\Bungadavi\Product\ProductController;
+use App\Http\Controllers\Bungadavi\Client\CorporateController;
 use App\Http\Controllers\Bungadavi\Location\CountryController;
 use App\Http\Controllers\Bungadavi\Location\VillageController;
 use App\Http\Controllers\Bungadavi\Location\ZipCodeController;
 use App\Http\Controllers\Bungadavi\BasicSetting\UnitController;
 use App\Http\Controllers\Bungadavi\Location\DistrictController;
 use App\Http\Controllers\Bungadavi\Location\ProvinceController;
+use App\Http\Controllers\Bungadavi\Transaction\OrderController;
 use App\Http\Controllers\Bungadavi\BasicSetting\ColorController;
 use App\Http\Controllers\Bungadavi\BasicSetting\OurBankController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CategoryController;
@@ -29,9 +34,6 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
-use App\Http\Controllers\Bungadavi\Client\CorporateController;
-use App\Http\Controllers\Bungadavi\Client\FloristController;
-use App\Http\Controllers\Bungadavi\Client\PersonalController;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -98,4 +100,21 @@ Route::group([
     Route::resource('opnames', OpnameController::class)->names('opnames');
     Route::resource('shops', ShopController::class)->names('shops');
     Route::resource('splits', SplitController::class)->names('splits');
+
+    // TRANSACTION ORDER
+    Route::resource('transaction', OrderController::class)->names('orders');
+
+    // Courier
+    Route::resource('courier', CourierController::class)->names('couriers');
+
+    // Route::get('create_courier', [CourierController::class, 'form_create']);
+    // Route::get('courier_list',[CourierController::class, 'index']);
+    // Route::get('courier_list_ajax',[CourierController::class, 'dataAjaxCourier']);
+    // Route::post('save_courier',[CourierController::class, 'save_courier']);
+    // Route::get('courier_detail/{uuid}', [CourierController::class, 'detail_courier']);
+    // Route::put('update_courier', [CourierController::class, 'update_courier']);
+    // Route::get('courier_task', [CourierController::class, 'courier_task']);
+    // Route::get('courier_task_detail/{uuid}', [CourierController::class, 'courier_task_detail']);
+    // Route::put('update_courier_task', [CourierController::class, 'update_courier_task']);
+
 });

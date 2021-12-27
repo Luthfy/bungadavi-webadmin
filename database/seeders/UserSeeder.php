@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer\Affiliate;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
             'position' => 'admin',
             'user_type' => 'bungadavi',
-            'customer_uuid' => '',
+            'customer_uuid' => Affiliate::where('fullname', 'Bungadavi')->first(),
         ]);
 
         $admin->assignRole('bungadavi');

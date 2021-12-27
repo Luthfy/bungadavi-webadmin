@@ -1,13 +1,15 @@
 <?php
 
-namespace App\DataTables\BasicSetting;
+namespace App\DataTables\Order;
 
+use App\Models\Transaction\Order;
+use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use App\Models\BasicSetting\PaymentType;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-
-class PaymentTypeDataTable extends DataTable
+class OrderDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,21 +21,16 @@ class PaymentTypeDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function ($datatable) {
-                $html  = "";
-                $html .= "<a href='".route('bungadavi.paymenttype.edit', ['payment_type' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
-                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
-                return $html;
-            });
+            ->addColumn('action', 'order/order.action');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\BasicSetting/PaymentType $model
+     * @param \App\Models\Order/Order $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PaymentType $model)
+    public function query(Order $model)
     {
         return $model->newQuery();
     }
@@ -46,7 +43,7 @@ class PaymentTypeDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('datatablesserverside')
+                    ->setTableId('order/order-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
@@ -66,7 +63,9 @@ class PaymentTypeDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('payment_type'),
+            Column::make('id'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
         ];
     }
 
@@ -77,6 +76,6 @@ class PaymentTypeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'BasicSetting/PaymentType_' . date('YmdHis');
+        return 'Order/Order_' . date('YmdHis');
     }
 }

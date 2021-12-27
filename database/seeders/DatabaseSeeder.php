@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(FloristBungaDaviSeeder::class);
 
         $this->call(UnitSeeder::class);
         $this->call(CurrencySeeder::class);
