@@ -55,8 +55,7 @@ class ProductController extends Controller
             'currencies'    => Currency::pluck('name', 'id') ?? [],
             'colors'        => Color::pluck('name', 'id') ?? [],
             'stocks'        => Stock::pluck('name_stock', 'uuid') ?? [],
-            // 'florist'       => Affiliate::pluck('fullname', 'uuid') ?? [],
-            'florist'       => [],
+            'florist'       => Affiliate::pluck('fullname', 'uuid') ?? [],
             'cities'        => City::pluck('name', 'id') ?? []
         ];
 

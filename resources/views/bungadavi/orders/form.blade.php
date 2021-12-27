@@ -150,7 +150,6 @@
             </div>
         </div>
 
-
         @include('bungadavi.orders.modal')
 
 @endsection

@@ -89,4 +89,11 @@ class DeliveryRemarkController extends Controller
     {
         return DeliveryRemark::find($id)->delete();
     }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            return DeliveryRemark::all();
+        }
+    }
 }
