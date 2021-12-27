@@ -24,7 +24,7 @@
     @if ($data == null)
         {!! Form::open(['route' => 'bungadavi.paymenttype.store', 'method' => 'POST']) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.paymenttype.update', ['paymenttype' => $data->uuid]], 'method' => 'PUT']) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.paymenttype.update', ['payment_type' => $data->uuid]], 'method' => 'PUT']) !!}
     @endif
     <div class="row">
         <div class="col-lg-12">
