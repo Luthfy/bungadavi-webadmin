@@ -63,6 +63,7 @@ class PersonalController extends Controller
             'mobile' => $request->mobile,
             'gender' => $request->gender,
             'birthday' => $request->birthday,
+            'address' => $request->address,
             'country_id' => $request->country_id,
             'province_id' => $request->province_id,
             'city_id' => $request->city_id,
