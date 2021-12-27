@@ -83,12 +83,10 @@
                 </div> --}}
 				<!-- /Header Title -->
 
-				<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+				{{-- <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a> --}}
 
 				<!-- Header Menu -->
 				<ul class="nav user-menu">
-
-
 					<li class="nav-item dropdown has-arrow main-drop">
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 							<span class="user-img"><img src="{{ asset('theme_be/img/profiles/avatar-21.jpg') }}" alt="">

@@ -1,9 +1,9 @@
 <?php
 
-namespace Database\Seeders\ProductControl;
+namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Product\Stock;
+use App\Models\Stock\Stock;
 use Illuminate\Database\Seeder;
 use App\Models\BasicSetting\Unit;
 
@@ -24,7 +24,7 @@ class StockSeeder extends Seeder
                 'image_stock' => null,
                 'is_active' => '1',
                 'unit_id' => Unit::where('name', 'Pcs')->first()->id,
-                'user_uuid' => User::where('fullname', 'administrator')->first()->uuid
+                'user_uuid' => User::where('email', 'admin@bungadavi.co.id')->first()->uuid
             ],
             [
                 'name_stock' => 'White Rose',
@@ -33,7 +33,7 @@ class StockSeeder extends Seeder
                 'image_stock' => null,
                 'is_active' => '1',
                 'unit_id' => Unit::where('name', 'Pcs')->first()->id,
-                'user_uuid' => User::where('fullname', 'administrator')->first()->uuid
+                'user_uuid' => User::where('email', 'admin@bungadavi.co.id')->first()->uuid
             ]
         ];
 

@@ -5,20 +5,19 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\StockSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\Location\CitySeeder;
+use Database\Seeders\Location\CountrySeeder;
+use Database\Seeders\Location\VillageSeeder;
+use Database\Seeders\Location\ZipCodeSeeder;
 use Database\Seeders\BasicSetting\UnitSeeder;
+use Database\Seeders\Location\DistrictSeeder;
+use Database\Seeders\Location\ProvinceSeeder;
 use Database\Seeders\BasicSetting\ColorSeeder;
 use Database\Seeders\BasicSetting\CategorySeeder;
 use Database\Seeders\BasicSetting\CurrencySeeder;
 use Database\Seeders\BasicSetting\SubcategorySeeder;
-use Database\Seeders\Location\CitySeeder;
-use Database\Seeders\Location\CountrySeeder;
-use Database\Seeders\Location\DistrictSeeder;
-use Database\Seeders\Location\ProvinceSeeder;
-use Database\Seeders\Location\VillageSeeder;
-use Database\Seeders\Location\ZipCodeSeeder;
-use Database\Seeders\ProductControl\StockSeeder;
-use Database\Seeders\ProductControl\ProductSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,9 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SubcategorySeeder::class);
         $this->call(ColorSeeder::class);
 
-        // $this->call(StockSeeder::class);
-        // $this->call(ProductSeeder::class);
-
         $this->call(CountrySeeder::class);
         $this->call(ProvinceSeeder::class);
         $this->call(CitySeeder::class);
@@ -50,6 +46,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ZipCodeSeeder::class);
 
         if (config('app.env') != 'production') {
+
+            $this->call(StockSeeder::class);
+            // $this->call(ProductSeeder::class);
         }
 
         // \App\Models\User::factory(10)->create()->assignRole('bungadavi');
