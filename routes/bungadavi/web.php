@@ -73,7 +73,8 @@ Route::group([
         // ajax
         Route::get('category/ajax', [CategoryController::class, 'getCategories'])->name('categories.ajax.list');
         Route::get('subcategory/ajax', [SubCategoryController::class, 'getSubCategories'])->name('subcategories.ajax.list');
-        Route::get('deliveryremark/ajax', [DeliveryRemarkController::class, 'list'])->names('deliveryremark.ajax.list');
+        Route::get('deliveryremark/ajax', [DeliveryRemarkController::class, 'list'])->name('deliveryremark.ajax.list');
+        Route::get('stocks/ajax', [StockController::class, 'getStocks'])->name('stocks.ajax.list');
 
         // web
         Route::resource('unit', UnitController::class)->names('unit');

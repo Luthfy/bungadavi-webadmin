@@ -402,6 +402,8 @@
             url : urlAbsolute,
             type : 'GET',
             success: (result) => {
+                console.log(result)
+
                 let html = "";
                 result.forEach((res) => {
                     html += "<option value='"+res.id+"'>"+res.name+"</option>";
@@ -417,6 +419,7 @@
             url : urlAbsolute,
             type : 'GET',
             success: (result) => {
+                console.log(result)
                 let html = "";
                 result.forEach((res) => {
                     html += "<option value='"+res.id+"'>"+res.name+"</option>";
@@ -453,63 +456,63 @@
 
     function uploadFiles()
     {
-        $('#form-product').submit((e) => {
-        e.preventDefault();
+        // $('#form-product').submit((e) => {
+        // e.preventDefault();
 
-        var data = {
-            florist_uuid                    : $("#florist_uuid").val(),
-            printcmmode_product             : $("#printcm_mode").val(),
-            name_product                    : $("#name_product").val(),
-            categories_id                   : $("#categories-id").val(),
-            subcategories_uuid              : $("#subcategories-id").val(),
-            color_id                        : $("#color-id").val(),
-            city_id                         : $("#city-id").val(),
-            short_description_product       : $("#short_description_product").val(),
-            short_description_en_product    : $("#short_description_en_product").val(),
-            description_product             : $("#description_product").val(),
-            description_en_product          : $("#description_en_product").val(),
-            currency_id                     : $("#currency-uuid").val(),
-            cost_product                    : $("#cost_product").val(),
-            florist_cost_product            : $("#florist_cost_product").val(),
-            selling_price_product           : $("#selling_price_product").val(),
-            selling_florist_price_product   : $("#selling_florist_price_product").val(),
-            status_product                  : $("#status-product").val(),
-            as_addon_product                : $("input[name=as_addon_product]:checked").val(),
-            is_active_product               : $("input[name=is_active_product]:checked").val(),
-            minimum_order_product           : $("#product_minimumorder").val(),
-            product_material                : product_materials,
-            _token                          : $("input[name=_token]").val().trim()
-        }
+        // var data = {
+        //     florist_uuid                    : $("#florist_uuid").val(),
+        //     printcmmode_product             : $("#printcm_mode").val(),
+        //     name_product                    : $("#name_product").val(),
+        //     categories_id                   : $("#categories-id").val(),
+        //     subcategories_uuid              : $("#subcategories-id").val(),
+        //     color_id                        : $("#color-id").val(),
+        //     city_id                         : $("#city-id").val(),
+        //     short_description_product       : $("#short_description_product").val(),
+        //     short_description_en_product    : $("#short_description_en_product").val(),
+        //     description_product             : $("#description_product").val(),
+        //     description_en_product          : $("#description_en_product").val(),
+        //     currency_id                     : $("#currency-uuid").val(),
+        //     cost_product                    : $("#cost_product").val(),
+        //     florist_cost_product            : $("#florist_cost_product").val(),
+        //     selling_price_product           : $("#selling_price_product").val(),
+        //     selling_florist_price_product   : $("#selling_florist_price_product").val(),
+        //     status_product                  : $("#status-product").val(),
+        //     as_addon_product                : $("input[name=as_addon_product]:checked").val(),
+        //     is_active_product               : $("input[name=is_active_product]:checked").val(),
+        //     minimum_order_product           : $("#product_minimumorder").val(),
+        //     product_material                : product_materials,
+        //     _token                          : $("input[name=_token]").val().trim()
+        // }
 
-        $.ajax({
-            url: "{{ route('bungadavi.products.store') }}",
-            type: 'post',
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (res) {
-                console.log(res);
-                if (res.status) {
-                        icon: 'success',
-                        title: 'Congratulation',
-                        text: 'Data has been added!',
-                        timerProgressBar: true,
-                    })
+        // $.ajax({
+        //     url: "{{ route('bungadavi.products.store') }}",
+        //     type: 'post',
+        //     dataType: 'json',
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //     },
+        //     contentType: 'application/json',
+        //     data: JSON.stringify(data),
+        //     success: function (res) {
+        //         console.log(res);
+        //         if (res.status) {
+        //                 icon: 'success',
+        //                 title: 'Congratulation',
+        //                 text: 'Data has been added!',
+        //                 timerProgressBar: true,
+        //             })
 
-                    window.location.href = "{{ route('bungadavi.products.index') }}"
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                    })
-                }
-            },
-        });
-    })
+        //             window.location.href = "{{ route('bungadavi.products.index') }}"
+        //         } else {
+        //             Swal.fire({
+        //                 icon: 'error',
+        //                 title: 'Oops...',
+        //                 text: 'Something went wrong!',
+        //             })
+        //         }
+        //     },
+        // });
+    }
 
      // $("#form-product").submit((e) => {
     //     e.preventDefault();
@@ -675,13 +678,13 @@
         let categories_selected = $("#categories-id").val();
         let params = "?categoryId=" + categories_selected.toString();
 
-        let urlSubCategories = "{{url('admin/basicsetting/subcategory/ajax')}}" + params;
+        let urlSubCategories = "{{route('bungadavi.subcategories.ajax.list')}}" + params;
         getSubCategoriesAjaxProduct(urlSubCategories)
     });
 
 
     $(document).ready(function (e) {
-        let urlStocks = "{{url('bungadavi.subcategories.ajax.list')}}";
+        let urlStocks = "{{route('bungadavi.stocks.ajax.list')}}";
         getStocksAjax(urlStocks)
 
         let urlCategories = "{{ route('bungadavi.categories.ajax.list')}}";
