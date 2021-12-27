@@ -3,14 +3,21 @@
 namespace App\Http\Controllers\Bungadavi\Product;
 
 use App\Models\Stock\Stock;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
+use App\Models\Product\Product;
+use App\Models\Product\Material;
 use App\Models\BasicSetting\Color;
 use App\Models\Customer\Affiliate;
+use App\Models\Product\ProductCity;
 use App\Http\Controllers\Controller;
+use App\Models\Product\ProductColor;
 use App\Models\BasicSetting\Currency;
+use App\Models\Product\ProductCategory;
+use App\Models\Product\ProductSubCategory;
 use App\DataTables\Product\ProductDataTable;
-use App\Http\Requests\ProductControl\ProductRequest;
+use App\Http\Requests\Product\ProductRequest;
 
 class ProductController extends Controller
 {

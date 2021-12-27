@@ -457,124 +457,125 @@
     function uploadFiles()
     {
         // $('#form-product').submit((e) => {
-        // e.preventDefault();
 
-        // var data = {
-        //     florist_uuid                    : $("#florist_uuid").val(),
-        //     printcmmode_product             : $("#printcm_mode").val(),
-        //     name_product                    : $("#name_product").val(),
-        //     categories_id                   : $("#categories-id").val(),
-        //     subcategories_uuid              : $("#subcategories-id").val(),
-        //     color_id                        : $("#color-id").val(),
-        //     city_id                         : $("#city-id").val(),
-        //     short_description_product       : $("#short_description_product").val(),
-        //     short_description_en_product    : $("#short_description_en_product").val(),
-        //     description_product             : $("#description_product").val(),
-        //     description_en_product          : $("#description_en_product").val(),
-        //     currency_id                     : $("#currency-uuid").val(),
-        //     cost_product                    : $("#cost_product").val(),
-        //     florist_cost_product            : $("#florist_cost_product").val(),
-        //     selling_price_product           : $("#selling_price_product").val(),
-        //     selling_florist_price_product   : $("#selling_florist_price_product").val(),
-        //     status_product                  : $("#status-product").val(),
-        //     as_addon_product                : $("input[name=as_addon_product]:checked").val(),
-        //     is_active_product               : $("input[name=is_active_product]:checked").val(),
-        //     minimum_order_product           : $("#product_minimumorder").val(),
-        //     product_material                : product_materials,
-        //     _token                          : $("input[name=_token]").val().trim()
-        // }
+        var data = {
+            florist_uuid                    : $("#florist_uuid").val(),
+            printcmmode_product             : $("#printcm_mode").val(),
+            name_product                    : $("#name_product").val(),
+            categories_id                   : $("#categories-id").val(),
+            subcategories_uuid              : $("#subcategories-id").val(),
+            color_id                        : $("#color-id").val(),
+            city_id                         : $("#city-id").val(),
+            short_description_product       : $("#short_description_product").val(),
+            short_description_en_product    : $("#short_description_en_product").val(),
+            description_product             : $("#description_product").val(),
+            description_en_product          : $("#description_en_product").val(),
+            currency_id                     : $("#currency-uuid").val(),
+            cost_product                    : $("#cost_product").val(),
+            florist_cost_product            : $("#florist_cost_product").val(),
+            selling_price_product           : $("#selling_price_product").val(),
+            selling_florist_price_product   : $("#selling_florist_price_product").val(),
+            status_product                  : $("#status-product").val(),
+            as_addon_product                : $("input[name=as_addon_product]:checked").val(),
+            is_active_product               : $("input[name=is_active_product]:checked").val(),
+            minimum_order_product           : $("#product_minimumorder").val(),
+            product_material                : product_materials,
+            _token                          : $("input[name=_token]").val().trim()
+        };
+
+        $.ajax({
+            url: "{{ route('bungadavi.products.store') }}",
+            type: 'post',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (res) {
+                console.log(res);
+                if (res.status) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulation',
+                        text: 'Data has been added!',
+                        timerProgressBar: true,
+                    })
+
+                    window.location.href = "{{ route('bungadavi.products.index') }}"
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            },
+        });
+    }
+
+    $("#form-product").submit((e) => {
+
+        e.preventDefault();
+        uploadFiles();
+        // Swal.fire({
+        //     title: 'Auto close alert!',
+        //     html: 'I will close in <b></b> milliseconds.',
+        //     // timer: 2000,
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //         Swal.showLoading()
+        //         const b = Swal.getHtmlContainer().querySelector('b')
+        //         timerInterval = setInterval(() => {
+        //         b.textContent = Swal.getTimerLeft()
+        //         }, 100)
+        //     },
+        //     willClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        //     }).then((result) => {
+        //     /* Read more about handling dismissals below */
+        //     if (result.dismiss === Swal.DismissReason.timer) {
+        //         console.log('I was closed by the timer')
+        //     }
+        // })
+
+        // var form_data       = new FormData($("#form-product")[0]);
+        // var main_image      = $("#product_main_image")[0].files[0];
+        // var feature_images  = [];
+        // var materials       = product_materials;
+
+        // $('.product_images').each((index, file) => {
+        //     if (file.files.length > 0) {
+        //         feature_images[index] = file.files[0]
+        //     }
+        // })
+
+
+
+        // console.log(form_data)
+
+
 
         // $.ajax({
         //     url: "{{ route('bungadavi.products.store') }}",
-        //     type: 'post',
-        //     dataType: 'json',
+        //     type: "POST",
+        //     data: form_data,
         //     headers: {
         //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
         //     },
-        //     contentType: 'application/json',
-        //     data: JSON.stringify(data),
-        //     success: function (res) {
-        //         console.log(res);
-        //         if (res.status) {
-        //                 icon: 'success',
-        //                 title: 'Congratulation',
-        //                 text: 'Data has been added!',
-        //                 timerProgressBar: true,
-        //             })
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     success: function (response) {
 
-        //             window.location.href = "{{ route('bungadavi.products.index') }}"
-        //         } else {
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: 'Oops...',
-        //                 text: 'Something went wrong!',
-        //             })
-        //         }
         //     },
-        // });
-    }
+        //     error: function (xhr, message, status) {
 
-     // $("#form-product").submit((e) => {
-    //     e.preventDefault();
-
-    //     Swal.fire({
-    //         title: 'Auto close alert!',
-    //         html: 'I will close in <b></b> milliseconds.',
-    //         // timer: 2000,
-    //         timerProgressBar: true,
-    //         didOpen: () => {
-    //             Swal.showLoading()
-    //             const b = Swal.getHtmlContainer().querySelector('b')
-    //             timerInterval = setInterval(() => {
-    //             b.textContent = Swal.getTimerLeft()
-    //             }, 100)
-    //         },
-    //         willClose: () => {
-    //             clearInterval(timerInterval)
-    //         }
-    //         }).then((result) => {
-    //         /* Read more about handling dismissals below */
-    //         if (result.dismiss === Swal.DismissReason.timer) {
-    //             console.log('I was closed by the timer')
-    //         }
-    //         })
-
-    //     // var form_data       = new FormData($("#form-product")[0]);
-    //     // var main_image      = $("#product_main_image")[0].files[0];
-    //     // var feature_images  = [];
-    //     // var materials       = product_materials;
-
-    //     // $('.product_images').each((index, file) => {
-    //     //     if (file.files.length > 0) {
-    //     //         feature_images[index] = file.files[0]
-    //     //     }
-    //     // })
-
-
-
-    //     // console.log(form_data)
-
-
-
-    //     // $.ajax({
-    //     //     url: "{{ route('bungadavi.products.store') }}",
-    //     //     type: "POST",
-    //     //     data: form_data,
-    //     //     headers: {
-    //     //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-    //     //         // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
-    //     //     },
-    //     //     cache: false,
-    //     //     contentType: false,
-    //     //     processData: false,
-    //     //     success: function (response) {
-
-    //     //     },
-    //     //     error: function (xhr, message, status) {
-
-    //     //     }
-    //     // })
-    // })
+        //     }
+        // })
+    })
 
     $("#button-add-product-materials").click(function (e) {
 
