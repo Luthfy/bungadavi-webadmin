@@ -1,15 +1,15 @@
 <?php
 
-namespace App\DataTables\BasicSetting;
+namespace App\DataTables\Client;
 
-use App\Models\BasicSetting\PaymentType;
+use App\Models\Client\Florist;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PaymentTypeDataTable extends DataTable
+class FloristDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,21 +21,16 @@ class PaymentTypeDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function ($datatable) {
-                $html  = "";
-                $html .= "<a href='".route('bungadavi.paymenttype.edit', ['paymenttype' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
-                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
-                return $html;
-            });
+            ->addColumn('action', 'client/florist.action');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\BasicSetting/PaymentType $model
+     * @param \App\Models\Client/Florist $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PaymentType $model)
+    public function query(Florist $model)
     {
         return $model->newQuery();
     }
@@ -48,11 +43,18 @@ class PaymentTypeDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('datatablesserverside')
+                    ->setTableId('client/florist-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('lfrtip')
-                    ->orderBy(1);
+                    ->dom('Bfrtip')
+                    ->orderBy(1)
+                    ->buttons(
+                        Button::make('create'),
+                        Button::make('export'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    );
     }
 
     /**
@@ -68,7 +70,9 @@ class PaymentTypeDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('payment_type'),
+            Column::make('id'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
         ];
     }
 
@@ -79,6 +83,6 @@ class PaymentTypeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'BasicSetting/PaymentType_' . date('YmdHis');
+        return 'Client/Florist_' . date('YmdHis');
     }
 }

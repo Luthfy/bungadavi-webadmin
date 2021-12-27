@@ -43,9 +43,9 @@
     <li class="submenu">
         <a href="#"><i class="fa fa-user-o" aria-hidden="true" style="font-size: 1.2em !important;"></i> <span> Client</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="{{ url('admin/') }}">Personal</a></li>
-            <li><a href="{{ url('admin/') }}">Corporate</a></li>
-            <li><a href="{{ url('admin/') }}">Florist</a></li>
+            <li><a href="{{ route('bungadavi.personal.index') }}">Personal</a></li>
+            <li><a href="{{ route('bungadavi.corporate.index') }}">Corporate</a></li>
+            <li><a href="{{ route('bungadavi.florist.index') }}">Florist</a></li>
         </ul>
     </li>
 

@@ -29,6 +29,9 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
+use App\Http\Controllers\Bungadavi\Client\CorporateController;
+use App\Http\Controllers\Bungadavi\Client\FloristController;
+use App\Http\Controllers\Bungadavi\Client\PersonalController;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -39,6 +42,11 @@ Route::group([
     Route::redirect('/', 'bungadavi/dashboard');
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // CLIENT
+    Route::resource('personal', PersonalController::class)->names('personal');
+    Route::resource('corporate', CorporateController::class)->names('corporate');
+    Route::resource('florist', FloristController::class)->names('florist');
 
     // LOCATION
     Route::prefix('location')->group(function () {
