@@ -31,12 +31,12 @@
             <span> Location</span>
             <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="{{ url('bungadavi/location/country') }}">Country</a></li>
-            <li><a href="{{ url('bungadavi/location/province') }}">Province</a></li>
-            <li><a href="{{ url('bungadavi/location/city') }}">City</a></li>
-            <li><a href="{{ url('bungadavi/location/district') }}">District</a></li>
-            <li><a href="{{ url('bungadavi/location/village') }}">Village</a></li>
-            <li><a href="{{ url('bungadavi/location/zipcode') }}">Zip Code</a></li>
+            <li><a href="{{ route('bungadavi.country.index') }}">Country</a></li>
+            <li><a href="{{ route('bungadavi.province.index') }}">Province</a></li>
+            <li><a href="{{ route('bungadavi.city.index') }}">City</a></li>
+            <li><a href="{{ route('bungadavi.district.index') }}">District</a></li>
+            <li><a href="{{ route('bungadavi.village.index') }}">Village</a></li>
+            <li><a href="{{ route('bungadavi.zipcode.index') }}">Zip Code</a></li>
         </ul>
     </li>
 
@@ -54,23 +54,23 @@
             <span> Basic Setting</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
             <li><a href="{{ url('admin/') }}">Setting</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/unit') }}">Unit</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/color') }}">Color</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/slidingbanner') }}">Sliding Banner</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/category') }}">Category</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/subcategory') }}">Sub Category</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/currency') }}">Currency</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/currencyrate') }}">Currency Rate</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/discount') }}">Discount</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/promotion') }}">Promotion</a></li>
+            <li><a href="{{ route('bungadavi.unit.index') }}">Unit</a></li>
+            <li><a href="{{ route('bungadavi.color.index') }}">Color</a></li>
+            <li><a href="{{ route('bungadavi.slidingbanner.index') }}">Sliding Banner</a></li>
+            <li><a href="{{ route('bungadavi.category.index') }}">Category</a></li>
+            <li><a href="{{ route('bungadavi.subcategory.index') }}">Sub Category</a></li>
+            <li><a href="{{ route('bungadavi.currency.index') }}">Currency</a></li>
+            <li><a href="{{ route('bungadavi.currencyrate.index') }}">Currency Rate</a></li>
+            <li><a href="{{ route('bungadavi.discount.index') }}">Discount</a></li>
+            <li><a href="{{ route('bungadavi.promotion.index') }}">Promotion</a></li>
             <li><a href="{{ url('admin/') }}">Occasion Special Price</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/ourbank') }}">Our Bank</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/payment_type') }}">Payment Type</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/midtrans') }}">Midtrans Setting</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/cardmessagecategory') }}">Card Message Category</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/cardmessagesubcategory') }}">Card Message Sub Category</a></li>
-            <li><a href="{{ url('bungadavi/basicsetting/timeslot') }}">Time Slot</a></li>
-            <li><a href="{{ url('admin/') }}">Delivery Remark</a></li>
+            <li><a href="{{ route('bungadavi.ourbank.index') }}">Our Bank</a></li>
+            <li><a href="{{ route('bungadavi.paymenttype.index') }}">Payment Type</a></li>
+            <li><a href="{{ route('bungadavi.paymenttype.index') }}">Midtrans Setting</a></li>
+            <li><a href="{{ route('bungadavi.cardmessagecategory.index') }}">Card Message Category</a></li>
+            <li><a href="{{ route('bungadavi.cardmessagesubcategory.index') }}">Card Message Sub Category</a></li>
+            <li><a href="{{ route('bungadavi.timeslot.index') }}">Time Slot</a></li>
+            <li><a href="{{ route('bungadavi.deliveryremark.index') }}">Delivery Remark</a></li>
             <li><a href="{{ url('admin/') }}">Message Group</a></li>
             <li><a href="{{ url('admin/') }}">Icon Social Media</a></li>
             <li><a href="{{ url('admin/') }}">Testimonial</a></li>
@@ -78,14 +78,21 @@
     </li>
 
     <li class="submenu">
+        <a href="#"><i class="fa fa-archive" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+            <span> Stock Control</span> <span class="menu-arrow"></span></a>
+        <ul style="display: none;">
+            <li><a href="{{ route('bungadavi.stocks.index') }}">Stock</a></li>
+            <li><a href="{{ route('bungadavi.shops.index') }}">Stock Shop</a></li>
+            <li><a href="{{ route('bungadavi.opnames.index') }}">Stock Opname</a></li>
+            <li><a href="{{ route('bungadavi.splits.index') }}">Stock Split</a></li>
+        </ul>
+    </li>
+
+    <li class="submenu">
         <a href="#"><i class="fa fa-wrench" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Product Control</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="#">Stock</a></li>
-            <li><a href="#">Stock Shop</a></li>
-            <li><a href="#">Stock Opname</a></li>
-            <li><a href="#">Stock Split</a></li>
-            <li><a href="#">Product</a></li>
+            <li><a href="{{ route('bungadavi.products.index') }}">Product</a></li>
         </ul>
     </li>
 

@@ -6,7 +6,6 @@ use App\DataTables\Location\CountryDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Location\CountryRequest;
 use App\Models\Location\Country;
-use Illuminate\Http\ResponseTrait;
 
 class CountryController extends Controller
 {

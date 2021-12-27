@@ -85,6 +85,10 @@ class TimeSlotController extends Controller
 
     public function edit($id)
     {
+        foreach(City::all() as $city){
+            $city_selected[$city->id] = $city->name;
+        }
+
         $data = [
             'title'         => 'Time Slot Management',
             'subtitle'      => 'Form Time Slot',
@@ -92,6 +96,7 @@ class TimeSlotController extends Controller
             'breadcrumb'    => ['Time Slot Management', 'Form Time Slot'],
             'guard' => auth()->user()->group,
             'data'  => TimeSlot::find($id),
+            'city' => $city_selected,
         ];
 
         return view('bungadavi.basicsetting.timeslot', $data);

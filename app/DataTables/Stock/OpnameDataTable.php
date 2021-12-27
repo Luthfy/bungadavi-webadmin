@@ -1,15 +1,12 @@
 <?php
 
-namespace App\DataTables\BasicSetting;
+namespace App\DataTables\Stock;
 
-use App\Models\BasicSetting\SubCategory;
-use Yajra\DataTables\Html\Button;
+use App\Models\Stock\Opname;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SubCategoryDataTable extends DataTable
+class OpnameDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,20 +18,17 @@ class SubCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->rawColumns(['photo','action'])
-            ->editColumn('photo', function ($data){
-                return "<img src='".asset('storage/'.$data->photo)."' alt='".$data->photo."' style='max-width:60px' />";
-                })
-            ->editColumn('category_id', function ($data){
-                return $data->category()->first()->name;
-                })
-            ->editColumn('is_active', function ($data){
-                return $data->is_active != 1 ? 'No':'Yes';
-                })
+            ->editColumn('stocks_uuid', function ($datatable) {
+                return $datatable->stocks()->first()->name_stock;
+            })
+            ->editColumn('user_uuid', function ($datatable) {
+                return $datatable->user()->first()->fullname;
+            })
             ->addColumn('action', function ($datatable) {
                 $html  = "";
-                $html .= "<a href='".route('bungadavi.subcategory.edit', ['subcategory' => $datatable->id])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
-                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->id."\")'><span class='fa fa-trash'></span></a>";
+                $html .= "<a href='".route('bungadavi.opnames.edit', ['opname' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                $html .= "<a href='".route('bungadavi.stocks.show', ['stock' => $datatable->stocks_uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
                 return $html;
             });
     }
@@ -42,10 +36,10 @@ class SubCategoryDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\BasicSetting/SubCategory $model
+     * @param \App\Models\Product/Opname $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(SubCategory $model)
+    public function query(Opname $model)
     {
         return $model->newQuery();
     }
@@ -78,12 +72,11 @@ class SubCategoryDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('category_id')->title('Category'),
-            Column::make('name'),
-            Column::make('name_en'),
-            Column::make('priority'),
-            Column::make('photo'),
-            Column::make('is_active'),
+            Column::make('stocks_uuid'),
+            Column::make('qty_stock_opname'),
+            Column::make('notes_stock_opname'),
+            Column::make('user_uuid'),
+            Column::make('created_at'),
         ];
     }
 
@@ -94,6 +87,6 @@ class SubCategoryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'BasicSetting/SubCategory_' . date('YmdHis');
+        return 'Product/Opname_' . date('YmdHis');
     }
 }
