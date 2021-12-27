@@ -78,7 +78,7 @@
     </li>
 
     <li class="submenu">
-        <a href="#"><i class="fa fa-boxes" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+        <a href="#"><i class="fa fa-archive" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Stock Control</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
             <li><a href="{{ route('bungadavi.stocks.index') }}">Stock</a></li>
