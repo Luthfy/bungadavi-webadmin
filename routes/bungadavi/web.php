@@ -8,13 +8,17 @@ use App\Http\Controllers\Bungadavi\Stock\SplitController;
 use App\Http\Controllers\Bungadavi\Stock\StockController;
 use App\Http\Controllers\Bungadavi\Stock\OpnameController;
 use App\Http\Controllers\Bungadavi\Location\CityController;
+use App\Http\Controllers\Bungadavi\Client\FloristController;
+use App\Http\Controllers\Bungadavi\Client\PersonalController;
 use App\Http\Controllers\Bungadavi\Product\ProductController;
+use App\Http\Controllers\Bungadavi\Client\CorporateController;
 use App\Http\Controllers\Bungadavi\Location\CountryController;
 use App\Http\Controllers\Bungadavi\Location\VillageController;
 use App\Http\Controllers\Bungadavi\Location\ZipCodeController;
 use App\Http\Controllers\Bungadavi\BasicSetting\UnitController;
 use App\Http\Controllers\Bungadavi\Location\DistrictController;
 use App\Http\Controllers\Bungadavi\Location\ProvinceController;
+use App\Http\Controllers\Bungadavi\Transaction\OrderController;
 use App\Http\Controllers\Bungadavi\BasicSetting\ColorController;
 use App\Http\Controllers\Bungadavi\BasicSetting\OurBankController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CategoryController;
@@ -30,9 +34,6 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
-use App\Http\Controllers\Bungadavi\Client\CorporateController;
-use App\Http\Controllers\Bungadavi\Client\FloristController;
-use App\Http\Controllers\Bungadavi\Client\PersonalController;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -99,6 +100,9 @@ Route::group([
     Route::resource('opnames', OpnameController::class)->names('opnames');
     Route::resource('shops', ShopController::class)->names('shops');
     Route::resource('splits', SplitController::class)->names('splits');
+
+    // TRANSACTION ORDER
+    Route::resource('transaction', OrderController::class)->names('orders');
 
     // Courier
     Route::resource('courier', CourierController::class)->names('couriers');

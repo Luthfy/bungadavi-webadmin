@@ -100,8 +100,8 @@
         <a href="#"><i class="fa fa-calendar" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Order</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="{{ url('admin/') }}">Create Order</a></li>
-            <li><a href="{{ url('admin/') }}">New Order List</a></li>
+            <li><a href="{{ route('bungadavi.orders.create') }}">Create Order</a></li>
+            <li><a href="{{ route('bungadavi.orders.index') }}">Order List</a></li>
         </ul>
     </li>
     <li>
