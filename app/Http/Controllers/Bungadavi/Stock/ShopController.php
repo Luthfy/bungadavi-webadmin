@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Bungadavi\Stock;
 use App\Models\Stock\Shop;
 use App\Models\Stock\Stock;
 use App\Http\Controllers\Controller;
-use App\DataTables\Product\ShopDataTable;
-use App\Http\Requests\ProductControl\ShopRequest;
+use App\DataTables\Stock\ShopDataTable;
+use App\Http\Requests\Stock\ShopRequest;
 
 class ShopController extends Controller
 {
@@ -22,11 +22,11 @@ class ShopController extends Controller
             'subtitle'      => 'Stock Shop List',
             'description'   => 'For Management Stock Shop',
             'breadcrumb'    => ['Stock Shop Management', 'Stock Shop List'],
-            'button'        => ['name' => 'Add Stock Shop', 'link' => 'shops.create'],
+            'button'        => ['name' => 'Add Stock Shop', 'link' => 'bungadavi.shops.create'],
             'guard'         => auth()->user()->group
         ];
 
-        return $datatables->render('backend.commons.datatable', $data);
+        return $datatables->render('commons.datatable', $data);
     }
 
     /**
@@ -46,7 +46,7 @@ class ShopController extends Controller
             'stocks'        => Stock::pluck('name_stock', 'uuid')
         ];
 
-        return view('backend.shops.form', $data);
+        return view('bungadavi.shops.form', $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class ShopController extends Controller
             return response()->json(['status' => true, 'message' => 'success', 'data' => $shop], 200);
         }
 
-        return redirect()->route('shops.index')->with('info', 'Shop and Stock '.$request->name_stock.' Has Been Added');
+        return redirect()->route('bungadavi.shops.index')->with('info', 'Shop and Stock '.$request->name_stock.' Has Been Added');
     }
 
     /**
@@ -97,7 +97,7 @@ class ShopController extends Controller
         ];
 
 
-        return view('backend.shops.form', $data);
+        return view('bungadavi.shops.form', $data);
     }
 
     /**
@@ -127,17 +127,19 @@ class ShopController extends Controller
             $stock  = Stock::find($request->stocks_uuid);
             $stock->update(['qty_stock' => (int) $stock->qty_stock + ((int) $request->qty_stock_shop - (int) $request->reject_stock_shop)]);
         } else {
-            $shop->total_price_stock_shop = $request->total_price_stock_shop;
-            $shop->qty_stock_shop    = $request->qty_stock_shop;
-            $shop->reject_stock_shop = $request->reject_stock_shop;
-            $shop->notes_stock_shop  = $request->notes_stock_shop;
-            $shop->save();
+            // $shop->total_price_stock_shop = $request->total_price_stock_shop;
+            // $shop->qty_stock_shop    = $request->qty_stock_shop;
+            // $shop->reject_stock_shop = $request->reject_stock_shop;
+            // $shop->notes_stock_shop  = $request->notes_stock_shop;
+            // $shop->save();
 
             $stock  = Stock::find($request->stocks_uuid);
-            $stock->update(['qty_stock' => (int) $stock->stocks()->first()->qty_stock + ((int) $request->qty_stock_shop - (int) $request->reject_stock_shop)]);
+            $stock->update(
+                ['qty_stock' => (int) $stock->qty_stock + ((int) $request->qty_stock_shop - (int) $request->reject_stock_shop)]
+            );
         }
 
-        return redirect()->route('shops.index')->with('info', 'Shop and Stock '.$request->name_stock.' Has Been Updated');
+        return redirect()->route('bungadavi.shops.index')->with('info', 'Shop and Stock '.$request->name_stock.' Has Been Updated');
     }
 
     /**
