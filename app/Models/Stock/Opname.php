@@ -4,10 +4,11 @@ namespace App\Models\Stock;
 
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
-use App\Models\Product\Stock;
+use App\Models\Stock\Stock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Opname extends Model
 {

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Bungadavi\Stock;
 use App\Models\Stock\Stock;
 use App\Models\Stock\Opname;
 use App\Http\Controllers\Controller;
-use App\DataTables\Product\OpnameDataTable;
-use App\Http\Requests\ProductControl\OpnameRequest;
+use App\DataTables\Stock\OpnameDataTable;
+use App\Http\Requests\Stock\OpnameRequest;
 
 class OpnameController extends Controller
 {
@@ -22,11 +22,11 @@ class OpnameController extends Controller
             'subtitle'      => 'Stock Opname List',
             'description'   => 'For Management Stock Opname',
             'breadcrumb'    => ['Stock Opname Management', 'Stock Opname List'],
-            'button'        => ['name' => 'Add Stock Opname', 'link' => 'opnames.create'],
+            'button'        => ['name' => 'Add Stock Opname', 'link' => 'bungadavi.opnames.create'],
             'guard'         => auth()->user()->group
         ];
 
-        return $datatables->render('backend.commons.datatable', $data);
+        return $datatables->render('commons.datatable', $data);
     }
 
     /**
@@ -46,7 +46,7 @@ class OpnameController extends Controller
             'stocks'        => Stock::pluck('name_stock', 'uuid')
         ];
 
-        return view('backend.opnames.form', $data);
+        return view('bungadavi.opnames.form', $data);
     }
 
     /**
@@ -66,7 +66,7 @@ class OpnameController extends Controller
             return response()->json(['status' => true, 'message' => 'success', 'data' => $opname], 200);
         }
 
-        return redirect()->route('opnames.index')->with('info', 'Stock Opname Has Been Added');
+        return redirect()->route('bungadavi.opnames.index')->with('info', 'Stock Opname Has Been Added');
     }
 
     /**
@@ -98,7 +98,7 @@ class OpnameController extends Controller
             'stocks'        => Stock::pluck('name_stock', 'uuid')
         ];
 
-        return view('backend.opnames.form', $data);
+        return view('bungadavi.opnames.form', $data);
     }
 
     /**
@@ -110,12 +110,39 @@ class OpnameController extends Controller
      */
     public function update(OpnameRequest $request, $id)
     {
-        Opname::findOrFail($id);
+        $opname = Opname::findOrFail($id);
 
-        $stock = Stock::find($request->stocks_uuid);
-        $stock->update(['qty_stock' => $stock->qty_stock + ($stock->qty_stock - $request->qty_stock_opname)]);
+        if ($opname->stocks_uuid != $request->stocks_uuid) {
+            //create new shops
+            $newOpname = Opname::create($request->post());
 
-        return redirect()->route('opnames.index')->with('info', 'Stock Opname Has Been Updated');
+            // stock restore old stock
+            $oldStock = Stock::find($opname->stocks_uuid);
+            $oldStock->update(
+                ['qty_stock' => (int) $oldStock->qty_stock - (int) $request->qty_stock_opname]
+            );
+            // delete old shop
+            $oldshop = Opname::find($opname->uuid);
+            $oldshop->delete();
+
+            // new stocks updated
+            $stock  = Stock::find($request->stocks_uuid);
+            $stock->update(
+                ['qty_stock' => (int) $stock->qty_stock + (int) $request->qty_stock_opname]
+            );
+        } else {
+
+            $opname->qty_stock_opname = $request->qty_stock_opname;
+            $opname->notes_stock_opname = $request->notes_stock_opname;
+            $opname->save();
+
+            $stock  = Stock::find($request->stocks_uuid);
+            $stock->update(
+                ['qty_stock' => (int) $stock->qty_stock - (int) $request->qty_stock_opname]
+            );
+        }
+
+        return redirect()->route('bungadavi.opnames.index')->with('info', 'Stock Opname Has Been Updated');
     }
 
     /**

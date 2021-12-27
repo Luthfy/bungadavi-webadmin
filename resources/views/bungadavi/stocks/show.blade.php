@@ -72,7 +72,7 @@
                                                 <td>{{ $item->reject_stock_shop }}</td>
                                                 <td>{{ $item->notes_stock_shop }}</td>
                                                 <td>
-                                                    <a href="{{ route('shops.edit', ['shop' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
+                                                    <a href="{{ route('bungadavi.shops.edit', ['shop' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
                                                     <a class='text-danger m-1' id="btn-delete-shop" aria-id="{{$item->uuid}}"><span class='fa fa-trash'></span></a>
                                                 </td>
                                             </tr>
@@ -117,7 +117,7 @@
                                                 <td>{{ $item->qty_stock_opname }}</td>
                                                 <td>{{ $item->notes_stock_shop }}</td>
                                                 <td>
-                                                    <a href="{{ route('opnames.edit', ['opname' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
+                                                    <a href="{{ route('bungadavi.opnames.edit', ['opname' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
                                                     <a class='text-danger m-1' id="btn-delete-opname" aria-id="{{$item->uuid}}"><span class='fa fa-trash'></span></a>
                                                 </td>
                                             </tr>
@@ -166,7 +166,7 @@
                                                 <td>{{ $item->qty_stock_split }}</td>
                                                 <td>{{ $item->notes_stock_split }}</td>
                                                 <td>
-                                                    <a href="{{ route('splits.edit', ['split' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
+                                                    <a href="{{ route('bungadavi.splits.edit', ['split' => $item->uuid]) }}" class='text-success m-1'><span class='fa fa-edit'></span></a>
                                                     <a class='text-danger m-1' id="btn-delete-split" aria-id="{{$item->uuid}}"><span class='fa fa-trash'></span></a>
                                                 </td>
                                             </tr>
