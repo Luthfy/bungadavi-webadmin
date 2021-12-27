@@ -11,6 +11,7 @@ use App\Http\Controllers\Bungadavi\Location\CityController;
 use App\Http\Controllers\Bungadavi\Client\FloristController;
 use App\Http\Controllers\Bungadavi\Client\PersonalController;
 use App\Http\Controllers\Bungadavi\Product\ProductController;
+use App\Http\Controllers\Bungadavi\Client\AffiliateController;
 use App\Http\Controllers\Bungadavi\Client\CorporateController;
 use App\Http\Controllers\Bungadavi\Location\CountryController;
 use App\Http\Controllers\Bungadavi\Location\VillageController;
@@ -46,6 +47,10 @@ Route::group([
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // CLIENT
+    Route::get('personal/ajax-list', [PersonalController::class, 'list'])->name('personals.ajax.list');
+    Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
+    Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
+
     Route::resource('personal', PersonalController::class)->names('personal');
     Route::resource('corporate', CorporateController::class)->names('corporate');
     Route::resource('florist', FloristController::class)->names('florist');
@@ -106,6 +111,7 @@ Route::group([
 
     // TRANSACTION ORDER
     Route::resource('transaction', OrderController::class)->names('orders');
+    Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
 
     // Courier
     Route::resource('courier', CourierController::class)->names('couriers');

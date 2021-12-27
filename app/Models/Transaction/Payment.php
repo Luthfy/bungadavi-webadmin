@@ -3,29 +3,27 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Transaction\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class Payment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table        = "order_transactions";
+    protected $table        = "payment_order_transactions";
     protected $primaryKey   = 'uuid';
     protected $keyType      = 'string';
 
     public $incrementing = false;
 
     protected $fillable = [
-        "code_order_transaction",
-        "type_order_transaction",
-        "total_order_transaction",
-        "shipping_price_order_transaction",
-        "status_order_transaction",
-        "currency_id",
-        "is_guest",
+        'order_transactions_uuid',
+        'sender_receiver_uuid',
+        'status_payment_order',
+        'proof_of_payment_order',
+        'data_payment_order',
+        'payment_type_uuid',
     ];
 
     protected $casts = [
@@ -41,15 +39,5 @@ class Order extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
-    }
-
-    /**
-     * Get all of the products for the Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'order_transactions_uuid', 'uuid');
     }
 }

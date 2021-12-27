@@ -40,7 +40,7 @@
                         <div class="row">
                             <h5 class="mb-2">Client Name <span class="text-danger">*</span></h5>
                             <div class="col-sm-12 col-md-12">
-                                {!! Form::select('client_uuid', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'clientData']) !!}
+                                {!! Form::select('client_uuid', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'client_id']) !!}
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="row">
                             <h5 class="mb-2 ml-3">Sender Name <span class="text-danger">*</span></h5>
                             <div class="col-sm-12 col-md-12">
-                                {!! Form::select('client_uuid', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'clientData']) !!}
+                                {!! Form::text('sender_name', null, ['class' => 'form-control', 'required' => true, 'id' => 'senderName']) !!}
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         <div class="row">
                             <h5 class="mb-2 ml-3">PIC Name <span class="text-danger">*</span></h5>
                             <div class="col-sm-12 col-md-12">
-                                {!! Form::select('client_uuid', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'clientData']) !!}
+                                {!! Form::text('pic_name', null, ['class' => 'form-control', 'required' => true, 'id' => 'PicName']) !!}
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button type="button" class="btn btn-primary" id="btnClientType">Understood</button>
         </div>
       </div>
     </div>
@@ -89,7 +89,13 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+            {!! Form::select('recipient_id', [], null, ['class' => 'form-control', 'required' => true, 'id', 'recipient_id']) !!}
+            <div class="col-12">
+                <div class="row">
+                    {!! Form::checkbox('is_new', null, false, ['id' => 'create_new_recipient']) !!}
+                </div>
+
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

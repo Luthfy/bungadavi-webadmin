@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Bungadavi\Client;
 
 use Illuminate\Http\Request;
-use App\Models\Client\Corporate;
+use App\Models\Customer\Affiliate;
 use App\Http\Controllers\Controller;
 
-class CorporateController extends Controller
+class AffiliateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,6 @@ class CorporateController extends Controller
      */
     public function create()
     {
-        //
         //
     }
 
@@ -88,7 +87,7 @@ class CorporateController extends Controller
     public function list(Request $request)
     {
         return response()->json(
-            Corporate::all()
+            Affiliate::all()
         );
     }
 }

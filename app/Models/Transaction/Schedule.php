@@ -3,12 +3,11 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Transaction\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class Schedule extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -41,15 +40,5 @@ class Order extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
-    }
-
-    /**
-     * Get all of the products for the Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'order_transactions_uuid', 'uuid');
     }
 }

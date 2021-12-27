@@ -21,7 +21,7 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'order/order.action');
+            ->addColumn('action', 'orderorder.action');
     }
 
     /**
@@ -43,7 +43,7 @@ class OrderDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('order/order-table')
+                    ->setTableId('datatablesserverside')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
@@ -63,9 +63,11 @@ class OrderDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
+            Column::make('code_order_transaction'),
+            Column::make('type_order_transaction'),
+            Column::make('total_order_transaction'),
+            Column::make('status_order_transaction'),
             Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
@@ -76,6 +78,6 @@ class OrderDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Order/Order_' . date('YmdHis');
+        return 'Order_' . date('YmdHis');
     }
 }

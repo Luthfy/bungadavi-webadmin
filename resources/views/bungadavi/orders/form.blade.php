@@ -144,7 +144,7 @@
                     <div class="card-footer">
                         <a href="{{ route('bungadavi.orders.index') }}" class="btn btn-secondary">Back</a>
                         {!! Form::reset('Reset', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::submit('Create Order', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::submit('Create Order', ['class' => 'btn btn-primary', 'id' => 'createNewOrder']) !!}
                     </div>
                 </div>
             </div>
@@ -168,37 +168,92 @@
         var paymentOrder            = null;
 
         $(document).ready({
-            $('input[type=radio][name=radioButtonClientType]').change(function() {
-                if (this.value == 'clientPersonal') {
-                    alert('personal')
-                    // $('#picData').remove()
-                    // $('#additionalForm').remove()
-                    // $('#rowClient').after(`
-                    //     <div id="additionalForm" class="col md-4">
-                    //         <p>PO Reference</p>
-                    //         <input text="" id="poReference" class="col md-4"></text>
-                    //         <br>
-                    //         <br>
-                    //     </div>
-                    // `)
-                } else if (this.value == 'clientCorporate') {
-                    alert('corporate')
 
-                    // $('#poReference').after(`
-                    //     <br>
-                    //     <p>PIC</p>
-                    //     <select id="picData" class="col md-4">
-                    //         <option value="AL">Alabama</option>
-                    //         <option value="WY">Wyoming</option>
-                    //     </select>
-                    // `)
-                } else if (this.value == 'clientAffiliate') {
-                    alert('affilaite')
-
-                    // alert("tampilkan dropdown client affiliate");
-                }
-            });
         });
+
+        $("#createNewOrder").click(function (e) {
+            postOrder();
+        });
+
+        $("#client_id").change(function (e) {
+            getRecipientAjax();
+        })
+
+        $('input[type=radio][name=radioButtonClientType]').change(function() {
+            console.log(this.value)
+            if (this.value == 'clientPersonal') {
+                getClientAjax("{{ route('bungadavi.personals.ajax.list') }}");
+                // $('#picData').remove()
+                // $('#additionalForm').remove()
+                // $('#rowClient').after(`
+                //     <div id="additionalForm" class="col md-4">
+                //         <p>PO Reference</p>
+                //         <input text="" id="poReference" class="col md-4"></text>
+                //         <br>
+                //         <br>
+                //     </div>
+                // `)
+            } else if (this.value == 'clientCorporate') {
+                getClientAjax("{{ route('bungadavi.corporate.ajax.list') }}");
+
+
+                // $('#poReference').after(`
+                //     <br>
+                //     <p>PIC</p>
+                //     <select id="picData" class="col md-4">
+                //         <option value="AL">Alabama</option>
+                //         <option value="WY">Wyoming</option>
+                //     </select>
+                // `)
+            } else if (this.value == 'clientAffiliate') {
+                getClientAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
+
+
+                // alert("tampilkan dropdown client affiliate");
+            }
+        });
+
+        function getClientAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result)
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
+                    })
+                    $("#client_id").html(html);
+                },
+            });
+        }
+
+        function getRecipientAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result)
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
+                    })
+                    $("#recipient_id").html(html);
+                },
+            });
+        }
 
         function customerModal()
         {
@@ -209,11 +264,11 @@
         {
             let data = {
                 "_token"                : "{{ csrf_token() }}",
-                "order_transaction"     : orderTransaction,
-                "sender_recipient"      : senderRecipientOrder,
-                "list_product_order"    : listProductOrder,
-                "delivery_schedule"     : deliverySchedule,
-                "payment_order"         : paymentOrder,
+                "order_transaction"     : setOrderTransaction(),
+                "sender_recipient"      : setSenderRecipientOrder(),
+                "list_product_order"    : setListProductOrder(),
+                "delivery_schedule"     : setDeliverySchedule(),
+                "payment_order"         : setPaymentOrder(),
             };
 
             $.ajax({
@@ -227,11 +282,15 @@
                 data: JSON.stringify(data),
                 success: function (e) {
                     console.log(e)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'New Order Created',
+                        text: 'New Order Has Been Created!',
+                    })
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
                 }
-
             })
         }
 
@@ -239,10 +298,10 @@
         {
             return {
                 type_order_transaction : "backoffice_bungadavi",
-                total_order_transaction : "",
-                shipping_price_order_transaction : "",
-                status_order_transaction : "",
-                currency_id : "",
+                total_order_transaction : "1000000",
+                shipping_price_order_transaction : "50000",
+                status_order_transaction : "New Order",
+                currency_id : "Rp",
                 is_guest : false,
             };
         }
@@ -251,28 +310,28 @@
         {
             return {
                 is_secret : false,
-                client_type : "",
-                client_uuid : "",
-                pic_name : "",
-                sender_name : "",
-                po_referrence : "",
-                sender_phone_number : "",
-                sender_address : "",
-                sender_country : "",
-                sender_province : "",
-                sender_city : "",
-                sender_district : "",
-                sender_village : "",
-                sender_zipcode : "",
-                receiver_name : "",
-                receiver_phone_number : "",
-                receiver_address : "",
-                receiver_country : "",
-                receiver_province : "",
-                receiver_city : "",
-                receiver_district : "",
-                receiver_village : "",
-                receiver_zipcode : "",
+                client_type : "personal",
+                client_uuid : "testing-uuid",
+                pic_name : ($("#PicName").val() == "") ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
+                sender_name : "testing sender name",
+                po_referrence : "testing po reference",
+                sender_phone_number : "1234",
+                sender_address : "Jl. Pasar Kamis",
+                sender_country : "Indonesia",
+                sender_province : "Kalimantan Selatan",
+                sender_city : "Banjarmasin",
+                sender_district : "Banjarmasin Utara",
+                sender_village : "Kuin Selatan",
+                sender_zipcode : "70122",
+                receiver_name : "Luthfy Testing",
+                receiver_phone_number : "1234",
+                receiver_address : "Jl. Putri Jaleha",
+                receiver_country : "Indonesia",
+                receiver_province : "Kalimantan Selatan",
+                receiver_city : "Banjarmasin",
+                receiver_district : "Banjarmasin Utara",
+                receiver_village : "Banua Anyar",
+                receiver_zipcode : "70111",
             };
         }
 
@@ -280,17 +339,18 @@
         {
             return [
                 {
-                    product_uuid : "",
-                    code_product : "",
-                    name_product : "",
-                    qty_product : "",
-                    price_product : "",
-                    from_message_product : "",
-                    to_message_product : "",
-                    card_message_category : "",
-                    card_message_subcategory : "",
-                    card_message_message : "",
-                    remarks_product : "",
+                    product_uuid : "testing-product-uuid",
+                    code_product : "SBDO1234",
+                    name_product : "Testing Product",
+                    qty_product : "1",
+                    price_product : "1000000",
+                    from_message_product : "Luthfy",
+                    to_message_product : "Luthfy To",
+                    card_message_category : "Happy New Year",
+                    card_message_subcategory : "Message Happy New Year",
+                    card_message_message : "message in here",
+                    remarks_product : "product remark",
+                    custom_product: null
                 }
             ];
         }
@@ -298,20 +358,20 @@
         function setDeliverySchedule()
         {
             return {
-                time_slot_name : "",
-                time_slot_id : "",
-                delivery_remarks : "",
+                time_slot_name : "NEW YEAR",
+                time_slot_id : "1",
+                delivery_remarks : "tinggalkan barnag didepan",
                 time_slot_charge : 0,
                 delivery_charge : 0,
-                delivery_date : "",
+                delivery_date : "2022-01-01",
             };
         }
 
         function setPaymentOrder()
         {
             return {
-                data_payment_order : "",
-                payment_type_uuid : "",
+                data_payment_order : "BCA 0000000 \na.n Testing Rekening",
+                payment_type_uuid : "Manual-UUID",
             };
         }
 

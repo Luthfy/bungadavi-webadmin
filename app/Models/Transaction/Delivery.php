@@ -3,29 +3,29 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Transaction\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class Delivery extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table        = "order_transactions";
+    protected $table        = "delivery_schedule_order";
     protected $primaryKey   = 'uuid';
     protected $keyType      = 'string';
 
     public $incrementing = false;
 
     protected $fillable = [
-        "code_order_transaction",
-        "type_order_transaction",
-        "total_order_transaction",
-        "shipping_price_order_transaction",
-        "status_order_transaction",
-        "currency_id",
-        "is_guest",
+        'order_transactions_uuid',
+        'sender_receiver_uuid',
+        'delivery_date',
+        'delivery_charge',
+        'time_slot_name',
+        'time_slot_charge',
+        'time_slot_id',
+        'delivery_remarks',
     ];
 
     protected $casts = [
@@ -44,12 +44,12 @@ class Order extends Model
     }
 
     /**
-     * Get all of the products for the Order
+     * Get the order that owns the Delivery
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function products()
+    public function order()
     {
-        return $this->hasMany(Product::class, 'order_transactions_uuid', 'uuid');
+        return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid')->first();
     }
 }

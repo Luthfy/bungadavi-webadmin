@@ -2,7 +2,7 @@
 
 namespace App\DataTables\BasicSetting;
 
-use App\Models\BasicSetting/Midtran;
+use App\Models\BasicSetting\Midtran;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;

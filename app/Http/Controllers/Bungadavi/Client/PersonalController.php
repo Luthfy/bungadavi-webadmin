@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Bungadavi\Client;
 
 use Illuminate\Http\Request;
-use App\Models\Location\City;
 use App\Models\Client\Personal;
-use App\Models\Location\Country;
-use App\Models\Location\Village;
-use App\Models\Location\ZipCode;
-use App\Models\Location\District;
-use App\Models\Location\Province;
 use App\Http\Controllers\Controller;
 use App\DataTables\Client\PersonalDataTable;
 use App\Http\Requests\Client\PersonalRequest;
+use App\Models\Client\Corporate;
+use App\Models\Customer\Affiliate;
 
 class PersonalController extends Controller
 {
@@ -162,5 +158,14 @@ class PersonalController extends Controller
     public function destroy($id)
     {
         return Personal::find($id)->delete();
+    }
+
+    public function list(Request $request)
+    {
+        // if ($request->ajax()) {
+            return response()->json(
+                Personal::all()
+            );
+        // }
     }
 }
