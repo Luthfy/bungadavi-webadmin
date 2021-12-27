@@ -58,7 +58,27 @@ class PersonalController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Personal::create($request->post());
+        // $user = Personal::create($request->post());
+        Personal::create([
+            'fullname' => $request->fullname,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'phone' => $request->phone,
+            'mobile' => $request->mobile,
+            'gender' => $request->gender,
+            'birthday' => $request->birthday,
+            'country_id' => $request->country_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'district_id' => $request->district_id,
+            'village_id' => $request->village_id,
+            'zipcode_id' => $request->zipcode_id,
+            'refferal' => $request->refferal,
+            'sharelink' => $request->sharelink,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+        ]);
 
         // return redirect()->route('personal.show', ['personal' => $user->uuid])->with('info', 'Customer Has Been Added');
         return redirect()->route('bungadavi.personal.index')->with('info', 'Customer Has Been Added');
@@ -123,7 +143,9 @@ class PersonalController extends Controller
         $personal->sharelink = $request->sharelink;
         $personal->email = $request->email;
         $personal->username = $request->username;
-        $personal->password = $request->password;
+        if($request->password != null || $request->password != '') {
+            $personal->password = bcrypt($request->password);
+        }
         $personal->save();
 
         // return redirect()->route('personal.show', ['personal' => $user->uuid])->with('info', 'Customer Has Been Added');
