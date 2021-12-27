@@ -17,6 +17,8 @@ use Database\Seeders\Location\DistrictSeeder;
 use Database\Seeders\Location\ProvinceSeeder;
 use Database\Seeders\Location\VillageSeeder;
 use Database\Seeders\Location\ZipCodeSeeder;
+use Database\Seeders\ProductControl\StockSeeder;
+use Database\Seeders\ProductControl\ProductSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +38,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(SubcategorySeeder::class);
         $this->call(ColorSeeder::class);
+
+        // $this->call(StockSeeder::class);
+        // $this->call(ProductSeeder::class);
 
         $this->call(CountrySeeder::class);
         $this->call(ProvinceSeeder::class);
