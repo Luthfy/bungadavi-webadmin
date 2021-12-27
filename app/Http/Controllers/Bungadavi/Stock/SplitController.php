@@ -6,8 +6,8 @@ use App\Models\Stock\Split;
 use App\Models\Stock\Stock;
 use App\Models\BasicSetting\Unit;
 use App\Http\Controllers\Controller;
-use App\DataTables\Product\SplitDataTable;
-use App\Http\Requests\ProductControl\SplitRequest;
+use App\DataTables\Stock\SplitDataTable;
+use App\Http\Requests\Stock\SplitRequest;
 
 class SplitController extends Controller
 {
@@ -23,11 +23,11 @@ class SplitController extends Controller
             'subtitle'      => 'Stock Split List',
             'description'   => 'For Management Stock Split',
             'breadcrumb'    => ['Stock Split Management', 'Stock Split List'],
-            'button'        => ['name' => 'Add Split Shop', 'link' => 'splits.create'],
+            'button'        => ['name' => 'Add Split Shop', 'link' => 'bungadavi.splits.create'],
             'guard'         => auth()->user()->group
         ];
 
-        return $datatables->render('backend.commons.datatable', $data);
+        return $datatables->render('commons.datatable', $data);
     }
 
     /**
@@ -48,7 +48,7 @@ class SplitController extends Controller
             'units'         => Unit::pluck('name', 'id')
         ];
 
-        return view('backend.splits.form', $data);
+        return view('bungadavi.splits.form', $data);
     }
 
     /**
@@ -87,8 +87,7 @@ class SplitController extends Controller
             return response()->json(['status' => true, 'message' => 'success', 'data' => $stock], 200);
         }
 
-        return redirect()->route('splits.index')->with('info', 'Stock Split Has Been Created');
-
+        return redirect()->route('bungadavi.splits.index')->with('info', 'Stock Split Has Been Created');
     }
 
     /**
@@ -110,7 +109,7 @@ class SplitController extends Controller
             'units'         => Unit::pluck('name', 'id')
         ];
 
-        return view('backend.splits.form', $data);
+        return view('bungadavi.splits.form', $data);
     }
 
     /**
@@ -132,7 +131,7 @@ class SplitController extends Controller
             'units'         => Unit::pluck('name', 'id')
         ];
 
-        return view('backend.splits.form', $data);
+        return view('bungadavi.splits.form', $data);
     }
 
     /**
