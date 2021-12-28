@@ -11,8 +11,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction\Delivery;
 use App\Models\Transaction\Schedule;
 use App\DataTables\Order\OrderDataTable;
+use App\Models\BasicSetting\DeliveryRemark;
+use App\Models\BasicSetting\OurBank;
 use App\Models\Transaction\ProductCustom;
 use App\Models\Transaction\SenderReceiver;
+use App\Models\Product\Product as ProductStock;
 
 class OrderController extends Controller
 {
@@ -47,6 +50,9 @@ class OrderController extends Controller
             'description'   => 'For Management Order Transaction',
             'breadcrumb'    => ['Order Transaction Management', 'Product List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
+            'products'      => ProductStock::all(),
+            'deliveryRemarks' => DeliveryRemark::all(),
+            'ourBank'       => OurBank::all()
         ];
 
         return view('bungadavi.orders.form', $data);

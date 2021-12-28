@@ -80,7 +80,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Charge</label>
-                                            {!! Form::date('delivery_charge', null, [ "class" => "form-control", "id" => "inputDeliveryCharge", "aria-describedby" => "deliveryChargeHelp"]) !!}
+                                            {!! Form::number('delivery_charge', null, [ "class" => "form-control", "id" => "inputDeliveryCharge", "aria-describedby" => "deliveryChargeHelp"]) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -93,23 +93,22 @@
                                 <div class="row mb-4">
                                     <div class="col-12">
                                         <label>Delivery Remarks</label>
+                                        @foreach ($deliveryRemarks as $item)
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                                             <label class="form-check-label" for="exampleRadios1">
-                                              Default radio
+                                              {{ $item->description }}
                                             </label>
-                                          </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                            <label class="form-check-label" for="exampleRadios2">
-                                              Second default radio
+                                        </div>
+                                        @endforeach
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                              Custom Remarks
                                             </label>
-                                          </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                                            <label class="form-check-label" for="exampleRadios3">
-                                              Disabled radio
-                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::textarea('custom_delivery_remaks', null, ['class' => 'form-control' ,'rows' => '4']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +116,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Internal Notes</label>
-                                            {!! Form::textarea('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                                            {!! Form::textarea('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp", 'rows' => '4']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -135,11 +134,37 @@
                         <h4 class="mb-0">Transaction Summary</h4>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <hr>
-
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <strong>Product Price</strong>
+                                </div>
+                                <div class="form-group">
+                                    <strong>Delivery Charge</strong>
+                                </div>
+                                <div class="form-group">
+                                    <strong>Timeslot Charge</strong>
+                                </div>
+                                <div class="form-group">
+                                    <strong>Total Price</strong>
+                                </div>
+                            </div>
                         </div>
-                        <a href="#" class="btn btn-info btn-sm">Select Payment</a>
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="mb-0">Select Payment</h4>
+                                @foreach ($ourBank as $item)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        <p>{{ $item->bank_name }} <br>
+                                        {{ $item->bank_account_number }} ({{ $item->bank_code }}) <br>
+                                        {{ $item->bank_beneficiary_name }} </p>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('bungadavi.orders.index') }}" class="btn btn-secondary">Back</a>
@@ -183,6 +208,8 @@
             console.log(this.value)
             if (this.value == 'clientPersonal') {
                 getClientAjax("{{ route('bungadavi.personals.ajax.list') }}");
+                $("#formPICName").addClass("d-none");
+                $("#formSenderName").addClass("d-none");
                 // $('#picData').remove()
                 // $('#additionalForm').remove()
                 // $('#rowClient').after(`
@@ -195,8 +222,8 @@
                 // `)
             } else if (this.value == 'clientCorporate') {
                 getClientAjax("{{ route('bungadavi.corporate.ajax.list') }}");
-
-
+                $("#formPICName").removeClass("d-none");
+                $("#formSenderName").addClass("d-none");
                 // $('#poReference').after(`
                 //     <br>
                 //     <p>PIC</p>
@@ -207,7 +234,8 @@
                 // `)
             } else if (this.value == 'clientAffiliate') {
                 getClientAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
-
+                $("#formPICName").removeClass("d-none");
+                $("#formSenderName").removeClass("d-none");
 
                 // alert("tampilkan dropdown client affiliate");
             }
