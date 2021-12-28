@@ -3,6 +3,7 @@
 namespace App\Models\Location;
 
 use App\Models\Client\Personal;
+use App\Models\Client\PersonalRecipient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Location\Country;
@@ -65,5 +66,10 @@ class City extends Model
     public function hasPersonal()
     {
         return $this->hasMany(Personal::class, 'city_id', 'id');
+    }
+
+    public function hasPersonalRecipient()
+    {
+        return $this->hasMany(PersonalRecipient::class, 'city_id', 'id');
     }
 }

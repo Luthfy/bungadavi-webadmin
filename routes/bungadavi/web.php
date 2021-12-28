@@ -35,6 +35,7 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
+use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -48,10 +49,12 @@ Route::group([
 
     // CLIENT
     Route::get('personal/ajax-list', [PersonalController::class, 'list'])->name('personals.ajax.list');
+    Route::get('personalrecipient/ajax-list', [PersonalRecipientController::class, 'list'])->name('personals.ajax.list');
     Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
 
     Route::resource('personal', PersonalController::class)->names('personal');
+    Route::resource('personalrecipient', PersonalRecipientController::class)->names('personalrecipient');
     Route::resource('corporate', CorporateController::class)->names('corporate');
     Route::resource('florist', FloristController::class)->names('florist');
 

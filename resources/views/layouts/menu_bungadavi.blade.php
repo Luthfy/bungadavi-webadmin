@@ -44,6 +44,7 @@
         <a href="#"><i class="fa fa-user-o" aria-hidden="true" style="font-size: 1.2em !important;"></i> <span> Client</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
             <li><a href="{{ route('bungadavi.personal.index') }}">Personal</a></li>
+            <li><a href="{{ route('bungadavi.personalrecipient.index') }}">Personal Recipient</a></li>
             <li><a href="{{ route('bungadavi.corporate.index') }}">Corporate</a></li>
             <li><a href="{{ route('bungadavi.florist.index') }}">Florist</a></li>
         </ul>
