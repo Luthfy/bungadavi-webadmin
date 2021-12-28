@@ -105,8 +105,8 @@
         </ul>
     </li>
     <li>
-        <a href="{{ url('/') }}"><i class="fa fa-clock-o" aria-hidden="true" style="font-size: 1.2em !important;"></i>
-            <span> Real Time Order</span> <span class="menu-arrow"></span></a>
+        <a href="{{ route('bungadavi.orders.realtimeorder') }}"><i class="fa fa-clock-o" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+            <span> Real Time Order</span></a>
     </li>
     <li class="submenu">
         <a href="#"><i class="fa fa-motorcycle" aria-hidden="true" style="font-size: 1.2em !important;"></i>

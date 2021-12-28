@@ -363,7 +363,7 @@
                 delivery_remarks : "tinggalkan barnag didepan",
                 time_slot_charge : 0,
                 delivery_charge : 0,
-                delivery_date : "2022-01-01",
+                delivery_date : "2021-12-27",
             };
         }
 
