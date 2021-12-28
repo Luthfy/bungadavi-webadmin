@@ -52,30 +52,30 @@
 	                <div class="row">
 	                    <div class="col-lg-9 col-xl-7 mx-auto">
 	                        <h4 class="mb-3 text-center">Login Florist</h4>
-                            {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
+                                {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
 
-								<div class="divider"></div>
-	                            <div class="form-group">
-	                                <label for="email_address">Email Address</label>
-	                                <input type="email" name="email_address" id="email_address" class="form-control">
-	                            </div>
-	                            <div class="form-group">
-	                                <label for="password">Password</label>
-	                                <input type="password" name="password" id="password" class="form-control">
-	                            </div>
-	                            <div class="clearfix mb-3">
-	                                <div class="float-left">
-	                                    <label class="container_check">Remember Me
-	                                        <input type="checkbox">
-	                                        <span class="checkmark"></span>
-	                                    </label>
-	                                </div>
-	                                <div class="float-right">
-	                                    <a id="forgot" href="javascript:void(0);">Lupa Password ?</a>
-	                                </div>
-	                            </div>
-	                            <button type="submit" class="btn_1 full-width">Login</button>
-	                        </form>
+                                    <div class="divider"></div>
+                                    <div class="form-group">
+                                        <label for="email_address">Email Address</label>
+                                        <input type="email" name="email" id="email" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control">
+                                    </div>
+                                    <div class="clearfix mb-3">
+                                        <div class="float-left">
+                                            <label class="container_check">Remember Me
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="float-right">
+                                            <a id="forgot" href="javascript:void(0);">Lupa Password ?</a>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn_1 full-width">Login</button>
+                                {!! Form::close() !!}
 
 	                        <form class="input_style_1" method="post">
 	                            <div id="forgot_pw">

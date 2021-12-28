@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
 
         $admin->assignRole('bungadavi');
 
-        $admin = User::create([
+        $affiliate = User::create([
             'name' => 'Admin Florist Banjarmasin',
             'username' => 'admin florist bjm',
             'email' => 'admin.floristbjm@bungadavi.co.id',
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             'customer_uuid' => '',
         ]);
 
-        $admin->assignRole('affiliate');
+        $affiliate->assignRole('affiliate');
 
         $corporate = User::create([
             'name' => 'Admin Corporate',

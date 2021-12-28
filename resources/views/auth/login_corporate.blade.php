@@ -54,12 +54,10 @@
 	                        <h4 class="mb-3 text-center">Login Corporate</h4>
 	                        {{-- <form class="input_style_1" method="post"> --}}
                             {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
-
-
 								<div class="divider"></div>
 	                            <div class="form-group">
 	                                <label for="email_address">Email Address</label>
-	                                <input type="email" name="email_address" id="email_address" class="form-control">
+	                                <input type="email" name="email" id="email_address" class="form-control">
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="password">Password</label>
@@ -77,7 +75,7 @@
 	                                </div>
 	                            </div>
 	                            <button type="submit" class="btn_1 full-width">Login</button>
-	                        </form>
+	                        {!! Form::close() !!}
 
 	                        <form class="input_style_1" method="post">
 	                            <div id="forgot_pw">

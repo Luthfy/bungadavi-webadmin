@@ -6,7 +6,7 @@ use App\Http\Controllers\Bungadavi\Product\ProductController;
 Route::group([
     'prefix' => 'affiliate',
     'as' => 'affiliate.',
-    'middleware' =>['web', 'role:affiliate']
+    'middleware' =>['auth', 'role:affiliate']
 ], function () {
 
     Route::get('dashboard', function () {
