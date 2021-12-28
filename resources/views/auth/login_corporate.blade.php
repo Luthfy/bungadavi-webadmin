@@ -52,7 +52,9 @@
 	                <div class="row">
 	                    <div class="col-lg-9 col-xl-7 mx-auto">
 	                        <h4 class="mb-3 text-center">Login Corporate</h4>
-	                        <form class="input_style_1" method="post">
+	                        {{-- <form class="input_style_1" method="post"> --}}
+                            {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
+
 
 								<div class="divider"></div>
 	                            <div class="form-group">
