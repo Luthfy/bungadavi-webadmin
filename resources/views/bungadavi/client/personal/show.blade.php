@@ -227,6 +227,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <a href="{{ route('bungadavi.personal.index') }}" class="btn btn-secondary">Back</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
