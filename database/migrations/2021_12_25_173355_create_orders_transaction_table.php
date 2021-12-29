@@ -24,6 +24,10 @@ class CreateOrdersTransactionTable extends Migration
             $table->boolean('is_guest')->default(false);
             $table->string('code_currency')->default('IDR')->comment('default is Indonesian Rupiah');
             $table->bigInteger('rates_currency')->default(1)->comment('if code currency is IDR it will be enter 1');
+            $table->string('card_message_category')->nullable();
+            $table->string('card_message_subcategory')->nullable();
+            $table->text('card_message_message')->nullable();
+            $table->foreignUuid('florist_uuid')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = "MyIsam";
@@ -77,9 +81,6 @@ class CreateOrdersTransactionTable extends Migration
             $table->string('from_message_product')->nullable();
             $table->string('to_message_product')->nullable();
             $table->string('city_product')->nullable();
-            $table->string('card_message_category')->nullable();
-            $table->string('card_message_subcategory')->nullable();
-            $table->text('card_message_message')->nullable();
             $table->text('remarks_product')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -123,6 +124,8 @@ class CreateOrdersTransactionTable extends Migration
             $table->string('delivery_number_assignment');
             $table->string('status_assignment')->comment('assigned, has been pickup, on delivery, has been received');
             $table->string('notes_assigment');
+            $table->boolean('browse_image')->default(false);
+            $table->string('image_pickup')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

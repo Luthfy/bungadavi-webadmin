@@ -58,7 +58,7 @@ class Product extends Model
 
         self::creating(function ($model) {
             $model['uuid']          = Uuid::uuid4()->toString();
-            $model['code_product']  = "PBD" . date('Ymdhis') . str_pad((self::get()->count()) + 1, 4, "0", STR_PAD_LEFT);
+            $model['code_product']  = "BD" . date('y') . str_pad((self::get()->count()) + 1, 4, "0", STR_PAD_LEFT);
             $model['user_uuid']     = auth()->user()->uuid ?? null;
             return $model;
         });

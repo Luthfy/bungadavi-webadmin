@@ -39,7 +39,7 @@ class ProductDataTable extends DataTable
                 }
             })
             ->editColumn('user_uuid', function ($datatable) {
-                return $datatable->user()->first() == null ? null : $datatable->user()->first()->fullname;
+                return $datatable->user()->first() == null ? null : $datatable->user()->first()->name;
             })
             ->addColumn('action', function ($datatable) {
                 $html  = "";

@@ -95,14 +95,14 @@
                                         <label>Delivery Remarks</label>
                                         @foreach ($deliveryRemarks as $item)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="option1" checked>
                                             <label class="form-check-label" for="exampleRadios1">
                                               {{ $item->description }}
                                             </label>
                                         </div>
                                         @endforeach
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="option1" checked>
                                             <label class="form-check-label" for="exampleRadios1">
                                               Custom Remarks
                                             </label>
@@ -330,6 +330,9 @@
                 shipping_price_order_transaction : "50000",
                 status_order_transaction : "New Order",
                 currency_id : "Rp",
+                card_message_category : "Happy New Year",
+                card_message_subcategory : "Message Happy New Year",
+                card_message_message : "message in here",
                 is_guest : false,
             };
         }
@@ -374,9 +377,6 @@
                     price_product : "1000000",
                     from_message_product : "Luthfy",
                     to_message_product : "Luthfy To",
-                    card_message_category : "Happy New Year",
-                    card_message_subcategory : "Message Happy New Year",
-                    card_message_message : "message in here",
                     remarks_product : "product remark",
                     custom_product: null
                 }
@@ -385,13 +385,15 @@
 
         function setDeliverySchedule()
         {
+            var deliveryRemark = "";
+
             return {
                 time_slot_name : "NEW YEAR",
                 time_slot_id : "1",
-                delivery_remarks : "tinggalkan barnag didepan",
+                delivery_remarks : deliveryRemark,
                 time_slot_charge : 0,
-                delivery_charge : 0,
-                delivery_date : "2021-12-27",
+                delivery_charge : $("#inputDeliveryCharge").val(),
+                delivery_date : "2021-12-20",
             };
         }
 

@@ -26,9 +26,6 @@ class Product extends Model
         'price_product',
         'from_message_product',
         'to_message_product',
-        'card_message_category',
-        'card_message_subcategory',
-        'card_message_message',
         'remarks_product',
     ];
 

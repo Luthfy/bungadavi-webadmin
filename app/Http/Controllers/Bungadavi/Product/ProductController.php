@@ -172,7 +172,7 @@ class ProductController extends Controller
             'data'          => Product::findOrFail($id)
         ];
 
-        return view('backend.products.show', $data);
+        return view('bungadavi.products.show', $data);
     }
 
     /**
@@ -222,6 +222,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-
+        return Product::find($id)->delete();
     }
 }
