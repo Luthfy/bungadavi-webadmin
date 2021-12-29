@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Client;
 
-use App\Models\Client/PersonalRecipient;
+use App\Models\Client\PersonalRecipient;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,7 +21,22 @@ class PersonalRecipientDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'client/personalrecipient.action');
+            ->editColumn('client_personal_uuid', function ($datatable) {
+                return $datatable->clientPersonal()->first()->fullname ?? '-';
+            })
+            ->editColumn('city_id', function ($datatable) {
+                return $datatable->city()->first()->name ?? '-';
+            })
+            ->editColumn('zipcode_id', function ($datatable) {
+                return $datatable->zipcode()->first()->postal_code ?? '-';
+            })
+            ->addColumn('action', function ($datatable) {
+                $html  = "";
+                $html .= "<a href='".route('bungadavi.personalrecipient.edit', ['personalrecipient' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                $html .= "<a href='".route('bungadavi.personalrecipient.show', ['personalrecipient' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
+                return $html;
+            });
     }
 
     /**
@@ -30,7 +45,7 @@ class PersonalRecipientDataTable extends DataTable
      * @param \App\Models\Client/PersonalRecipient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Client/PersonalRecipient $model)
+    public function query(PersonalRecipient $model)
     {
         return $model->newQuery();
     }
@@ -43,18 +58,11 @@ class PersonalRecipientDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('client/personalrecipient-table')
+                    ->setTableId('datatableserverside')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+                    ->dom('lfrtip')
+                    ->orderBy(1);
     }
 
     /**
@@ -70,10 +78,15 @@ class PersonalRecipientDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('client_personal_uuid')->title('Customer Name'),
+            Column::make('address'),
+            Column::make('firstname')->title('Recipient Name'),
+            Column::make('email')->title('Recipient Email'),
+            Column::make('mobile')->title('Recipient Mobile'),
+            Column::make('city_id')
+                ->title('City'),
+            Column::make('zipcode_id')
+                ->title('Zip Code'),
         ];
     }
 

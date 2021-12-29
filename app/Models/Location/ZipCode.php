@@ -2,6 +2,8 @@
 
 namespace App\Models\Location;
 
+use App\Models\Client\Personal;
+use App\Models\Client\PersonalRecipient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Location\Country;
@@ -46,5 +48,15 @@ class ZipCode extends Model
     public function village()
     {
         return $this->belongsTo(Village::class, 'village_id', 'id');
+    }
+
+    public function hasPersonal()
+    {
+        return $this->hasMany(Personal::class, 'zipcode_id', 'id');
+    }
+
+    public function hasPersonalRecipient()
+    {
+        return $this->hasMany(PersonalRecipient::class, 'zipcode_id', 'id');
     }
 }

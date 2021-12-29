@@ -93,4 +93,9 @@ class Personal extends Model
         return $this->belongsTo(ZipCode::class, 'zipcode_id', 'id');
     }
 
+    public function hasPersonalRecipient()
+    {
+        return $this->hasMany(PersonalRecipient::class, 'client_personal_uuid', 'uuid');
+    }
+
 }

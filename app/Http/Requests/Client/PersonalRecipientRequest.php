@@ -13,7 +13,7 @@ class PersonalRecipientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,25 @@ class PersonalRecipientRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+            return [
+                'firstname'     => 'required',
+                'lastname'      => 'required',
+                'email'         => 'string|email|unique:client_personal_recipient',
+                'phone'         => 'required',
+                'mobile'        => 'required',
+                'gender'        => 'required',
+                'birthday'      => 'required|date',
+                'latitude'      => 'required',
+                'longitude'     => 'required',
+                'address'       => 'required',
+                'country_id'    => 'required',
+                'province_id'   => 'required',
+                'city_id'       => 'required',
+                'district_id'   => 'required',
+                'village_id'    => 'required',
+                'zipcode_id'    => 'required',
+                'client_personal_uuid'    => 'required',
+                'is_active'     => 'required',
+            ];
     }
 }

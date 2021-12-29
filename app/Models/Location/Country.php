@@ -2,6 +2,8 @@
 
 namespace App\Models\Location;
 
+use App\Models\Client\Personal;
+use App\Models\Client\PersonalRecipient;
 use App\Models\Courier\Courier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +56,15 @@ class Country extends Model
     public function hasCourier()
     {
         return $this->hasMany(Courier::class, 'country', 'id');
+    }
+
+    public function hasPersonal()
+    {
+        return $this->hasMany(Personal::class, 'country_id', 'id');
+    }
+
+    public function hasPersonalRecipient()
+    {
+        return $this->hasMany(PersonalRecipient::class, 'country_id', 'id');
     }
 }

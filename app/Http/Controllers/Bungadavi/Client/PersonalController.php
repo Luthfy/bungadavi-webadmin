@@ -89,7 +89,29 @@ class PersonalController extends Controller
      */
     public function show($id)
     {
-        $user = Personal::findOrFail($id);
+        $get_country = Personal::with('country')->get();
+        $get_province = Personal::with('province')->get();
+        $get_city = Personal::with('city')->get();
+        $get_district = Personal::with('district')->get();
+        $get_village = Personal::with('village')->get();
+        $get_zipcode = Personal::with('zipcode')->get();
+
+        $data = [
+            'title'         => 'Customer Personal',
+            'subtitle'      => 'Detail Customer Personal',
+            'description'   => 'Detail Customer Personal User',
+            'breadcrumb'    => ['Customer Personal', 'Detail Customer Personal'],
+            'guard'         => auth()->user()->group,
+            'data'          => Personal::findOrFail($id),
+            'country'       => $get_country,
+            'province'      => $get_province,
+            'city'          => $get_city,
+            'district'      => $get_district,
+            'village'       => $get_village,
+            'zipcode'       => $get_zipcode,
+        ];
+
+        return view('bungadavi.client.personal.show', $data);
     }
 
     /**
