@@ -58,7 +58,6 @@ class CreateClientTable extends Migration
         Schema::create('client_personal_recipient', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-
             $table->string('firstname', 100)->nullable();
             $table->string('lastname', 100)->nullable();
             $table->string('email', 200)->nullable();
@@ -66,7 +65,6 @@ class CreateClientTable extends Migration
             $table->string('mobile', 20)->nullable();
             $table->string('gender', 1)->nullable();
             $table->date('birthday')->nullable();
-
             $table->string('latitude', 200)->nullable();
             $table->string('longitude', 200)->nullable();
             $table->text('address')->nullable();
@@ -76,13 +74,11 @@ class CreateClientTable extends Migration
             $table->foreignId('district_id')->nullable()->index();
             $table->foreignId('village_id')->nullable()->index();
             $table->foreignId('zipcode_id')->nullable()->index();
-
             $table->foreignUuid('client_personal_uuid')->nullable()->index();
             $table->string('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('client_personal_uuid')->references('uuid')->on('client_personal')->onDelete('cascade');
         });
 

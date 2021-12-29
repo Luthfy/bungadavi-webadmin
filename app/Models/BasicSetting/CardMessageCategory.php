@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CardMessageCategory extends Model
 {
     use HasFactory;
+
     protected $table = "card_message_category";
     protected $primaryKey = 'id';
     protected $keyType = 'integer';

@@ -15,19 +15,19 @@
                         <h5 class="mb-2 ml-1 mb-3">Client Type</h5>
                         <div class="row">
                             <div class="form-check ml-0">
-                                <input type="radio" id="clientPersonal" name="radioButtonClientType" class ="radioButtonClientType" value="clientPersonal">
+                                <input type="radio" id="radioButtonClientType" name="radioButtonClientType" class ="radioButtonClientType" value="personal">
                                 <label class="form-check-label" for="exampleRadios1">
                                     Personal
                                 </label>
                             </div>
                             <div class="form-check ml-0">
-                                <input type="radio" id="clientCorporate" name="radioButtonClientType" class="radioButtonClientType" value="clientCorporate">
+                                <input type="radio" id="radioButtonClientType" name="radioButtonClientType" class="radioButtonClientType" value="corporate">
                                 <label class="form-check-label" for="exampleRadios2">
                                     Corporate
                                 </label>
                             </div>
                             <div class="form-check ml-0">
-                                <input type="radio" id="clientAffiliate" name="radioButtonClientType" class="radioButtonClientType" value="clientAffiliate">
+                                <input type="radio" id="radioButtonClientType" name="radioButtonClientType" class="radioButtonClientType" value="affilaite">
                                 <label class="form-check-label" for="exampleRadios3">
                                     Affiliate
                                 </label>
@@ -82,7 +82,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btnClientType">Understood</button>
+          <button type="button" class="btn btn-primary" id="btnClientType">Select</button>
         </div>
       </div>
     </div>
@@ -99,7 +99,7 @@
           </button>
         </div>
         <div class="modal-body">
-            {!! Form::select('recipient_id', [], null, ['class' => 'form-control', 'required' => true, 'id', 'recipient_id']) !!}
+            {!! Form::select('recipient_id', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'recipient_id']) !!}
 
             <div class="col-12">
                 <div class="row my-4">

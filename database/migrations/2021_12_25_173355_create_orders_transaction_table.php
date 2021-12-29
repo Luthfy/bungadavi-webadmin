@@ -109,7 +109,7 @@ class CreateOrdersTransactionTable extends Migration
             $table->string('time_slot_name')->nullable();
             $table->bigInteger('time_slot_charge')->default(0);
             $table->string('time_slot_id',255);
-            $table->string('delivery_remarks',255);
+            $table->string('delivery_remarks',255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -141,7 +141,7 @@ class CreateOrdersTransactionTable extends Migration
             $table->foreignUuid('courier_uuid')->nullable()->index();
             $table->string('photo_delivery_receipt')->nullable();
             $table->string('recipient_receipt')->nullable();
-            $table->string('status_receipt')->nullable()->comment('received by customer, accept by courier');
+            $table->string('status_receipt')->nullable()->comment('1 => received by customer, 2 => accept by courier');
             $table->text('notes_receipt')->nullable();
             $table->string('fee_receipt')->nullable();
             $table->string('reward_receipt')->nullable();

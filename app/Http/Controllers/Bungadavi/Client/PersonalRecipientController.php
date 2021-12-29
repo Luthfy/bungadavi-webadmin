@@ -188,11 +188,11 @@ class PersonalRecipientController extends Controller
         return PersonalRecipient::find($id)->delete();
     }
 
-    public function list(Request $request)
+    public function list($user)
     {
         // if ($request->ajax()) {
             return response()->json(
-                PersonalRecipient::all()
+                PersonalRecipient::where('client_personal_uuid', $user)->get()
             );
         // }
     }

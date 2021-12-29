@@ -27,26 +27,36 @@
                             <h4 class="mb-0">Detail Transaction</h4>
                             <hr>
                         </div>
+
+                        {{-- SENDER RECIPIENT SECTION --}}
                         <div class="row pb-4 mb-4">
                             <div class="col-6">
                                 <h4 class="h5">SENDER</h4>
                                 <hr>
+                                <div id="senderData">
+
+                                </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" class="btn btn-primary" data-toggle="modal" data-target="#addClientSender">Add Sender</button>
+                                        <button class="btn btn-primary btn-sm" class="btn btn-primary" data-toggle="modal" data-target="#addClientSender" id="btnOpenModalAddSender">Add Sender</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <h4 class="h5">RECEIVER</h4>
                                 <hr>
+                                <div id="recipientData">
+
+                                </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientRecipient">Add Receiver</button>
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientRecipient" id="btnOpenModalAddRecipient">Add Receiver</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- END SENDER RECIPIENT SECTION --}}
+
                         <div class="row pb-4 mb-4">
                             <div class="col-12">
                                 <h4 class="h5">Product List</h4>
@@ -186,59 +196,131 @@
     {{-- @include('bungadavi.orders.form_js') --}}
 
     <script>
-        var orderTransaction        = null;
-        var senderRecipientOrder    = null;
+        var orderTransaction        = {};
+        var senderRecipientOrder    = {};
         var listProductOrder        = null;
         var deliverySchedule        = null;
         var paymentOrder            = null;
 
-        $(document).ready({
+        var client_result;
+        var recipient_result;
 
-        });
-
+        // click process order
         $("#createNewOrder").click(function (e) {
             postOrder();
         });
 
-        $("#client_id").change(function (e) {
-            getRecipientAjax();
-        })
+        // click set client sender data
+        $("#btnClientType").click(function (e) {
+            let client_selected = client_result.find(x => x.uuid === $("#client_id").val());
+
+            senderRecipientOrder = {
+                client_type : ($('input[type=radio][name=radioButtonClientType]:checked').val() == (null || undefined || "") ? "undefined" :  $('input[type=radio][name=radioButtonClientType]:checked').val()),
+                client_uuid : client_selected.uuid,
+                pic_name : ($("#PicName").val() == (null || undefined || "")) ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
+                sender_name : ($("#senderName").val() == (null || undefined || "") ? client_selected.fullname : $("#senderName").val()),
+                po_referrence : ($("#poReference").val() == (null || undefined || "") ? "" :  $("#poReference").val()),
+                sender_phone_number : client_selected.phone,
+                sender_address : client_selected.address,
+                sender_country : client_selected.country_id,
+                sender_province : client_selected.province_id,
+                sender_city : client_selected.city_id,
+                sender_district : client_selected.district_id,
+                sender_village : client_selected.village_id,
+                sender_zipcode : client_selected.zipcode_id,
+            }
+
+            setSenderData(senderRecipientOrder)
+            getRecipientAjax("{{ url('bungadavi/personalrecipient/ajax-list') }}"+ "/" + client_selected.uuid);
+
+            $("#btnOpenModalAddSender").html('Change Sender');
+            $("#addClientSender").modal('hide');
+        });
+
+        $("#btnRecipientAdd").click(function (e) {
+            let recipient_selected = recipient_result.find(x => x.uuid === $("#recipient_id").val());
+
+            Object.assign(senderRecipientOrder, {
+                receiver_name : recipient_selected.firstname + " " + recipient_selected.lastname,
+                receiver_phone_number : recipient_selected.phone,
+                receiver_address : recipient_selected.address,
+                receiver_country : recipient_selected.country_id,
+                receiver_province : recipient_selected.province_id,
+                receiver_city : recipient_selected.city_id,
+                receiver_district : recipient_selected.district_id,
+                receiver_village : recipient_selected.village_id,
+                receiver_zipcode : recipient_selected.zipcode_id,
+            });
+
+            setRecipientData(senderRecipientOrder)
+
+            $("#btnOpenModalAddRecipient").html('Change Recipient');
+            $("#addClientRecipient").modal('hide');
+
+        });
+
+        function setSenderData(senderData)
+        {
+            let html_sender = "<table class='table'>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Name</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_name+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Address</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_address+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Phone</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_phone_number+"</td>";
+                html_sender += "</tr>";
+                html_sender += "</table>";
+            $("#senderData").html(html_sender);
+        }
+
+        function setRecipientData(receiverData)
+        {
+            let html_recipient = "<table class='table'>";
+                html_recipient += "<tr>";
+                html_recipient += "<td>Sender Name</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_name+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "<tr>";
+                html_recipient += "<td>Sender Address</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_address+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "<tr>";
+                html_recipient += "<td>Sender Phone</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_phone_number+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "</table>";
+            $("#recipientData").html(html_recipient);
+        }
 
         $('input[type=radio][name=radioButtonClientType]').change(function() {
-            console.log(this.value)
-            if (this.value == 'clientPersonal') {
+            if (this.value == 'personal') {
                 getClientAjax("{{ route('bungadavi.personals.ajax.list') }}");
                 $("#formPICName").addClass("d-none");
                 $("#formSenderName").addClass("d-none");
-                // $('#picData').remove()
-                // $('#additionalForm').remove()
-                // $('#rowClient').after(`
-                //     <div id="additionalForm" class="col md-4">
-                //         <p>PO Reference</p>
-                //         <input text="" id="poReference" class="col md-4"></text>
-                //         <br>
-                //         <br>
-                //     </div>
-                // `)
-            } else if (this.value == 'clientCorporate') {
+            } else if (this.value == 'corporate') {
                 getClientAjax("{{ route('bungadavi.corporate.ajax.list') }}");
                 $("#formPICName").removeClass("d-none");
                 $("#formSenderName").addClass("d-none");
-                // $('#poReference').after(`
-                //     <br>
-                //     <p>PIC</p>
-                //     <select id="picData" class="col md-4">
-                //         <option value="AL">Alabama</option>
-                //         <option value="WY">Wyoming</option>
-                //     </select>
-                // `)
-            } else if (this.value == 'clientAffiliate') {
+            } else if (this.value == 'affilaite') {
                 getClientAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
                 $("#formPICName").removeClass("d-none");
                 $("#formSenderName").removeClass("d-none");
-
-                // alert("tampilkan dropdown client affiliate");
             }
+        });
+
+        // click set recipient data
+        $("#recipient_id").change(function (e) {
         });
 
         function getClientAjax(url)
@@ -252,7 +334,7 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
-                    console.log(result)
+                    client_result = result;
                     let html = "";
                     result.forEach((res) => {
                         html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
@@ -273,19 +355,14 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
-                    console.log(result)
+                    recipient_result = result;
                     let html = "";
                     result.forEach((res) => {
-                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
+                        html += "<option value='"+res.uuid+"'>"+res.firstname+"</option>";
                     })
                     $("#recipient_id").html(html);
                 },
             });
-        }
-
-        function customerModal()
-        {
-
         }
 
         function postOrder()
@@ -390,9 +467,9 @@
             return {
                 time_slot_name : "NEW YEAR",
                 time_slot_id : "1",
-                delivery_remarks : deliveryRemark,
+                delivery_remarks : "tes",
                 time_slot_charge : 0,
-                delivery_charge : $("#inputDeliveryCharge").val(),
+                delivery_charge : 0,
                 delivery_date : "2021-12-20",
             };
         }

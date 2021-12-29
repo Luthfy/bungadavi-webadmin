@@ -32,7 +32,11 @@ class OrderDataTable extends DataTable
      */
     public function query(Order $model)
     {
-        return $model->newQuery();
+        if (auth()->user()->hasRole('bungadavi')) {
+            return $model->newQuery();
+        } else {
+            return $model->where('florist_uuid', auth()->user()->uuid)->newQuery();
+        }
     }
 
     /**
