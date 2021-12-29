@@ -104,6 +104,9 @@ class OrderController extends Controller
                 "status_order_transaction"          => $request->order_transaction['status_order_transaction'],
                 // "currency_id"                       => $request->order_transaction['currency_id'],
                 "is_guest"                          => $request->order_transaction['is_guest'],
+                'card_message_category'             => $request->order_transaction['card_message_category'],
+                'card_message_subcategory'          => $request->order_transaction['card_message_subcategory'],
+                'card_message_message'              => $request->order_transaction['card_message_message'],
             ];
 
             $orderTransaction = Order::create($order);
@@ -179,9 +182,6 @@ class OrderController extends Controller
                     'price_product'             => $product['price_product'],
                     'from_message_product'      => $product['from_message_product'],
                     'to_message_product'        => $product['to_message_product'],
-                    'card_message_category'     => $product['card_message_category'],
-                    'card_message_subcategory'  => $product['card_message_subcategory'],
-                    'card_message_message'      => $product['card_message_message'],
                     'remarks_product'           => $product['remarks_product'],
                 ];
 

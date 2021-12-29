@@ -15,7 +15,9 @@
                 </ul>
             </div>
             <div class="col-auto float-right ml-auto">
-                <a href="{{ route($button['link']) }}" class="btn add-btn"><i class="fa fa-plus"></i> {{ $button['name'] ?? 'Add' }}</a>
+                @if (auth()->user()->hasRole('bungadavi'))
+                    <a href="{{ route($button['link']) }}" class="btn add-btn"><i class="fa fa-plus"></i> {{ $button['name'] ?? 'Add' }}</a>
+                @endif
             </div>
         </div>
     </div>

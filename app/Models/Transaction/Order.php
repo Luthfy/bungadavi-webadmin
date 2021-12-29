@@ -26,6 +26,9 @@ class Order extends Model
         "status_order_transaction",
         "currency_id",
         "is_guest",
+        'card_message_category',
+        'card_message_subcategory',
+        'card_message_message'
     ];
 
     protected $casts = [

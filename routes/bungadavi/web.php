@@ -49,7 +49,7 @@ Route::group([
 
     // CLIENT
     Route::get('personal/ajax-list', [PersonalController::class, 'list'])->name('personals.ajax.list');
-    Route::get('personalrecipient/ajax-list', [PersonalRecipientController::class, 'list'])->name('personals.ajax.list');
+    Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
     Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
 

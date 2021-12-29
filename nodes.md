@@ -23,3 +23,23 @@ DASHBOARD ROUTE
 - corporate -> admin corporate
 - affiliate -> admin dan staff affiliate
 
+Cancel Order -> on delivery Order
+- New Order
+- Proses Order
+- On Delivery Order
+- Return / Re Delivery Order
+
+Realtime Order
+- Group Berdasarkan Jenis Product
+- Bisa di expand seperti accordion
+- Group Berdasarkan ID Product 
+- ADA COUNTER
+- PRICE PRODUCT DATA TABLE - SELLING \n COST
+
+PRODUCT DATATABLE
+Action
+Image
+productCode | productName | Type
+sellingPrice | cost Price
+status
+
