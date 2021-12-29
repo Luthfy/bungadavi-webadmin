@@ -7,6 +7,7 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\StockSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\CourierSeeder;
 use Database\Seeders\Location\CitySeeder;
 use Database\Seeders\Location\CountrySeeder;
 use Database\Seeders\Location\VillageSeeder;
@@ -46,6 +47,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DistrictSeeder::class);
         $this->call(VillageSeeder::class);
         $this->call(ZipCodeSeeder::class);
+
+        $this->call(CourierSeeder::class);
 
         if (config('app.env') != 'production') {
             $this->call(StockSeeder::class);

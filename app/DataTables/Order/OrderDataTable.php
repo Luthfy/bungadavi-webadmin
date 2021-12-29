@@ -21,7 +21,18 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'orderorder.action');
+            ->addColumn('action', function ($datatable) {
+                $html  = "";
+                if (auth()->user()->hasRole('bungadavi')) {
+                    $html .= "<a href='".route('bungadavi.orders.edit', ['transaction' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                    $html .= "<a href='".route('bungadavi.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                } else if(auth()->user()->hasRole('corporate')){
+                    $html .= "<a href='".route('corporate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                } else {
+                    $html .= "<a href='".route('affiliate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                }
+                return $html;
+            });
     }
 
     /**
@@ -35,7 +46,7 @@ class OrderDataTable extends DataTable
         if (auth()->user()->hasRole('bungadavi')) {
             return $model->newQuery();
         } else {
-            return $model->where('florist_uuid', auth()->user()->uuid)->newQuery();
+            return $model->where('florist_uuid', auth()->user()->customer_uuid)->newQuery();
         }
     }
 

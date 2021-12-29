@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Bungadavi\Product\ProductController;
+use App\Http\Controllers\Bungadavi\Transaction\OrderController;
 
 Route::group([
     'prefix' => 'affiliate',
@@ -15,4 +16,5 @@ Route::group([
 
     // PRODUCT CONTROL
     Route::get('products', [ProductController::class, "index"])->name('products');
+    Route::resource('transaction', OrderController::class)->names('orders');
 });

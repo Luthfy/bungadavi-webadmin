@@ -45,15 +45,7 @@
         <a href="#"><i class="fa fa-cog" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Order</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="{{ url('admin/') }}">New Order</a></li>
-            <li><a href="{{ url('admin/') }}">On Proccess</a></li>
-            <li><a href="{{ url('admin/') }}">On Delivery</a></li>
-            <li><a href="{{ url('admin/') }}">Succeed</a></li>
-            <li><a href="{{ url('admin/') }}">Returned</a></li>
-            <li><a href="{{ url('admin/') }}">Canceled</a></li>
-            <li><a href="{{ url('admin/') }}">Outstanding</a></li>
-            <li><a href="{{ url('admin/') }}">SPK/CM</a></li>
-            <li><a href="{{ url('admin/') }}">List Order</a></li>
+            <li><a href="{{ route('affiliate.orders.index') }}">Order List</a></li>
         </ul>
     </li>
 

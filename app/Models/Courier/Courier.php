@@ -76,18 +76,18 @@ class Courier extends Model
         parent::boot();
 
         self::creating(function ($model) {
-            $prefix = 'UND';
-            if (auth()) {
-                if (auth()->user()->hasRole('bungadavi')) {
-                    $prefix = "CBDO";
-                } else {
-                    $prefix = "CBDA";
-                }
-            }
+            $prefix = "CBD";
+            // if (auth()) {
+            //     if (auth()->user()->hasRole('bungadavi')) {
+            //         $prefix = "CBDO";
+            //     } else {
+            //         $prefix = "CBDA";
+            //     }
+            // }
 
             $model['uuid']      = Uuid::uuid4()->toString();
-            $model['user_uuid'] = auth()->user()->uuid;
-            $model['unique_code_courier']  = $prefix . date('Ymdhis') . str_pad((self::get()->where('florist_uuid', auth()->user()->uuid)->count()) + 1, 4, "0", STR_PAD_LEFT);
+            $model['user_uuid'] = auth()->user()->uuid ?? null;
+            $model['unique_code_courier']  = $prefix . date('Ymdhis') . str_pad((self::get()->where('florist_uuid', auth()->user()->uuid ?? '0')->count()) + 1, 4, "0", STR_PAD_LEFT);
             return $model;
         });
 
