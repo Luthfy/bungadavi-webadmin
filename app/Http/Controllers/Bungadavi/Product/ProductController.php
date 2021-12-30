@@ -77,6 +77,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // return response(json_decode($request->product_material, true)[0]['stocks_name']);
         $request->request->add(['size_product' => count($request->products_material ?? [])]);
 
         if ($request->hasFile('product_main_image')){
@@ -110,8 +111,10 @@ class ProductController extends Controller
             }
         }
 
-        if ($request->product_material != null) {
-            foreach ($request->product_material as $key => $value) {
+        // $productsMaterial = json_decode($request->product_material, true)[0]['stocks_name'];
+        $productsMaterial = json_decode($request->product_material, true);
+        if ($productsMaterial != null) {
+            foreach ($productsMaterial as $key => $value) {
                 $material = [
                     'stocks_uuid' => $value['stocks_uuid'],
                     'products_uuid' => $products->uuid,

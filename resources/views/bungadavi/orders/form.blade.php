@@ -467,7 +467,7 @@
                 contentType: 'application/json',
                 success: function (result) {
                     let html_product = "";
-
+                    product_result = result;
                     result.forEach( (x, i) => {
                         html_product += "<h3 class='h3'>"+ x.code_product +"</h3>";
                         html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
@@ -475,17 +475,17 @@
                         html_product += "<input type='text' class='form-control' id='toMessageProduct' value='' />";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
 
-                        listProductOrder[i] = {
-                            product_uuid : x.uuid,
-                            code_product : x.code_product,
-                            name_product : x.name_product,
-                            qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
-                            price_product : x.cost_product,
-                            from_message_product : $("#fromMessageProduct").val(),
-                            to_message_product : $("#romMessageProduct").val(),
-                            remarks_product : $("#remarkProduct").val(),
-                            custom_product: null
-                        };
+                        // listProductOrder[i] = {
+                        //     product_uuid : x.uuid,
+                        //     code_product : x.code_product,
+                        //     name_product : x.name_product,
+                        //     qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
+                        //     price_product : x.cost_product,
+                        //     from_message_product : $("#fromMessageProduct").val(),
+                        //     to_message_product : $("#romMessageProduct").val(),
+                        //     remarks_product : $("#remarkProduct").val(),
+                        //     custom_product: null
+                        // };
 
                     })
 
@@ -562,8 +562,20 @@
         function postOrder()
         {
             let total_order = 0;
-            listProductOrder.forEach(x => {
-                total_order += x.price_product * x.qty_product;
+            product_result.forEach((x, i) => {
+                total_order += x.cost_product * ($("#qtyProduct").val() == (null || undefined || "")? 1 : $("#qtyProduct").val());
+
+                listProductOrder[i] = {
+                    product_uuid : x.uuid,
+                    code_product : x.code_product,
+                    name_product : x.name_product,
+                    qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
+                    price_product : x.cost_product,
+                    from_message_product : $("#fromMessageProduct").val(),
+                    to_message_product : $("#romMessageProduct").val(),
+                    remarks_product : $("#remarkProduct").val(),
+                    custom_product: null
+                };
             });
 
             let data = {

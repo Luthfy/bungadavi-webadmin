@@ -483,7 +483,7 @@
             as_addon_product                : $("input[name=as_addon_product]:checked").val(),
             is_active_product               : $("input[name=is_active_product]:checked").val(),
             minimum_order_product           : $("#product_minimumorder").val(),
-            product_material                : product_materials,
+            product_material                : JSON.stringify(product_materials),
             _token                          : $("input[name=_token]").val().trim()
         };
 
