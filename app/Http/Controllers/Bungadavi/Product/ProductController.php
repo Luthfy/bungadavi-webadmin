@@ -75,58 +75,59 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
-        if ($request->ajax()) {
+        $request->request->add(['size_product' => count($request->products_material ?? [])]);
 
-            $request->request->add(['size_product' => count($request->products_material ?? [])]);
-
-            $products = Product::create($request->post());
-
-            if (count($request->categories_uuid ?? []) > 0) {
-                foreach ($request->categories_uuid as $value) {
-                    ProductCategory::create(['category_id' => $value, 'products_uuid' => $products->uuid]);
-                }
-            }
-
-            if (count($request->subcategories_uuid ?? []) > 0) {
-                foreach ($request->subcategories_uuid as $value) {
-                    ProductSubCategory::create(['subcategory_id' => $value, 'products_uuid' => $products->uuid]);
-                }
-            }
-
-            if (count($request->color_id ?? []) > 0) {
-                foreach ($request->color_id as $value) {
-                    ProductColor::create(['color_id' => $value, 'products_uuid' => $products->uuid]);
-                }
-            }
-
-            if (count($request->cities_uuid ?? []) > 0) {
-                foreach ($request->cities_uuid as $value) {
-                    ProductCity::create(['city_id' => $value, 'products_uuid' => $products->uuid]);
-                }
-            }
-
-            if ($request->product_material != null) {
-                foreach ($request->product_material as $key => $value) {
-                    $material = [
-                        'stocks_uuid' => $value['stocks_uuid'],
-                        'products_uuid' => $products->uuid,
-                        'qty_used_products_material' => $value['qty'] ?? 0,
-                    ];
-                    $materials = Material::create($material);
-                }
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'success',
-                'data' => $products], 200);
+        if ($request->hasFile('product_main_image')){
+            $name = Str::random(4) . '_' . str_replace(' ', '', $request->file('product_main_image')->getClientOriginalName());
+            $request->request->add(['image_main_product' => $request->product_main_image->storeAs('products_main', $name, 'public')]);
         }
-        //     if ($request->hasFile('product_main_image')){
-        //         $name = Str::random(4) . '_' . str_replace(' ', '', $request->file('product_main_image')->getClientOriginalName());
-        //         $request->request->add(['image_main_product' => $request->product_main_image->storeAs('products_main', $name, 'public')]);
-        //     }
+
+        $products = Product::create($request->post());
+
+        if (count($request->categories_uuid ?? []) > 0) {
+            foreach ($request->categories_uuid as $value) {
+                ProductCategory::create(['category_id' => $value, 'products_uuid' => $products->uuid]);
+            }
+        }
+
+        if (count($request->subcategories_uuid ?? []) > 0) {
+            foreach ($request->subcategories_uuid as $value) {
+                ProductSubCategory::create(['subcategory_id' => $value, 'products_uuid' => $products->uuid]);
+            }
+        }
+
+        if (count($request->color_id ?? []) > 0) {
+            foreach ($request->color_id as $value) {
+                ProductColor::create(['color_id' => $value, 'products_uuid' => $products->uuid]);
+            }
+        }
+
+        if (count($request->cities_uuid ?? []) > 0) {
+            foreach ($request->cities_uuid as $value) {
+                ProductCity::create(['city_id' => $value, 'products_uuid' => $products->uuid]);
+            }
+        }
+
+        if ($request->product_material != null) {
+            foreach ($request->product_material as $key => $value) {
+                $material = [
+                    'stocks_uuid' => $value['stocks_uuid'],
+                    'products_uuid' => $products->uuid,
+                    'qty_used_products_material' => $value['qty'] ?? 0,
+                ];
+                $materials = Material::create($material);
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'success',
+            'data' => $products
+        ], 200);
+
+
 
         //     if ($request->hasFile('product_images')){
         //         $image = array();

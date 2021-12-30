@@ -18,28 +18,29 @@ class ProductDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->rawColumns(['image_main_product', 'action'])
+            ->rawColumns(['image_main_product', 'action', 'code_product', 'selling_price_product'])
             ->editColumn('image_main_product', function ($datatable) {
                 return "<img src='".asset('storage').'/'.$datatable->image_main_product."' alt='".$datatable->code_product."' style='max-height:100px;'/>";
             })
-            ->editColumn('status_product', function ($datatable) {
+            ->editColumn('code_product', function ($datatable) {
                 switch ($datatable->status_product) {
                     case '0':
-                        return  "Reguler";
+                        $type = "Reguler";
                         break;
                     case '1':
-                        return "New";
+                        $type = "New";
                         break;
                     case '2':
-                        return "Most Wanted";
+                        $type = "Most Wanted";
                         break;
                     default:
-                        return "-";
+                        $type = "-";
                         break;
                 }
+                return $datatable->code_product . "<br>" . $datatable->name_product . '<br>' . $type;
             })
-            ->editColumn('user_uuid', function ($datatable) {
-                return $datatable->user()->first() == null ? null : $datatable->user()->first()->name;
+            ->editColumn('selling_price_product', function ($datatable) {
+                return $datatable->selling_price_product . "<br>" . $datatable->cost_product;
             })
             ->addColumn('action', function ($datatable) {
                 $html  = "";
@@ -89,20 +90,12 @@ class ProductDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('code_product')
-                ->title('Code'),
-            Column::make('name_product')
-                ->title('Product'),
             Column::make('image_main_product')
                 ->title('Image'),
-            Column::make('status_product')
-                ->title('Type'),
-            Column::make('is_active')
-                ->title('status'),
-            Column::make('user_uuid')
-                ->title('User Created'),
-            Column::make('created_at')
-                ->title('Created Date')
+            Column::make('code_product')
+                ->title('Product'),
+            Column::make('selling_price_product')
+                ->title('Price')
         ];
     }
 

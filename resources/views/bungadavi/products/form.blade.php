@@ -311,7 +311,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row" id="form-product-materials">
+                                            {{-- <div class="row" id="form-product-materials">
                                                 <div class="col-lg-4 p-4">
                                                     <img src="" alt="" id="product_image_1_preview" class="img-thumbnail mb-3" style="max-width:100%">
                                                     <div><label>Image 1</label></div>
@@ -360,7 +360,7 @@
                                                         <label class="custom-file-label" for="customFile" id="product_image_label_6">Choose file</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -395,6 +395,8 @@
 <script>
     var product_materials = [];
     var form_data = [];
+    var formData = new FormData();
+
 
     function getCategoriesAjaxProduct(urlAbsolute)
     {
@@ -456,7 +458,9 @@
 
     function uploadFiles()
     {
-        // $('#form-product').submit((e) => {
+        var mainImage = $("#product_main_image")[0].files[0];
+
+        formData.append("product_main_image", mainImage);
 
         var data = {
             florist_uuid                    : $("#florist_uuid").val(),
@@ -483,15 +487,22 @@
             _token                          : $("input[name=_token]").val().trim()
         };
 
+        for (let key in data) {
+            Array.isArray(data[key])
+                ? data[key].forEach(value => formData.append(key + '[]', value))
+                : formData.append(key, data[key]) ;
+        }
+
         $.ajax({
             url: "{{ route('bungadavi.products.store') }}",
-            type: 'post',
-            dataType: 'json',
+            type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            contentType: 'application/json',
-            data: JSON.stringify(data),
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
             success: function (res) {
                 console.log(res);
                 if (res.status) {
