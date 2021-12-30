@@ -43,3 +43,23 @@ productCode | productName | Type
 sellingPrice | cost Price
 status
 
+0 = cart
+1 = checkout
+2 = paid -> upload bukti pembayaran manual upload
+3 = unpaid
+4 = cancel order by customer
+5 = cancel order by bungadavi
+6 = cancel order by payment gateway
+7 = order forward to gudang
+8 = product ready from gudang to pickup -> notifikasi kirim kurir
+9 = accept by courier
+10 = sudah di pickup courier (include foto dan sudah di pickup) -> api laravel
+11 = dalam perjalanan
+12 = sudah sampai di customer (include foto) -> api laravel
+13 = pengiriman kembali ke gudang
+14 = reject kurir
+
+-> api gambar product dan main gambar! (cancel)
+-> Laravel ngirim FCM ke firebase
+
+

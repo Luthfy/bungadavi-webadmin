@@ -21,6 +21,7 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->rawColumns(['florist_uuid', 'action'])
             ->addColumn('action', function ($datatable) {
                 $html  = "";
                 if (auth()->user()->hasRole('bungadavi')) {
@@ -32,6 +33,10 @@ class OrderDataTable extends DataTable
                     $html .= "<a href='".route('affiliate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                 }
                 return $html;
+            })
+            ->editColumn('florist_uuid', function ($datatable) {
+                $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-code-product="'.$datatable->code_product.'">Assign To Florist</button>';
+                return ($datatable->florist_uuid == null) ? $button : $datatable->florist_uuid ;
             });
     }
 
