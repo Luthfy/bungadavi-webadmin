@@ -47,6 +47,7 @@
             <li><a href="{{ route('bungadavi.personalrecipient.index') }}">Personal Recipient</a></li>
             <li><a href="{{ route('bungadavi.corporate.index') }}">Corporate</a></li>
             <li><a href="{{ route('bungadavi.florist.index') }}">Florist</a></li>
+            <li><a href="{{ route('bungadavi.floristrecipient.index') }}">Florist Recipient</a></li>
         </ul>
     </li>
 

@@ -22,9 +22,9 @@
 
     <!-- /Page Header -->
     @if ($data == null)
-        {!! Form::open(['route' => 'bungadavi.personal.store', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'bungadavi.personalrecipient.store', 'method' => 'POST']) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.personal.update', ['personal' => $data->uuid]], 'method' => 'PUT']) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.personalrecipient.update', ['personalrecipient' => $data->uuid]], 'method' => 'PUT']) !!}
     @endif
     <div class="row">
         <div class="col-lg-12">
@@ -36,7 +36,19 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Full Name </label>
+                        <label class="col-form-label col-sm-12 col-md-2">Florist ID </label>
+                        <div class="col-form-label col-md-1">
+                            <span>:</span>
+                        </div>
+                        <div class="col-form-label col-sm-12 col-md-9">
+                            @foreach ($florist as $item)
+                                {{$item->florist->fullname}}
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Fullname</label>
                         <div class="col-form-label col-md-1">
                             <span>:</span>
                         </div>
@@ -46,22 +58,12 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">First Name</label>
+                        <label class="col-form-label col-sm-12 col-md-2">Email</label>
                         <div class="col-form-label col-md-1">
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->firstname}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Lastname </label>
-                        <div class="col-form-label col-md-1">
-                            <span>:</span>
-                        </div>
-                        <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->lastname}}
+                            {{$data->email}}
                         </div>
                     </div>
 
@@ -96,12 +98,32 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Birthday </label>
+                        <label class="col-form-label col-sm-12 col-md-2">Latitude</label>
                         <div class="col-form-label col-md-1">
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->birthday}}
+                            {{$data->latitude}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Longitude</label>
+                        <div class="col-form-label col-md-1">
+                            <span>:</span>
+                        </div>
+                        <div class="col-form-label col-sm-12 col-md-9">
+                            {{$data->longitude}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Info Address</label>
+                        <div class="col-form-label col-md-1">
+                            <span>:</span>
+                        </div>
+                        <div class="col-form-label col-sm-12 col-md-9">
+                            {{$data->info_address}}
                         </div>
                     </div>
 
@@ -176,48 +198,18 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Refferal</label>
+                        <label class="col-form-label col-sm-12 col-md-2">Is Active</label>
                         <div class="col-form-label col-md-1">
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->refferal}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Sharelink</label>
-                        <div class="col-form-label col-md-1">
-                            <span>:</span>
-                        </div>
-                        <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->sharelink}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Email</label>
-                        <div class="col-form-label col-md-1">
-                            <span>:</span>
-                        </div>
-                        <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->email}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">User Name</label>
-                        <div class="col-form-label col-md-1">
-                            <span>:</span>
-                        </div>
-                        <div class="col-form-label col-sm-12 col-md-9">
-                            {{$data->username}}
+                            {{$data->is_active}}
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <a href="{{ route('bungadavi.personal.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('bungadavi.floristrecipient.index') }}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
             </div>

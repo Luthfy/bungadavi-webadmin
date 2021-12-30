@@ -13,7 +13,7 @@ class FloristRecipientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class FloristRecipientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'fullname'     => 'required',
+            'email'         => 'string|email|unique:client_florist_recipient',
+            'phone'         => 'required',
+            'mobile'        => 'required',
+            'gender'        => 'required',
+            'latitude'      => 'required',
+            'longitude'     => 'required',
+            'info_address'  => 'required',
+            'address'       => 'required',
+            'country_id'    => 'required',
+            'province_id'   => 'required',
+            'city_id'       => 'required',
+            'district_id'   => 'required',
+            'village_id'    => 'required',
+            'zipcode_id'    => 'required',
+            'client_affiliate_uuid' => 'required',
+            'is_active'     => 'required',
         ];
     }
 }

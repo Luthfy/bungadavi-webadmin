@@ -35,6 +35,7 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
+use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
 use App\Models\BasicSetting\CardMessageCategory;
 use App\Models\BasicSetting\CardMessageSubCategory;
@@ -55,6 +56,7 @@ Route::group([
     Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
     Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
+    // Route::get('floritsrecipient/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
     Route::get('products/ajax-list', [ProductController::class, 'list'])->name('products.ajax.list');
     Route::get('cardmessagecategory/ajax-list', [CardMessageCategoryController::class, 'list'])->name('cardmessagecategory.ajax.list');
     Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');
@@ -64,6 +66,7 @@ Route::group([
     Route::resource('personalrecipient', PersonalRecipientController::class)->names('personalrecipient');
     Route::resource('corporate', CorporateController::class)->names('corporate');
     Route::resource('florist', FloristController::class)->names('florist');
+    Route::resource('floristrecipient', FloristRecipientController::class)->names('floristrecipient');
 
     // LOCATION
     Route::prefix('location')->group(function () {

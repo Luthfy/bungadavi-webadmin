@@ -22,9 +22,9 @@
 
     <!-- /Page Header -->
     @if ($data == null)
-        {!! Form::open(['route' => 'bungadavi.personal.store', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'bungadavi.floristrecipient.store', 'method' => 'POST']) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.personal.update', ['personal' => $data->uuid]], 'method' => 'PUT']) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.floristrecipient.update', ['floristrecipient' => $data->uuid]], 'method' => 'PUT']) !!}
     @endif
     <div class="row">
         <div class="col-lg-12">
@@ -36,23 +36,23 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Full Name <span class="text-danger">*</span></label>
+                        <label class="col-form-label col-sm-12 col-md-2">Client Florist <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 col-md-10">
+                            {!! Form::select('client_affiliate_uuid',$florist, null,['class' => 'form-control select2']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Fullname<span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
                             {!! Form::text('fullname', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">First Name <span class="text-danger">*</span></label>
+                        <label class="col-form-label col-sm-12 col-md-2">Email <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
-                            {!! Form::text('firstname', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Lastname <span class="text-danger">*</span></label>
-                        <div class="col-sm-12 col-md-10">
-                            {!! Form::text('lastname', null, ['class' => 'form-control']) !!}
+                            {!! Form::email('email', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
@@ -78,9 +78,23 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Birthday <span class="text-danger">*</span></label>
+                        <label class="col-form-label col-sm-12 col-md-2">Latitude <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
-                            {!! Form::date('birthday', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('latitude', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Longitude <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 col-md-10">
+                            {!! Form::text('longitude', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-4">
+                        <label class="col-form-label col-sm-12 col-md-2">Info Address <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 col-md-10">
+                            {!! Form::textarea('info_address', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
@@ -90,6 +104,8 @@
                             {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
+
+
 
                     <div class="form-group row pb-4">
                         <label class="col-form-label col-sm-12 col-md-2">Country <span class="text-danger">*</span></label>
@@ -134,43 +150,15 @@
                     </div>
 
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Refferal <span class="text-danger">*</span></label>
+                        <label class="col-form-label col-sm-12 col-md-2">Is Active <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
-                            {!! Form::text('refferal', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Sharelink <span class="text-danger">*</span></label>
-                        <div class="col-sm-12 col-md-10">
-                            {!! Form::text('sharelink', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Email <span class="text-danger">*</span></label>
-                        <div class="col-sm-12 col-md-10">
-                            {!! Form::email('email', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">User Name <span class="text-danger">*</span></label>
-                        <div class="col-sm-12 col-md-10">
-                            {!! Form::text('username', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Password <span class="text-danger">*</span></label>
-                        <div class="col-sm-12 col-md-10">
-                            {!! Form::password('password', ['class' => 'form-control']) !!}
+                            {!! Form::select('is_active', array('1' => 'Yes', '0' => 'No'),null,['class' => 'form-control'] );!!}
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <a href="{{ route('bungadavi.personal.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('bungadavi.floristrecipient.index') }}" class="btn btn-secondary">Back</a>
                         {!! Form::reset('Reset', ['class' => 'btn btn-danger']) !!}
                         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
