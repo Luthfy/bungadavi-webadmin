@@ -10,10 +10,6 @@ use Illuminate\Http\Request;
 
 class CardMessageCategoryController extends Controller
 {
-    public function __construct()
-    {
-
-    }
 
     public function index(CardMessageCategoryDataTable $datatables)
     {
@@ -86,5 +82,10 @@ class CardMessageCategoryController extends Controller
     public function destroy($id)
     {
         return CardMessageCategory::find($id)->delete();
+    }
+
+    public function list()
+    {
+        return response()->json(CardMessageCategory::all());
     }
 }

@@ -205,7 +205,7 @@
             </tr>
             @forelse ($products as $item)
             <tr>
-                <td></td>
+                <td>{!! Form::checkbox('product_checkbox[]', $item->uuid, null, ['class' => 'form-check', 'id' => 'product_uuid']) !!}</td>
                 <td>{{ $item->image_main_product }}</td>
                 <td>{{ $item->code_product }}</td>
                 <td>{{ $item->name_product }}</td>
@@ -218,7 +218,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btnAddProduct">Understood</button>
+          <button type="button" class="btn btn-primary" id="btnAddProduct">Select</button>
         </div>
       </div>
     </div>

@@ -57,10 +57,14 @@
                         </div>
                         {{-- END SENDER RECIPIENT SECTION --}}
 
+                        {{-- PRODUCT ORDER --}}
                         <div class="row pb-4 mb-4">
                             <div class="col-12">
-                                <h4 class="h5">Product List</h4>
+                                <h4 class="h5">PRODUCT LIST</h4>
                                 <hr>
+                                <div id="productData">
+
+                                </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductDetail">Add Product Order</button>
@@ -68,6 +72,40 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- END PRODUCT ORDER --}}
+
+                        {{-- CARD MESSAGE --}}
+                        <div class="row pb-4">
+                            <div class="col-12">
+                                <h4 class="h5">CARD MESSAGE</h4>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="inputCardMessageCategory">Card Message Category</label>
+                                            {!! Form::select('card_message_category', [], null, [ "class" => "form-control", "id" => "cardMessageCategory", "aria-describedby" => "cardMessageCategoryHelp"]) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="inputCardMessageSubCategory">Card Message Sub Category</label>
+                                            {!! Form::select('card_message_subcategory', [], null, [ "class" => "form-control", "id" => "cardMessageSubCategory", "aria-describedby" => "cardMessageSubCategoryHelp"]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="inputDeliveryDate">Card Message</label>
+                                            {!! Form::textarea('card_message', null, [ "class" => "form-control", "id" => "cardMessage", "aria-describedby" => "cardMessageHelp", 'rows' => '4']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END CARD MESSAGE--}}
+
+                        {{-- DELIVERY DETAIL--}}
                         <div class="row pb-4">
                             <div class="col-12">
                                 <h4 class="h5">DELIVERY DETAILS</h4>
@@ -76,7 +114,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Date</label>
-                                            {!! Form::date('delivery_date', null, [ "class" => "form-control", "id" => "inputDeliveryDate", "aria-describedby" => "deliveryDateHelp"]) !!}
+                                            {!! Form::date('delivery_date', null, [ "class" => "form-control", "id" => "deliveryDate", "aria-describedby" => "deliveryDateHelp"]) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -90,17 +128,17 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Charge</label>
-                                            {!! Form::number('delivery_charge', null, [ "class" => "form-control", "id" => "inputDeliveryCharge", "aria-describedby" => "deliveryChargeHelp"]) !!}
+                                            {!! Form::number('delivery_charge', null, [ "class" => "form-control", "id" => "deliveryCharge", "aria-describedby" => "deliveryChargeHelp"]) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Charge Timeslot</label>
-                                            {!! Form::number('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                                            {!! Form::number('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "deliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row mb-2">
                                     <div class="col-12">
                                         <label>Delivery Remarks</label>
                                         @foreach ($deliveryRemarks as $item)
@@ -118,7 +156,7 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::textarea('custom_delivery_remaks', null, ['class' => 'form-control' ,'rows' => '4']) !!}
+                                            {!! Form::textarea('custom_delivery_remaks', null, ['class' => 'form-control' ,'rows' => '4', 'id' => 'custom_delivery_remark']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -126,12 +164,14 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Internal Notes</label>
-                                            {!! Form::textarea('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp", 'rows' => '4']) !!}
+                                            {!! Form::textarea('internal_notes', null, [ "class" => "form-control", "id" => "internalNotes", "aria-describedby" => "internalNotesHelp", 'rows' => '4']) !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- END DELIVERY DETAIL--}}
+
                     </div>
                 </div>
             </div>
@@ -198,12 +238,19 @@
     <script>
         var orderTransaction        = {};
         var senderRecipientOrder    = {};
-        var listProductOrder        = null;
+        var listProductOrder        = {};
         var deliverySchedule        = null;
         var paymentOrder            = null;
 
         var client_result;
         var recipient_result;
+        var product_result;
+        var timeslot_result;
+        var card_message_sub_result;
+
+        $(document).ready(function (e) {
+            getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}")
+        })
 
         // click process order
         $("#createNewOrder").click(function (e) {
@@ -237,10 +284,12 @@
             $("#addClientSender").modal('hide');
         });
 
+        // cliek set Click Recipient Data
         $("#btnRecipientAdd").click(function (e) {
             let recipient_selected = recipient_result.find(x => x.uuid === $("#recipient_id").val());
 
             Object.assign(senderRecipientOrder, {
+                is_secret: false,
                 receiver_name : recipient_selected.firstname + " " + recipient_selected.lastname,
                 receiver_phone_number : recipient_selected.phone,
                 receiver_address : recipient_selected.address,
@@ -259,6 +308,19 @@
 
         });
 
+        // click set product list data
+        $("#btnAddProduct").click(function (e) {
+            let product_selected = [];
+            $("input[type='checkbox'][id='product_uuid']:checked").each(function(i){
+                product_selected[i] = $(this).val();
+            });
+
+            setProductData(product_selected)
+
+            $("#addProductDetail").modal('hide');
+        })
+
+        // set html data sender
         function setSenderData(senderData)
         {
             let html_sender = "<table class='table'>";
@@ -281,6 +343,7 @@
             $("#senderData").html(html_sender);
         }
 
+        // set html data recipient
         function setRecipientData(receiverData)
         {
             let html_recipient = "<table class='table'>";
@@ -303,6 +366,12 @@
             $("#recipientData").html(html_recipient);
         }
 
+        // set html data product
+        function setProductData(productData)
+        {
+            getProductAjax("{{ url('bungadavi/products/ajax-list?data=') }}" + productData);
+        }
+
         $('input[type=radio][name=radioButtonClientType]').change(function() {
             if (this.value == 'personal') {
                 getClientAjax("{{ route('bungadavi.personals.ajax.list') }}");
@@ -322,6 +391,27 @@
         // click set recipient data
         $("#recipient_id").change(function (e) {
         });
+
+        // card message
+        $("#cardMessageCategory").change(function (e) {
+            getCardMessageSubCategoryAjax("{{url('bungadavi/cardmessagesubcategory/ajax-list')}}/" + $('#cardMessageCategory option:selected').val())
+        });
+
+        $("#cardMessageSubCategory").change(function (e) {
+            let message_selected = card_message_sub_result.find(x => x.id === $("#cardMessageSubCategory option:selected").val());
+
+            $("#cardMessage").val(message_selected.description);
+        });
+
+        // delivery date for timeslot
+        $("#deliveryDate").change(function (e) {
+            getTimeSlotAjax("{{url('bungadavi/timeslots/ajax-list/')}}/"+this.value);
+        })
+
+        $("#selectTimeSlot").change(function (e) {
+            let timeslot_selected = timeslot_result.find(x => x.id === $("#selectTimeSlot option:selected").val());
+            $("#deliveryChargeTimeslot").val(timeslot_result.price);
+        })
 
         function getClientAjax(url)
         {
@@ -365,13 +455,129 @@
             });
         }
 
+        function getProductAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    let html_product = "";
+
+                    result.forEach( x => {
+                        html_product += "<h3 class='h3'>"+ x.code_product +"</h3>";
+                        html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
+                        html_product += "<input type='text' class='form-control' id='fromMessageProduct' value='' />";
+                        html_product += "<input type='text' class='form-control' id='toMessageProduct' value='' />";
+                        html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
+                    })
+
+                    $("#productData").html(html_product);
+
+                    listProductOrder = {
+                        product_uuid : result.uuid,
+                        code_product : result.code_product,
+                        name_product : result.name_product,
+                        qty_product : $("#qtyProduct").val(),
+                        price_product : result.cost_product,
+                        from_message_product : $("#fromMessageProduct").val(),
+                        to_message_product : $("#romMessageProduct").val(),
+                        remarks_product : $("#remarkProduct").val(),
+                        custom_product: null
+                    };
+                },
+            });
+        }
+
+        function getCardMessageCategoryAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    recipient_result = result;
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                    })
+                    $("#cardMessageCategory").html(html);
+                },
+            });
+        }
+
+        function getCardMessageSubCategoryAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    recipient_result = result;
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                    })
+                    $("#cardMessageSubCategory").html(html);
+                },
+            });
+        }
+
+        function getTimeSlotAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    timeslot_result = result;
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.id+"'>"+res.time_slot_name+"</option>";
+                    })
+                    $("#selectTimeSlot").html(html);
+                },
+            });
+        }
+
         function postOrder()
         {
+            let total_order = 0;
+            listProductOrder.forEach(x => {
+                total_order += x.price_product * x.qty_product;
+            });
+
             let data = {
                 "_token"                : "{{ csrf_token() }}",
-                "order_transaction"     : setOrderTransaction(),
-                "sender_recipient"      : setSenderRecipientOrder(),
-                "list_product_order"    : setListProductOrder(),
+                "order_transaction"     : {
+                                            type_order_transaction : "backoffice_bungadavi",
+                                            total_order_transaction : "1000000",
+                                            shipping_price_order_transaction : $("#deliveryCharge").val() + $("#deliveryChargeTimeslot").val(),
+                                            status_order_transaction : "New Order",
+                                            currency_id : "Rp",
+                                            card_message_category : $('#cardMessageCategory option:selected').text(),
+                                            card_message_subcategory : $('#cardMessageSubCategory option:selected').text(),
+                                            card_message_message : $("#cardMessage").val(),
+                                            is_guest : false,
+                                        },
+                "sender_recipient"      : senderRecipientOrder,
+                "list_product_order"    : listProductOrder,
                 "delivery_schedule"     : setDeliverySchedule(),
                 "payment_order"         : setPaymentOrder(),
             };
@@ -399,78 +605,80 @@
             })
         }
 
-        function setOrderTransaction()
-        {
-            return {
-                type_order_transaction : "backoffice_bungadavi",
-                total_order_transaction : "1000000",
-                shipping_price_order_transaction : "50000",
-                status_order_transaction : "New Order",
-                currency_id : "Rp",
-                card_message_category : "Happy New Year",
-                card_message_subcategory : "Message Happy New Year",
-                card_message_message : "message in here",
-                is_guest : false,
-            };
-        }
+        // function setOrderTransaction()
+        // {
+        //     return {
+        //         type_order_transaction : "backoffice_bungadavi",
+        //         total_order_transaction : "1000000",
+        //         shipping_price_order_transaction : "50000",
+        //         status_order_transaction : "New Order",
+        //         currency_id : "Rp",
+        //         card_message_category : $('#cardMessageCategory option:selected').text(),
+        //         card_message_subcategory : $('#cardMessageSubCategory option:selected').text(),
+        //         card_message_message : $("#cardMessage").val(),
+        //         is_guest : false,
+        //     };
+        // }
 
-        function setSenderRecipientOrder()
-        {
-            return {
-                is_secret : false,
-                client_type : "personal",
-                client_uuid : "testing-uuid",
-                pic_name : ($("#PicName").val() == "") ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
-                sender_name : "testing sender name",
-                po_referrence : "testing po reference",
-                sender_phone_number : "1234",
-                sender_address : "Jl. Pasar Kamis",
-                sender_country : "Indonesia",
-                sender_province : "Kalimantan Selatan",
-                sender_city : "Banjarmasin",
-                sender_district : "Banjarmasin Utara",
-                sender_village : "Kuin Selatan",
-                sender_zipcode : "70122",
-                receiver_name : "Luthfy Testing",
-                receiver_phone_number : "1234",
-                receiver_address : "Jl. Putri Jaleha",
-                receiver_country : "Indonesia",
-                receiver_province : "Kalimantan Selatan",
-                receiver_city : "Banjarmasin",
-                receiver_district : "Banjarmasin Utara",
-                receiver_village : "Banua Anyar",
-                receiver_zipcode : "70111",
-            };
-        }
+        // // done
+        // function setSenderRecipientOrder()
+        // {
+        //     return {
+        //         is_secret : false,
+        //         client_type : "personal",
+        //         client_uuid : "testing-uuid",
+        //         pic_name : ($("#PicName").val() == "") ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
+        //         sender_name : "testing sender name",
+        //         po_referrence : "testing po reference",
+        //         sender_phone_number : "1234",
+        //         sender_address : "Jl. Pasar Kamis",
+        //         sender_country : "Indonesia",
+        //         sender_province : "Kalimantan Selatan",
+        //         sender_city : "Banjarmasin",
+        //         sender_district : "Banjarmasin Utara",
+        //         sender_village : "Kuin Selatan",
+        //         sender_zipcode : "70122",
+        //         receiver_name : "Luthfy Testing",
+        //         receiver_phone_number : "1234",
+        //         receiver_address : "Jl. Putri Jaleha",
+        //         receiver_country : "Indonesia",
+        //         receiver_province : "Kalimantan Selatan",
+        //         receiver_city : "Banjarmasin",
+        //         receiver_district : "Banjarmasin Utara",
+        //         receiver_village : "Banua Anyar",
+        //         receiver_zipcode : "70111",
+        //     };
+        // }
 
-        function setListProductOrder()
-        {
-            return [
-                {
-                    product_uuid : "testing-product-uuid",
-                    code_product : "SBDO1234",
-                    name_product : "Testing Product",
-                    qty_product : "1",
-                    price_product : "1000000",
-                    from_message_product : "Luthfy",
-                    to_message_product : "Luthfy To",
-                    remarks_product : "product remark",
-                    custom_product: null
-                }
-            ];
-        }
+        // function setListProductOrder()
+        // {
+        //     return [
+        //         {
+        //             product_uuid : "testing-product-uuid",
+        //             code_product : "SBDO1234",
+        //             name_product : "Testing Product",
+        //             qty_product : "1",
+        //             price_product : "1000000",
+        //             from_message_product : "Luthfy",
+        //             to_message_product : "Luthfy To",
+        //             remarks_product : "product remark",
+        //             custom_product: null
+        //         }
+        //     ];
+        // }
 
         function setDeliverySchedule()
         {
             var deliveryRemark = "";
 
             return {
-                time_slot_name : "NEW YEAR",
-                time_slot_id : "1",
-                delivery_remarks : "tes",
-                time_slot_charge : 0,
-                delivery_charge : 0,
-                delivery_date : "2021-12-20",
+                time_slot_name : $("#selectTimeSlot option:selected").text(),
+                time_slot_id : $("#selectTimeSlot option:selected").val(),
+                delivery_remarks : deliveryRemark,
+                internal_notes: $("#internalNotes").val(),
+                time_slot_charge : $("#deliveryChargeTimeslot").val(),
+                delivery_charge : $("#deliveryCharge").val(),
+                delivery_date : ($("#deliveryDate").val() == (null || undefined || "") ? null : $("#deliveryDate").val()),
             };
         }
 

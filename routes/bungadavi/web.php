@@ -36,6 +36,9 @@ use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
+use App\Models\BasicSetting\CardMessageCategory;
+use App\Models\BasicSetting\CardMessageSubCategory;
+use App\Models\BasicSetting\TimeSlot;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -52,6 +55,10 @@ Route::group([
     Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
     Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
+    Route::get('products/ajax-list', [ProductController::class, 'list'])->name('products.ajax.list');
+    Route::get('cardmessagecategory/ajax-list', [CardMessageCategoryController::class, 'list'])->name('cardmessagecategory.ajax.list');
+    Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');
+    Route::get('timeslots/ajax-list/{dates}', [TimeSlotController::class, 'list'])->name('timeslot.ajax.list');
 
     Route::resource('personal', PersonalController::class)->names('personal');
     Route::resource('personalrecipient', PersonalRecipientController::class)->names('personalrecipient');

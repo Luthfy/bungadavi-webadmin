@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\BasicSetting;
 
 use App\Models\BasicSetting\DeliveryRemark;
 use Illuminate\Database\Seeder;

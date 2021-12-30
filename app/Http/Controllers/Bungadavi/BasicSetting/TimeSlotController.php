@@ -12,10 +12,6 @@ use Carbon\Carbon;
 
 class TimeSlotController extends Controller
 {
-    public function __construct()
-    {
-
-    }
 
     public function index(TimeSlotDataTable $datatables)
     {
@@ -58,10 +54,14 @@ class TimeSlotController extends Controller
     public function store(TimeSlotRequest $request)
     {
         $format_time_from = Carbon::createFromTimeString($request->time_from)->format('H:i:s');
-        $format_time_to = Carbon::createFromTimeString($request->time_to)->format('H:i:s');
-
         $datetime_from = $request->date_from  . ' ' . $format_time_from;
-        $datetime_to =$request->date_to . ' ' . $format_time_to;
+
+        if ($request->date_to != null) {
+            $format_time_to = Carbon::createFromTimeString($request->time_to)->format('H:i:s');
+            $datetime_to =$request->date_to . ' ' . $format_time_to;
+        } else {
+            $datetime_to = null;
+        }
 
 
         TimeSlot::create([
@@ -129,5 +129,20 @@ class TimeSlotController extends Controller
     public function destroy($id)
     {
         return TimeSlot::find($id)->delete();
+    }
+
+    public function list($date)
+    {
+        $dateTime = Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . " 00:00:00";
+
+        $timeslot = TimeSlot::where('time_from', "<", $dateTime);
+
+        if ($timeslot->where('is_priority', 1)) {
+            $timeslot = TimeSlot::where('time_from', "<", $dateTime)->where('is_priority', 1)->get();
+        } if ($timeslot->where('time_to', "!=", null)) {
+            $timeslot = TimeSlot::where('time_from', "<", $dateTime)->where('time_to', ">", $dateTime)->get();
+        }
+
+        return response()->json($timeslot ?? []);
     }
 }

@@ -50,9 +50,9 @@ class OrderController extends Controller
             'description'   => 'For Management Order Transaction',
             'breadcrumb'    => ['Order Transaction Management', 'Product List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
-            'products'      => ProductStock::all(),
-            'deliveryRemarks' => DeliveryRemark::all(),
-            'ourBank'       => OurBank::all()
+            'products'          => ProductStock::all(),
+            'deliveryRemarks'   => DeliveryRemark::all(),
+            'ourBank'           => OurBank::all()
         ];
 
         return view('bungadavi.orders.form', $data);
@@ -155,6 +155,7 @@ class OrderController extends Controller
                 'time_slot_charge'          => $request->delivery_schedule['time_slot_charge'],
                 'time_slot_id'              => $request->delivery_schedule['time_slot_id'],
                 'delivery_remarks'          => $request->delivery_schedule['delivery_remarks'],
+                'internal_notes'            => $request->delivery_schedule['delivery_remarks'],
             ];
 
             $deliveryOrder = Delivery::create($deliveryOrder);

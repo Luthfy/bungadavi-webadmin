@@ -26,7 +26,6 @@ class TimeSlotRequest extends FormRequest
         return [
             'time_slot_name' => 'required',
             'time_from' => 'required',
-            'time_to' => 'required',
             'price' => 'required',
             'description' => 'required',
             'is_priority'=>'required',
