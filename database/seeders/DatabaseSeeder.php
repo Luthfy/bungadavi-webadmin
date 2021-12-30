@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\StockSeeder;
+use Database\Seeders\OurBankSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\CourierSeeder;
 use Database\Seeders\Location\CitySeeder;
@@ -20,6 +21,7 @@ use Database\Seeders\BasicSetting\CategorySeeder;
 use Database\Seeders\BasicSetting\CurrencySeeder;
 use Database\Seeders\ProductControl\ProductSeeder;
 use Database\Seeders\BasicSetting\SubcategorySeeder;
+use Database\Seeders\BasicSetting\DeliveryRemarkSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,6 +49,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DistrictSeeder::class);
         $this->call(VillageSeeder::class);
         $this->call(ZipCodeSeeder::class);
+
+        $this->call(OurBankSeeder::class);
+        $this->call(DeliveryRemarkSeeder::class);
 
         $this->call(CourierSeeder::class);
 

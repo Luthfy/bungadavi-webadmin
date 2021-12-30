@@ -110,6 +110,7 @@ class CreateOrdersTransactionTable extends Migration
             $table->bigInteger('time_slot_charge')->default(0);
             $table->string('time_slot_id',255);
             $table->string('delivery_remarks',255)->nullable();
+            $table->string('internal_notes',255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

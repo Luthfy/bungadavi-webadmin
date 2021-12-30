@@ -26,6 +26,7 @@ class Delivery extends Model
         'time_slot_charge',
         'time_slot_id',
         'delivery_remarks',
+        'internal_notes'
     ];
 
     protected $casts = [

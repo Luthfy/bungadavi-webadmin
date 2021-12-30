@@ -11,10 +11,6 @@ use Illuminate\Http\Request;
 
 class CardMessageSubCategoryController extends Controller
 {
-    public function __construct()
-    {
-
-    }
 
     public function index(CardMessageSubCategoryDataTable $datatables)
     {
@@ -98,5 +94,10 @@ class CardMessageSubCategoryController extends Controller
     public function destroy($id)
     {
         return CardMessageSubCategory::find($id)->delete();
+    }
+
+    public function list($id)
+    {
+        return response()->json(CardMessageSubCategory::where('card_message_category_id', $id)->get());
     }
 }

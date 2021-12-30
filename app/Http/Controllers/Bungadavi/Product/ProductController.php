@@ -224,4 +224,13 @@ class ProductController extends Controller
     {
         return Product::find($id)->delete();
     }
+
+    public function list()
+    {
+        $ids = explode(",", $_GET['data']);
+
+        return response()->json(
+            Product::findMany($ids)
+        );
+    }
 }
