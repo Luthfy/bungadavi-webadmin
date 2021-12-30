@@ -65,6 +65,35 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="addModalAssignFlorist" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Florist List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Code Product</label>
+                    {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product']) !!}
+                    {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
+                </div>
+                <div class="form-group">
+                    <label for="">Florist Name</label>
+                    {!! Form::select('florist_uuid', [], null, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSelectFloristAssign">Select</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -77,5 +106,77 @@
     <script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
 
     {!! $dataTable->scripts() !!}
+
+    <script>
+        $(document).ready(function (e) {
+            getFloristAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
+        });
+
+        $('#addModalAssignFlorist').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var uuid = button.data('uuid')
+            var codeProduct = button.data('code-product')
+
+            var modal = $(this)
+
+            modal.find('.modal-body #uuid').val(uuid)
+            modal.find('.modal-body #code_product').val(codeProduct)
+        })
+
+        $("#btnSelectFloristAssign").click(function (e) {
+            let id = $("#uuid").val();
+            updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id);
+        })
+
+        function updateOrderAssignToFlorist(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify({"_token" : "{{ csrf_token() }}",'florist_uuid': $("#florist_uuid option:selected").val()}),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Assign To Florist',
+                        text: 'New Order Has Been Assign To Florist!',
+                    });
+
+                    $('#addModalAssignFlorist').modal('hide')
+
+                    if ($('#datatablesserverside').length > 0) {
+                        $('#datatablesserverside').DataTable().ajax.reload();
+                    } else {
+                        window.location.reload()
+                    }
+                },
+            });
+        }
+
+        function getFloristAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    client_result = result;
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
+                    })
+                    $("#florist_uuid").html(html);
+                },
+            });
+        }
+    </script>
 
 @endpush

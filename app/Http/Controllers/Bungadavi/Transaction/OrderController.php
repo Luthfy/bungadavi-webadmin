@@ -255,6 +255,34 @@ class OrderController extends Controller
         //
     }
 
+    public function assignFlorist(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->florist_uuid = $request->florist_uuid;
+        return response()->json($order->save());
+    }
+
+    public function rejectFlorist(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->florist_uuid = null;
+        return response()->json($order->save());
+    }
+
+    public function acceptFlorist(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->status_order_transaction = "On Progress";
+        return response()->json($order->save());
+    }
+
+    public function finishFlorist(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->status_order_transaction = "Ready To Pickup";
+        return response()->json($order->save());
+    }
+
     public function realTimeOrder()
     {
         $today = Carbon::now()->format('Y-m-d');

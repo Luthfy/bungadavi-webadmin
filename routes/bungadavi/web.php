@@ -123,6 +123,8 @@ Route::group([
     Route::resource('splits', SplitController::class)->names('splits');
 
     // TRANSACTION ORDER
+    Route::post('transaction/{id}', [OrderController::class, 'assignFlorist'])->name('orders.florist');
+
     Route::resource('transaction', OrderController::class)->names('orders');
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
 
