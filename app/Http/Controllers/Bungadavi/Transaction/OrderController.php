@@ -179,11 +179,11 @@ class OrderController extends Controller
                     'product_uuid'              => $product['product_uuid'],
                     'code_product'              => $product['code_product'],
                     'name_product'              => $product['name_product'],
-                    'qty_product'               => $product['qty_product'],
+                    'qty_product'               => $product['qty_product'] ?? 1,
                     'price_product'             => $product['price_product'],
-                    'from_message_product'      => $product['from_message_product'],
-                    'to_message_product'        => $product['to_message_product'],
-                    'remarks_product'           => $product['remarks_product'],
+                    'from_message_product'      => $product['from_message_product'] ?? "",
+                    'to_message_product'        => $product['to_message_product'] ?? "",
+                    'remarks_product'           => $product['remarks_product'] ?? "",
                 ];
 
                 $orderProduct = Product::create($productData);

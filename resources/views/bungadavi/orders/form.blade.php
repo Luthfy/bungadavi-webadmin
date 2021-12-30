@@ -238,7 +238,7 @@
     <script>
         var orderTransaction        = {};
         var senderRecipientOrder    = {};
-        var listProductOrder        = {};
+        var listProductOrder        = [];
         var deliverySchedule        = null;
         var paymentOrder            = null;
 
@@ -468,27 +468,30 @@
                 success: function (result) {
                     let html_product = "";
 
-                    result.forEach( x => {
+                    result.forEach( (x, i) => {
                         html_product += "<h3 class='h3'>"+ x.code_product +"</h3>";
                         html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
                         html_product += "<input type='text' class='form-control' id='fromMessageProduct' value='' />";
                         html_product += "<input type='text' class='form-control' id='toMessageProduct' value='' />";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
+
+                        listProductOrder[i] = {
+                            product_uuid : x.uuid,
+                            code_product : x.code_product,
+                            name_product : x.name_product,
+                            qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
+                            price_product : x.cost_product,
+                            from_message_product : $("#fromMessageProduct").val(),
+                            to_message_product : $("#romMessageProduct").val(),
+                            remarks_product : $("#remarkProduct").val(),
+                            custom_product: null
+                        };
+
                     })
 
                     $("#productData").html(html_product);
 
-                    listProductOrder = {
-                        product_uuid : result.uuid,
-                        code_product : result.code_product,
-                        name_product : result.name_product,
-                        qty_product : $("#qtyProduct").val(),
-                        price_product : result.cost_product,
-                        from_message_product : $("#fromMessageProduct").val(),
-                        to_message_product : $("#romMessageProduct").val(),
-                        remarks_product : $("#remarkProduct").val(),
-                        custom_product: null
-                    };
+
                 },
             });
         }

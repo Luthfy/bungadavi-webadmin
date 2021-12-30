@@ -133,16 +133,20 @@ class TimeSlotController extends Controller
 
     public function list($date)
     {
-        $dateTime = Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . " 00:00:00";
+        $dateTime = Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d');
 
-        $timeslot = TimeSlot::where('time_from', "<", $dateTime);
+        $timeslot = TimeSlot::whereDate('time_from', "<=", $dateTime);
 
-        if ($timeslot->where('is_priority', 1)) {
-            $timeslot = TimeSlot::where('time_from', "<", $dateTime)->where('is_priority', 1)->get();
-        } if ($timeslot->where('time_to', "!=", null)) {
-            $timeslot = TimeSlot::where('time_from', "<", $dateTime)->where('time_to', ">", $dateTime)->get();
+        if ($timeslot->where('is_priority', 1)->count() == 1) {
+            $timeslot = TimeSlot::whereDate('time_from', "<=", $dateTime)->where('is_priority', 1);
+            return response()->json($timeslot->get());
+        } else if ($timeslot->whereNotNull('time_to')->count() != 0) {
+            $timeslot = TimeSlot::whereDate('time_from', "<=", $dateTime)->whereDate('time_to', ">=", $dateTime);
+            return response()->json($timeslot->get());
+        } else {
+            $timeslot = TimeSlot::whereDate('time_from', "<=", $dateTime);
+            return response()->json($timeslot->get());
         }
 
-        return response()->json($timeslot ?? []);
     }
 }

@@ -78,11 +78,38 @@ class OrderDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('code_order_transaction'),
-            Column::make('type_order_transaction'),
-            Column::make('total_order_transaction'),
-            Column::make('status_order_transaction'),
-            Column::make('created_at'),
+            Column::make('code_order_transaction')
+                ->title('Transaction Code'),
+            Column::make('status_order_transaction')
+                ->title('Status'),
+            Column::make('florist_uuid')
+                ->title('Florist Name'),
+            Column::make('total_order_transaction')
+                ->title('Client Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
+            Column::make('total_order_transaction')
+                ->title('PIC Name'),
         ];
     }
 
