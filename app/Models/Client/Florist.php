@@ -98,4 +98,9 @@ class Florist extends Model
     {
         return $this->belongsTo(ZipCode::class, 'zipcode_id', 'id');
     }
+
+    public function floristBank()
+    {
+        return $this->belongsTo(FloristBank::class, 'client_florist_uuid', 'uuid');
+    }
 }

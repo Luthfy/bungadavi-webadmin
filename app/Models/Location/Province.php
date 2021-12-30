@@ -2,6 +2,7 @@
 
 namespace App\Models\Location;
 
+use App\Models\Client\Florist;
 use App\Models\Client\Personal;
 use App\Models\Client\PersonalRecipient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -61,5 +62,10 @@ class Province extends Model
     public function hasPersonalRecipient()
     {
         return $this->hasMany(PersonalRecipient::class, 'province_id', 'id');
+    }
+
+    public function hasFlorist()
+    {
+        return $this->hasMany(Florist::class, 'province_id', 'id');
     }
 }

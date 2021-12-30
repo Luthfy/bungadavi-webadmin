@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\PersonalRecipientRequest;
 use App\Models\Client\Personal;
 use App\Models\Client\PersonalRecipient;
+use App\Models\Location\City;
+use App\Models\Location\Country;
+use App\Models\Location\District;
+use App\Models\Location\Province;
+use App\Models\Location\Village;
+use App\Models\Location\ZipCode;
 use Illuminate\Http\Request;
 
 class PersonalRecipientController extends Controller
@@ -92,12 +98,13 @@ class PersonalRecipientController extends Controller
     public function show($id)
     {
         $get_personal = PersonalRecipient::with('clientPersonal')->get();
-        $get_country = PersonalRecipient::with('country')->get();
-        $get_province = PersonalRecipient::with('province')->get();
-        $get_city = PersonalRecipient::with('city')->get();
-        $get_district = PersonalRecipient::with('district')->get();
-        $get_village = PersonalRecipient::with('village')->get();
-        $get_zipcode = PersonalRecipient::with('zipcode')->get();
+        $data = PersonalRecipient::findOrFail($id);
+        $get_country = Country::where('id', $data->country_id)->first();
+        $get_province = Province::where('id',$data->province_id)->first();
+        $get_city = City::where('id',$data->city_id)->first();
+        $get_district = District::where('id',$data->district_id)->first();
+        $get_village = Village::where('id',$data->village_id)->first();
+        $get_zipcode = ZipCode::where('id',$data->zipcode_id)->first();
 
         $data = [
             'title'         => 'Customer Personal Recipient',
@@ -105,8 +112,8 @@ class PersonalRecipientController extends Controller
             'description'   => 'Detail Customer Personal Recipient',
             'breadcrumb'    => ['Customer Personal Recipient', 'Detail Customer Personal Recipient'],
             'guard'         => auth()->user()->group,
-            'data'          => PersonalRecipient::findOrFail($id),
-            'personal'       => $get_personal,
+            'data'          => $data,
+            'personal'      => $get_personal,
             'country'       => $get_country,
             'province'      => $get_province,
             'city'          => $get_city,

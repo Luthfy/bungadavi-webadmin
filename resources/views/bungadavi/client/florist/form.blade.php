@@ -22,9 +22,9 @@
 
     <!-- /Page Header -->
     @if ($data == null)
-        {!! Form::open(['route' => 'bungadavi.florist.store', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'bungadavi.florist.store', 'method' => 'POST','files' => true]) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.florist.update', ['personal' => $data->id]], 'method' => 'PUT']) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.florist.update', ['florist' => $data->uuid]], 'method' => 'PUT','files' => true]) !!}
     @endif
     <div class="row">
         <div class="col-lg-12">
@@ -250,19 +250,80 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row pb-4">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="row">
-                                        <label class="col-form-label col-sm-12 col-md-12">NPWP</label>
-                                        <div class="col-sm-12 col-md-12">
-                                            {!! Form::file('npwp_image', null, ['class' => 'form-control', 'accept' => 'images/*']) !!}
+                            @if ($data==null)
+                                <div class="row pb-4">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">NPWP Image</label>
+                                            <div class="col-sm-12 col-md-12">
+                                                {!! Form::file('npwp_image', null, ['class' => 'form-control', 'accept' => 'images/*']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row pb-4">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">NPWP Image</label>
+                                            <div class="col-sm-12 col-md-12">
+                                                <img src="{{ asset('storage/'.$data->npwp_image) }}" height="200px" width="250" style="margin-bottom: 2rem">
+                                                <br>
+                                                {!! Form::file('npwp_image', null, ['class' => 'form-control', 'accept' => 'images/*']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
+
+                    @if ($florist_bank == null)
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="h4">Bank Information</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row pb-4">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">Bank Name <span class="text-danger">*</span></label>
+                                            <div class="col-sm-12 col-md-12">
+                                                {!! Form::text('bank_name', null, ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">Bank Account Number</label>
+                                            <div class="col-sm-12 col-md-12">
+                                                {!! Form::text('bank_account_number', null, ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pb-4">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">Bank Beneficiary <span class="text-danger">*</span></label>
+                                            <div class="col-sm-12 col-md-12">
+                                                {!! Form::text('bank_beneficiary', null, ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-12 col-md-12">Bank Branch</label>
+                                            <div class="col-sm-12 col-md-12">
+                                                {!! Form::text('bank_branch', null, ['class' => 'form-control']) !!}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    @else
                     <div class="card">
                         <div class="card-header">
                             <h4 class="h4">Bank Information</h4>
@@ -273,7 +334,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Bank Name <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            {!! Form::text('bank_name', null, ['class' => 'form-control']) !!}
+                                            {!! Form::text('bank_name', $florist_bank->bank_name, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -281,7 +342,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Bank Account Number</label>
                                         <div class="col-sm-12 col-md-12">
-                                            {!! Form::text('bank_account_number', null, ['class' => 'form-control']) !!}
+                                            {!! Form::text('bank_account_number', $florist_bank->bank_account_number, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -291,7 +352,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Bank Beneficiary <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            {!! Form::text('bank_beneficiary', null, ['class' => 'form-control']) !!}
+                                            {!! Form::text('bank_beneficiary', $florist_bank->bank_beneficiary, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -299,17 +360,20 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Bank Branch</label>
                                         <div class="col-sm-12 col-md-12">
-                                            {!! Form::text('bank_branch', null, ['class' => 'form-control']) !!}
+                                            {!! Form::text('bank_branch', $florist_bank->bank_branch, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endif
+
+
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <a href="{{ route('florist.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('bungadavi.florist.index') }}" class="btn btn-secondary">Back</a>
                         {!! Form::reset('Reset', ['class' => 'btn btn-danger']) !!}
                         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                     </div>
@@ -400,28 +464,33 @@
     })
 
     $("#village-id").change(function (e) {
-        let url = "{{url('admin/location/ajax/zipcode')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val() + "&village-id=" + $("#village-id").val();
+        let url = "{{url('bungadavi/location/ajax/zipcode')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val() + "&village-id=" + $("#village-id").val();
         getZipCodesAjax(url)
     });
 
     $("#district-id").change(function (e) {
-        let url = "{{url('admin/location/ajax/village')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val();
+        let url = "{{url('bungadavi/location/ajax/village')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val();
         getVillagesAjax(url)
     });
 
     $("#city-id").change(function (e) {
-        let url = "{{url('admin/location/ajax/district')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val();
+        let url = "{{url('bungadavi/location/ajax/district')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val();
         getDistrictsAjax(url)
     });
 
     $("#province-id").change(function (e) {
-        let url = "{{url('admin/location/ajax/city')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val();
+        let url = "{{url('bungadavi/location/ajax/city')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val();
         getCitiesAjax(url)
     });
 
     $("#country-id").change(function (e) {
-        let url = "{{url('admin/location/ajax/province')}}" + "?country-id=" + $("#country-id").val();
+        let url = "{{url('bungadavi/location/ajax/province')}}" + "?country-id=" + $("#country-id").val();
         getProvincesAjax(url)
+    });
+
+    $(document).ready(function (e) {
+        let url = "{{ url('/bungadavi/location/ajax/country')}}";
+        getCountriesAjax(url)
     });
 
 

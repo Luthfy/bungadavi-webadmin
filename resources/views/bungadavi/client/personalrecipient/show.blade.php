@@ -153,9 +153,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($country as $item)
-                                {{$item->country->name}}
-                            @endforeach
+                            {{$country->name}}
                         </div>
                     </div>
 
@@ -165,9 +163,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($province as $item)
-                            {{$item->province->name}}
-                            @endforeach
+                            {{$province->name}}
                         </div>
                     </div>
 
@@ -177,9 +173,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($city as $item)
-                            {{$item->city->name}}
-                            @endforeach
+                            {{$city->name}}
                         </div>
                     </div>
 
@@ -189,9 +183,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($district as $item)
-                            {{$item->district->name}}
-                            @endforeach
+                            {{$district->name}}
                         </div>
                     </div>
 
@@ -201,9 +193,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($village as $item)
-                            {{$item->village->name}}
-                            @endforeach
+                            {{$village->name}}
                         </div>
                     </div>
 
@@ -213,9 +203,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-form-label col-sm-12 col-md-9">
-                            @foreach ($zipcode as $item)
-                            {{$item->zipcode->postal_code}}
-                            @endforeach
+                            {{$zipcode->postal_code}}
                         </div>
                     </div>
 

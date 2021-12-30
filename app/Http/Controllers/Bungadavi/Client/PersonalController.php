@@ -9,6 +9,12 @@ use App\DataTables\Client\PersonalDataTable;
 use App\Http\Requests\Client\PersonalRequest;
 use App\Models\Client\Corporate;
 use App\Models\Customer\Affiliate;
+use App\Models\Location\City;
+use App\Models\Location\Country;
+use App\Models\Location\District;
+use App\Models\Location\Province;
+use App\Models\Location\Village;
+use App\Models\Location\ZipCode;
 
 class PersonalController extends Controller
 {
@@ -89,12 +95,13 @@ class PersonalController extends Controller
      */
     public function show($id)
     {
-        $get_country = Personal::with('country')->get();
-        $get_province = Personal::with('province')->get();
-        $get_city = Personal::with('city')->get();
-        $get_district = Personal::with('district')->get();
-        $get_village = Personal::with('village')->get();
-        $get_zipcode = Personal::with('zipcode')->get();
+        $data = Personal::findOrFail($id);
+        $get_country = Country::where('id', $data->country_id)->first();
+        $get_province = Province::where('id',$data->province_id)->first();
+        $get_city = City::where('id',$data->city_id)->first();
+        $get_district = District::where('id',$data->district_id)->first();
+        $get_village = Village::where('id',$data->village_id)->first();
+        $get_zipcode = ZipCode::where('id',$data->zipcode_id)->first();
 
         $data = [
             'title'         => 'Customer Personal',
@@ -102,7 +109,7 @@ class PersonalController extends Controller
             'description'   => 'Detail Customer Personal User',
             'breadcrumb'    => ['Customer Personal', 'Detail Customer Personal'],
             'guard'         => auth()->user()->group,
-            'data'          => Personal::findOrFail($id),
+            'data'          => $data,
             'country'       => $get_country,
             'province'      => $get_province,
             'city'          => $get_city,

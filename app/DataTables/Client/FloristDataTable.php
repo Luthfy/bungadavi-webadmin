@@ -21,7 +21,31 @@ class FloristDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'client/florist.action');
+            ->editColumn('country_id', function ($datatable) {
+                return $datatable->country()->first()->name ?? '-';
+            })
+            ->editColumn('province_id', function ($datatable) {
+                return $datatable->province()->first()->name ?? '-';
+            })
+            ->editColumn('city_id', function ($datatable) {
+                return $datatable->city()->first()->name ?? '-';
+            })
+            ->editColumn('district_id', function ($datatable) {
+                return $datatable->district()->first()->name ?? '-';
+            })
+            ->editColumn('village_id', function ($datatable) {
+                return $datatable->village()->first()->name ?? '-';
+            })
+            ->editColumn('zipcode_id', function ($datatable) {
+                return $datatable->zipcode()->first()->postal_code ?? '-';
+            })
+            ->addColumn('action', function ($datatable) {
+                $html  = "";
+                $html .= "<a href='".route('bungadavi.florist.edit', ['florist' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                $html .= "<a href='".route('bungadavi.florist.show', ['florist' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
+                return $html;
+            });
     }
 
     /**
@@ -43,18 +67,11 @@ class FloristDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('client/florist-table')
+                    ->setTableId('datatableserverside')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+                    ->dom('lfrtip')
+                    ->orderBy(1);
     }
 
     /**
@@ -70,9 +87,22 @@ class FloristDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('fullname'),
+            Column::make('mobile'),
+            Column::make('address'),
+            Column::make('country_id')
+                ->title('Country'),
+            Column::make('province_id')
+                ->title('Province'),
+            Column::make('city_id')
+                ->title('City'),
+            Column::make('district_id')
+                ->title('District'),
+            Column::make('village_id')
+                ->title('Village'),
+            Column::make('zipcode_id')
+                ->title('Zipcode'),
+            Column::make('created_at')
         ];
     }
 

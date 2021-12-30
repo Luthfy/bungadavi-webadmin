@@ -99,9 +99,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Country <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($country as $item)
-                                                {{$item->country->name}}
-                                            @endforeach
+                                            {{$country->name}}
                                         </div>
                                     </div>
                                 </div>
@@ -109,9 +107,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Province <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($province as $item)
-                                                {{$item->province->name}}
-                                            @endforeach
+                                            {{$province->name}}
                                         </div>
                                     </div>
                                 </div>
@@ -121,9 +117,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">City <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($city as $item)
-                                                {{$item->city->name}}
-                                            @endforeach
+                                            {{$city->name}}
                                         </div>
                                     </div>
                                 </div>
@@ -131,9 +125,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">District <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($district as $item)
-                                                {{$item->district->name}}
-                                            @endforeach
+                                            {{$district->name}}
                                         </div>
                                     </div>
                                 </div>
@@ -143,9 +135,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Village <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($village as $item)
-                                                {{$item->village->name}}
-                                            @endforeach
+                                            {{$village->name}}
                                         </div>
                                     </div>
                                 </div>
@@ -153,10 +143,7 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-12 col-md-12">Zip Code <span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-12">
-                                            @foreach ($zipcode as $item)
-                                                {{$item->zipcode->postal_code}}
-                                            @endforeach
-
+                                            {{$zipcode->postal_code}}
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +248,7 @@
                             <div class="row pb-4">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="row">
-                                        <label class="col-form-label col-sm-12 col-md-12">NPWP</label>
+                                        <label class="col-form-label col-sm-12 col-md-12">NPWP Image</label>
                                         <div class="col-sm-12 col-md-12">
                                             <img src="{{ asset('storage/'.$data->npwp_image) }}" height="200px" width="250" style="margin-bottom: 2rem">
                                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Location;
 
+use App\Models\Client\Florist;
 use App\Models\Client\Personal;
 use App\Models\Client\PersonalRecipient;
 use App\Models\Courier\Courier;
@@ -66,5 +67,10 @@ class Country extends Model
     public function hasPersonalRecipient()
     {
         return $this->hasMany(PersonalRecipient::class, 'country_id', 'id');
+    }
+
+    public function hasFlorist()
+    {
+        return $this->hasMany(Florist::class, 'country_id', 'id');
     }
 }
