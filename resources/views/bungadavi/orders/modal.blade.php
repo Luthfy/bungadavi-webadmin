@@ -206,10 +206,10 @@
             @forelse ($products as $item)
             <tr>
                 <td>{!! Form::checkbox('product_checkbox[]', $item->uuid, null, ['class' => 'form-check', 'id' => 'product_uuid']) !!}</td>
-                <td>{{ $item->image_main_product }}</td>
+                <td><img src="{{ url('storage/'.$item->image_main_product) }}" alt="" srcset="" class="img-thumbnail" style="max-width: 120px"></td>
                 <td>{{ $item->code_product }}</td>
                 <td>{{ $item->name_product }}</td>
-                <td>{{ $item->selling_price_product }}</td>
+                <td>{{ $item->cost_product }}</td>
             </tr>
             @empty
 
