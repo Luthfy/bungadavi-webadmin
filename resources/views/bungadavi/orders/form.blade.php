@@ -469,11 +469,29 @@
                     let html_product = "";
                     product_result = result;
                     result.forEach( (x, i) => {
-                        html_product += "<h3 class='h3'>"+ x.code_product +"</h3>";
+                        html_product += "<div class='col-6'>";
+                        html_product += "<img src='{{ url(\'"+"storage/"+x.product_main_image+"\') }}'/>";
+                        html_product += "</div>";
+                        html_product += "<div class='col-6'>";
+                        html_product += "<h3 class='h6'>"+ x.code_product +"</h3>";
+                        html_product += "<h3 class='h3'>"+ x.name_product +"</h3>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<label>Qty</label>";
                         html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
+                        html_product += "</div>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<label>Message From</label>";
                         html_product += "<input type='text' class='form-control' id='fromMessageProduct' value='' />";
+                        html_product += "</div>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<label>Message To</label>";
                         html_product += "<input type='text' class='form-control' id='toMessageProduct' value='' />";
+                        html_product += "</div>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<label>Product Remarks</label>";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
+                        html_product += "</div>";
+                        html_product += "</div>";
 
                         // listProductOrder[i] = {
                         //     product_uuid : x.uuid,
