@@ -43,18 +43,31 @@ productCode | productName | Type
 sellingPrice | cost Price
 status
 
+-> NEW ORDER
+-> TAKE FLORIST
+-> REJECT FLORIST
+-> ACCEPT FLORIST
+-> ON PROGRESS
+-> READY TO PICKUP
+-> HAS BEEN ASSIGNED TO COURIER
+-> HAS BEEN PICKUP
+-> REJECTED BY COURIER
+-> ON DELIVERY
+-> RETURN TO WAREHOUSE
+-> RECEIVED BY CUSTOMER
+
 0 = cart
-1 = checkout
+1 = checkout -> NEW ORDER
 2 = paid -> upload bukti pembayaran manual upload
 3 = unpaid
 4 = cancel order by customer
 5 = cancel order by bungadavi
 6 = cancel order by payment gateway
-7 = order forward to gudang
-8 = product ready from gudang to pickup -> notifikasi kirim kurir
-9 = accept by courier
+7 = order forward to gudang -> ON PROGRESS
+8 = product ready from gudang to pickup -> notifikasi kirim kurir -> READY TO PICKUP
+9 = accept by courier -> HAS BEEN PICKUP
 10 = sudah di pickup courier (include foto dan sudah di pickup) -> api laravel
-11 = dalam perjalanan
+11 = dalam perjalanan -> ON DELIVERY
 12 = sudah sampai di customer (include foto) -> api laravel
 13 = pengiriman kembali ke gudang
 14 = reject kurir
