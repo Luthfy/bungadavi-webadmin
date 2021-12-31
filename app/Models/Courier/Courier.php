@@ -3,6 +3,7 @@
 namespace App\Models\Courier;
 
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\Village;
@@ -60,10 +61,8 @@ class Courier extends Model
         'bank_branch',
         'photo',
         'fcm',
-        'token',
         'is_active',
         'florist_uuid',
-        'user_uuid',
     ];
 
     protected $casts = [
@@ -76,16 +75,17 @@ class Courier extends Model
         parent::boot();
 
         self::creating(function ($model) {
-            $prefix = "CBD";
-            // if (auth()) {
-            //     if (auth()->user()->hasRole('bungadavi')) {
-            //         $prefix = "CBDO";
-            //     } else {
-            //         $prefix = "CBDA";
-            //     }
-            // }
+            $prefix = "UND";
+            if (auth()) {
+                if (auth()->user()->hasRole('bungadavi')) {
+                    $prefix = "CBDO";
+                } else {
+                    $prefix = "CBDA";
+                }
+            }
 
             $model['uuid']      = Uuid::uuid4()->toString();
+            $model['token']     = Str::random(10);
             $model['user_uuid'] = auth()->user()->uuid ?? null;
             $model['unique_code_courier']  = $prefix . date('Ymdhis') . str_pad((self::get()->where('florist_uuid', auth()->user()->uuid ?? '0')->count()) + 1, 4, "0", STR_PAD_LEFT);
             return $model;

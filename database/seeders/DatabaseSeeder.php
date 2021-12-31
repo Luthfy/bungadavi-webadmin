@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OurBankSeeder::class);
         $this->call(DeliveryRemarkSeeder::class);
 
-        $this->call(CourierSeeder::class);
+        // $this->call(CourierSeeder::class);
 
         if (config('app.env') != 'production') {
             $this->call(StockSeeder::class);

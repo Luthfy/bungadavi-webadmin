@@ -129,7 +129,7 @@ Route::group([
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
 
     // Courier
-    Route::resource('courier', CourierController::class)->names('couriers');
+    Route::resource('courier', CourierController::class)->names('courier');
 
     // Route::get('create_courier', [CourierController::class, 'form_create']);
     // Route::get('courier_list',[CourierController::class, 'index']);

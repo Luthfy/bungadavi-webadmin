@@ -114,8 +114,8 @@
         <a href="#"><i class="fa fa-motorcycle" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span>Courier</span> <span class="menu-arrow"></span></a>
         <ul style="display: none;">
-            <li><a href="{{ url('admin/') }}">Create Courier</a></li>
-            <li><a href="{{ route('bungadavi.couriers.index') }}">Courier List</a></li>
+            <li><a href="{{ route('bungadavi.courier.index') }}">Create Courier</a></li>
+            <li><a href="{{ route('bungadavi.courier.index') }}">Courier List</a></li>
         </ul>
     </li>
 

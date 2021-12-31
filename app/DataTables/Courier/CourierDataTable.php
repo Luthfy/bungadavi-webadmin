@@ -21,7 +21,13 @@ class CourierDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'courier.action');
+            ->addColumn('action', function ($datatable) {
+                $html  = "";
+                $html .= "<a href='".route('bungadavi.courier.edit', ['courier' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                $html .= "<a href='".route('bungadavi.courier.show', ['courier' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
+                return $html;
+            });
     }
 
     /**
@@ -63,12 +69,11 @@ class CourierDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('Detail'),
-            Column::make('Fullname'),
-            Column::make('Email'),
-            Column::make('Mobile'),
-            Column::make('Username'),
-            Column::make('Join Date'),
+            Column::make('fullname'),
+            Column::make('email'),
+            Column::make('mobile'),
+            Column::make('username'),
+            Column::make('join_date'),
         ];
     }
 
