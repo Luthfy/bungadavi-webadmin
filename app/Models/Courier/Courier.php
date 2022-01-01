@@ -76,13 +76,13 @@ class Courier extends Model
 
         self::creating(function ($model) {
             $prefix = "UND";
-            if (auth()) {
-                if (auth()->user()->hasRole('bungadavi')) {
-                    $prefix = "CBDO";
-                } else {
-                    $prefix = "CBDA";
-                }
-            }
+            // if (auth()) {
+            //     if (auth()->user()->hasRole('bungadavi')) {
+            //         $prefix = "CBDO";
+            //     } else {
+            //         $prefix = "CBDA";
+            //     }
+            // }
 
             $model['uuid']      = Uuid::uuid4()->toString();
             $model['token']     = Str::random(10);

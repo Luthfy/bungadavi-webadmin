@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Client;
 
-use App\Models\Client/FloristAdmin;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,7 +21,18 @@ class FloristAdminDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'client/floristadmin.action');
+            ->editColumn('customer_uuid', function ($datatable) {
+                return $datatable->affiliate()->first()->fullname ?? '-';
+            })
+            ->addColumn('action', function ($datatable) {
+                $html  = "";
+                if (auth()->user()->hasRole('bungadavi')) {
+                    $html .= "<a href='".route('bungadavi.floristadmin.edit', ['floristadmin' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                    // $html .= "<a href='".route('bungadavi.floristadmin.show', ['floristadmin' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                    $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
+                }
+                return $html;
+            });
     }
 
     /**
@@ -30,9 +41,13 @@ class FloristAdminDataTable extends DataTable
      * @param \App\Models\Client/FloristAdmin $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Client/FloristAdmin $model)
+    public function query(User $model)
     {
-        return $model->newQuery();
+        if (auth()->user()->hasRole('bungadavi')) {
+            return $model->where('user_type', 'affiliate')->newQuery();
+        } else {
+            return $model->where('user_type', 'affiliate')->where('customer_uuid', auth()->user()->customer_uuid)->newQuery();
+        }
     }
 
     /**
@@ -43,7 +58,7 @@ class FloristAdminDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('client/floristadmin-table')
+                    ->setTableId('datatableserverside')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -70,10 +85,14 @@ class FloristAdminDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name'),
+            Column::make('email'),
+            Column::make('phone'),
+            Column::make('address'),
+            Column::make('photo'),
+            Column::make('position'),
+            Column::make('user_type'),
+            Column::make('customer_uuid')
         ];
     }
 
@@ -84,6 +103,6 @@ class FloristAdminDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Client/FloristAdmin_' . date('YmdHis');
+        return 'ClientFloristAdmin_' . date('YmdHis');
     }
 }

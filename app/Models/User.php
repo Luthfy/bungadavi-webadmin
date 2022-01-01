@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Client\Florist;
 use Ramsey\Uuid\Uuid;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,7 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'fullname',
+        'name',
         'username',
         'email',
         'password',
@@ -69,5 +70,15 @@ class User extends Authenticatable
             $model['pass_access'] = str_pad(mt_rand(0, 99999), 4, 0, STR_PAD_LEFT);
             return $model;
         });
+    }
+
+    /**
+     * Get the florist or affiliate that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function affiliate()
+    {
+        return $this->belongsTo(Florist::class, 'customer_uuid', 'uuid');
     }
 }
