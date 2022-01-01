@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Bungadavi\Product\ProductController;
 use App\Http\Controllers\Bungadavi\Transaction\OrderController;
+use App\Http\Controllers\Courier\CourierTaskController;
 
 Route::group([
     'prefix' => 'affiliate',
@@ -17,4 +18,6 @@ Route::group([
     // PRODUCT CONTROL
     Route::get('products', [ProductController::class, "index"])->name('products');
     Route::resource('transaction', OrderController::class)->names('orders');
+
+    Route::resource('couriertask', CourierTaskController::class)->names('couriertask');
 });

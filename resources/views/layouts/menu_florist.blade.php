@@ -65,7 +65,7 @@
     </li>
 
     <li>
-        <a href="{{ route('bungadavi.couriertask.index') }}"><i class="fa fa-truck" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+        <a href="{{ route('affiliate.couriertask.index') }}"><i class="fa fa-truck" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Courier Task</span> </span></a>
     </li>
 
