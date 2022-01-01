@@ -81,15 +81,6 @@
                     {{-- belom bisa --}}
                     {!! Form::select('courier_uuid', [], null, ['class' => 'form-control', 'id' => 'courier_uuid']) !!}
                 </div>
-                <div class="form-group">
-                    <label for="">Delivery Number Assignment</label>
-                    {!! Form::text('delivery_number_assignment', null, ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                    <label for="">Status Assignment</label>
-                    {!! Form::select('status_assignment', array('1' => 'Assigned', '2' => 'Has Been Pickup', '3' => 'On Delivery', '4' => 'Has Been Received'),null,['class' => 'form-control'] );!!}
-                </div>
 
                 <div class="form-group">
                     <label for="">Notes Assignment</label>

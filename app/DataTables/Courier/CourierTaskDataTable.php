@@ -62,6 +62,7 @@ class CourierTaskDataTable extends DataTable
         if (auth()->user()->hasRole('bungadavi')) {
             return $model->newQuery();
         } else {
+            return $model->newQuery();
             // return $model->where('florist_uuid', auth()->user()->customer_uuid)->newQuery();
         }
     }
