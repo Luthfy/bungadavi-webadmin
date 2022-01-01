@@ -111,6 +111,12 @@
         <a href="{{ route('bungadavi.orders.realtimeorder') }}"><i class="fa fa-clock-o" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span> Real Time Order</span></a>
     </li>
+
+    <li>
+        <a href="{{ route('bungadavi.couriertask.index') }}"><i class="fa fa-truck" aria-hidden="true" style="font-size: 1.2em !important;"></i>
+            <span> Courier Task</span></a>
+    </li>
+
     <li class="submenu">
         <a href="#"><i class="fa fa-motorcycle" aria-hidden="true" style="font-size: 1.2em !important;"></i>
             <span>Courier</span> <span class="menu-arrow"></span></a>

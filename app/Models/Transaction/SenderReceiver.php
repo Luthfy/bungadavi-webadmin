@@ -2,6 +2,7 @@
 
 namespace App\Models\Transaction;
 
+use App\Models\Client\Personal;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,5 +62,15 @@ class SenderReceiver extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid');
+    }
+
+    public function client_personal()
+    {
+        return $this->hasMany(Personal::class, 'client_uuid', 'uuid');
     }
 }

@@ -126,4 +126,9 @@ class Courier extends Model
     {
         return $this->belongsTo(ZipCode::class, 'zipcode', 'id');
     }
+
+    public function courier_task()
+    {
+        return $this->hasMany(CourierTask::class, 'courier_uuid', 'uuid');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Client;
 
+use App\Models\Courier\CourierTask;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
 use App\Models\Location\City;
@@ -10,6 +11,7 @@ use App\Models\Location\Village;
 use App\Models\Location\ZipCode;
 use App\Models\Location\District;
 use App\Models\Location\Province;
+use App\Models\Transaction\SenderReceiver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -96,6 +98,16 @@ class Personal extends Model
     public function hasPersonalRecipient()
     {
         return $this->hasMany(PersonalRecipient::class, 'client_personal_uuid', 'uuid');
+    }
+
+    public function sender_receiver()
+    {
+        return $this->belongsTo(SenderReceiver::class, 'client_uuid', 'uuid');
+    }
+
+    public function courier_task()
+    {
+        return $this->hasMany(CourierTask::class, 'user_uuid', 'uuid');
     }
 
 }

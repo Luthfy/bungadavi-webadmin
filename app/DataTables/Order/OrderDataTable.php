@@ -34,6 +34,36 @@ class OrderDataTable extends DataTable
                 }
                 return $html;
             })
+            ->editColumn('pic_name', function ($datatable) {
+                return $datatable->sender_receiver()->first()->pic_name ?? '-';
+            })
+            ->editColumn('fullname', function ($datatable) {
+                return $datatable->sender_receiver()->first()->client_personal()->fullname ?? '-';
+            })
+            ->editColumn('po_referrence', function ($datatable) {
+                return $datatable->sender_receiver()->first()->po_referrence ?? '-';
+            })
+            ->editColumn('sender_name', function ($datatable) {
+                return $datatable->sender_receiver()->first()->sender_name ?? '-';
+            })
+            ->editColumn('sender_phone_number', function ($datatable) {
+                return $datatable->sender_receiver()->first()->sender_phone_number ?? '-';
+            })
+            ->editColumn('receiver_name', function ($datatable) {
+                return $datatable->sender_receiver()->first()->receiver_name ?? '-';
+            })
+            ->editColumn('receiver_phone_number', function ($datatable) {
+                return $datatable->sender_receiver()->first()->receiver_phone_number ?? '-';
+            })
+            ->editColumn('delivery_date', function ($datatable) {
+                return $datatable->delivery_schedule()->first()->delivery_date ?? '-';
+            })
+            ->editColumn('time_slot_name', function ($datatable) {
+                return $datatable->delivery_schedule()->first()->time_slot_name ?? '-';
+            })
+            ->editColumn('delivery_remarks', function ($datatable) {
+                return $datatable->delivery_schedule()->first()->delivery_remarks ?? '-';
+            })
             ->editColumn('florist_uuid', function ($datatable) {
                 $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
                 return ($datatable->florist_uuid == null) ? $button : $datatable->florist_uuid ;
@@ -89,32 +119,29 @@ class OrderDataTable extends DataTable
                 ->title('Status'),
             Column::make('florist_uuid')
                 ->title('Florist Name'),
-            Column::make('total_order_transaction')
+            Column::make('fullname')
                 ->title('Client Name'),
-            Column::make('total_order_transaction')
+            Column::make('pic_name')
                 ->title('PIC Name'),
+            Column::make('po_referrence')
+                ->title('PO Reference'),
+            Column::make('sender_name')
+                ->title('Sender Name'),
+            Column::make('sender_phone_number')
+                ->title('Sender Mobile'),
+            Column::make('receiver_name')
+                ->title('Receiver Name'),
+            Column::make('receiver_phone_number')
+                ->title('Receiver Mobile'),
             Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
-            Column::make('total_order_transaction')
-                ->title('PIC Name'),
+                ->title('City Name'),
+            Column::make('delivery_date')
+                ->title('Delivery Date'),
+            Column::make('time_slot_name')
+                ->title('Time Slot'),
+            Column::make('delivery_remarks')
+                ->title('Delivery Remarks'),
+            Column::make('created_at'),
         ];
     }
 

@@ -38,6 +38,7 @@ use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController
 use App\Http\Controllers\Bungadavi\Client\FloristAdminController;
 use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
+use App\Http\Controllers\Courier\CourierTaskController;
 use App\Models\BasicSetting\CardMessageCategory;
 use App\Models\BasicSetting\CardMessageSubCategory;
 use App\Models\BasicSetting\TimeSlot;
@@ -132,7 +133,7 @@ Route::group([
 
     // Courier
     Route::resource('courier', CourierController::class)->names('courier');
-
+    Route::resource('couriertask', CourierTaskController::class)->names('couriertask');
     // Route::get('create_courier', [CourierController::class, 'form_create']);
     // Route::get('courier_list',[CourierController::class, 'index']);
     // Route::get('courier_list_ajax',[CourierController::class, 'dataAjaxCourier']);

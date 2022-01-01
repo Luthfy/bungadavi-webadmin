@@ -2,6 +2,7 @@
 
 namespace App\Models\Transaction;
 
+use App\Models\Courier\CourierTask;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -52,5 +53,10 @@ class Delivery extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid')->first();
+    }
+
+    public function courier_task()
+    {
+        return $this->hasMany(CourierTask::class, 'delivery_schedule_uuid', 'uuid');
     }
 }

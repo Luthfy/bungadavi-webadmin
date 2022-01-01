@@ -2,6 +2,8 @@
 
 namespace App\Models\Transaction;
 
+use App\Models\Client\Personal;
+use App\Models\Courier\CourierTask;
 use Ramsey\Uuid\Uuid;
 use App\Models\Transaction\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +56,20 @@ class Order extends Model
     public function products()
     {
         return $this->hasMany(Product::class, 'order_transactions_uuid', 'uuid');
+    }
+
+    public function sender_receiver()
+    {
+        return $this->hasMany(SenderReceiver::class, 'order_transactions_uuid', 'uuid');
+    }
+
+    public function delivery_schedule()
+    {
+        return $this->hasMany(Delivery::class, 'order_transactions_uuid', 'uuid');
+    }
+
+    public function courier_task()
+    {
+        return $this->hasMany(CourierTask::class, 'order_transactions_uuid', 'uuid');
     }
 }
