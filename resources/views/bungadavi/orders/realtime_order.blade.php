@@ -37,31 +37,47 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
+                            @foreach ($data['orderToday'] as $item)
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-12">
-                                        @foreach ($data['orderToday'] as $item)
-                                            <h2 class="h4">Order ID : {{$item->order()->code_order_transaction}}</h2>
-                                            @foreach ($item->order()->products()->get() as $product)
-                                                {{ $product->name_product }}
-                                            @endforeach
+                                        <h3 class="h5">{{ $item->order()->first()->code_order_transaction }}</h3>
+                                        @foreach($item->order()->first()->products()->get() as $prod)
+                                        <div class="row mt-4">
+                                            <div class="col-4">
+                                                <img src="{{ url('storage/'.$prod->product()->first()->image_main_product) }}" alt="">
+                                            </div>
+                                            <div class="col-8">
+                                                <h5 class="h5">{{ $prod->name_product }}</h5>
+                                            </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                         <div class="col-6">
                             <div class="card">
+                                @foreach ($data['orderTomorrow'] as $item)
+                            <div class="card">
                                 <div class="card-body">
                                     <div class="col-12">
-                                        @foreach ($data['ordertomorrow'] as $item)
-                                            <h2 class="h4">Order ID : {{$item->order()->code_order_transaction}}</h2>
-                                            @foreach ($item->order()->products()->get() as $product)
-                                                {{ $product->name_product }}
-                                            @endforeach
+                                        <h3 class="h5">{{ $item->order()->first()->code_order_transaction }}</h3>
+                                        @foreach($item->order()->first()->products()->get() as $prod)
+                                        <div class="row mt-4">
+                                            <div class="col-4">
+                                                <img src="{{ url('storage/'.$prod->product()->first()->image_main_product) }}" alt="" style="max-width:100px;">
+                                            </div>
+                                            <div class="col-8">
+                                                <h5 class="h5">{{ $prod->name_product }}</h5>
+                                            </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
+                            </div>
+                            @endforeach
                             </div>
 
                         </div>

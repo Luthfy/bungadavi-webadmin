@@ -81,8 +81,22 @@ class OrderController extends Controller
 
             if ($request->sender_recipient['is_create_new']) {
                 switch ($request->sender_recipient['client_type']) {
+                    case 'corporate':
+
+                        break;
+
                     case 'affiliate':
                         $recipient = new FloristRecipient();
+                        $recipient->fullname    = $request->sender_recipient['receiver_name'];
+                        $recipient->phone       = $request->sender_recipient['receiver_phone_number'];
+                        $recipient->address     = $request->sender_recipient['receiver_address'];
+                        $recipient->country_id  = Country::where('name', $request->sender_recipient['receiver_country'])->first()->id;
+                        $recipient->province_id = Province::where('name', $request->sender_recipient['receiver_province'])->first()->id;
+                        $recipient->city_id     = City::where('name', $request->sender_recipient['receiver_city'])->first()->id;
+                        $recipient->district_id = District::where('name', $request->sender_recipient['receiver_district'])->first()->id;
+                        $recipient->village_id  = Village::where('name', $request->sender_recipient['receiver_village'])->first()->id;
+                        $recipient->zipcode_id  = ZipCode::where('postal_code', $request->sender_recipient['receiver_zipcode'])->first()->id;
+                        $recipient->client_affiliate_uuid = $request->sender_recipient[''];
                         $recipient->save();
                         break;
 
@@ -300,24 +314,10 @@ class OrderController extends Controller
         return response()->json($order->save());
     }
 
-    public function rejectFlorist(Request $request, $id)
+    public function updateStatus(Request $request, $id)
     {
         $order = Order::find($id);
-        $order->florist_uuid = null;
-        return response()->json($order->save());
-    }
-
-    public function acceptFlorist(Request $request, $id)
-    {
-        $order = Order::find($id);
-        $order->status_order_transaction = "On Progress";
-        return response()->json($order->save());
-    }
-
-    public function finishFlorist(Request $request, $id)
-    {
-        $order = Order::find($id);
-        $order->status_order_transaction = "Ready To Pickup";
+        $order->status_order_transaction = $request->status;
         return response()->json($order->save());
     }
 
@@ -333,8 +333,8 @@ class OrderController extends Controller
             'breadcrumb'    => ['Real Time Order Management', 'Order List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
             'data'          => [
-                'orderToday' => Delivery::where('delivery_date', $today)->get(),
-                'ordertomorrow' => Delivery::where('delivery_date', $tomorrow)->get(),
+                'orderToday'    => Schedule::whereDate('delivery_date', $today)->get(),
+                'orderTomorrow' => Schedule::whereDate('delivery_date', ">", $tomorrow)->get(),
             ]
         ];
 
