@@ -122,9 +122,9 @@ class CreateOrdersTransactionTable extends Migration
             $table->foreignUuid('delivery_schedule_uuid')->nullable()->index();
             $table->foreignUuid('user_uuid')->nullable()->index();
             $table->foreignUuid('courier_uuid')->nullable()->index();
-            $table->string('delivery_number_assignment');
+            $table->string('delivery_number_assignment')->nullable();
             $table->string('status_assignment')->comment('assigned, has been pickup, on delivery, has been received');
-            $table->string('notes_assigment');
+            $table->string('notes_assigment')->nullable();
             $table->boolean('browse_image')->default(false);
             $table->string('image_pickup')->nullable();
             $table->timestamps();

@@ -64,6 +64,9 @@ Route::group([
     Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');
     Route::get('timeslots/ajax-list/{dates}', [TimeSlotController::class, 'list'])->name('timeslot.ajax.list');
 
+    Route::get('courier/ajax-list/{florist_uuid?}', [CourierController::class, 'list'])->name('courier.ajax.list');
+    Route::post('couriertask/assigned/{scheduleId?}', [CourierTaskController::class, 'assignToCourier'])->name('couriertask.assign');
+
     Route::resource('personal', PersonalController::class)->names('personal');
     Route::resource('personalrecipient', PersonalRecipientController::class)->names('personalrecipient');
     Route::resource('corporate', CorporateController::class)->names('corporate');

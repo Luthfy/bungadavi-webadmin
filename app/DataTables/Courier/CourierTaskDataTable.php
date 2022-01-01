@@ -2,11 +2,8 @@
 
 namespace App\DataTables\Courier;
 
-use App\Models\Courier\CourierTask;
-use Yajra\DataTables\Html\Button;
+use App\Models\Transaction\Schedule;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class CourierTaskDataTable extends DataTable
@@ -26,18 +23,18 @@ class CourierTaskDataTable extends DataTable
                 return $datatable->order()->first()->code_order_transaction ?? '-';
             })
             ->addColumn('village_id', function ($datatable) {
-                return $datatable->user()->first()->village_id ?? '-';
+                return $datatable->senderRecipient()->first()->receiver_village ?? '-';
             })
-            ->addColumn('delivery_date', function ($datatable) {
-                return $datatable->delivery()->first()->delivery_date ?? '-';
-            })
-            ->addColumn('time_slot_name', function ($datatable) {
-                return $datatable->delivery()->first()->time_slot_name ?? '-';
-            })
-            ->addColumn('fullname', function ($datatable) {
-                return $datatable->courier()->first()->fullname ?? '-';
-            })
-            ->addColumn('status_order_transaction', function ($datatable) {
+            // ->addColumn('delivery_date', function ($datatable) {
+            //     return $datatable->delivery()->first()->delivery_date ?? '-';
+            // })
+            // ->addColumn('time_slot_name', function ($datatable) {
+            //     return $datatable->delivery()->first()->time_slot_name ?? '-';
+            // })
+            // ->addColumn('courier_uuid', function ($datatable) {
+            //     return $datatable->courier()->first()->uuid ?? '-';
+            // })
+            ->editColumn('status_order_transaction', function ($datatable) {
                 return $datatable->order()->first()->status_order_transaction ?? '-';
             })
             ->addColumn('action', function ($datatable) {
@@ -46,8 +43,13 @@ class CourierTaskDataTable extends DataTable
                 return $html;
             })
             ->editColumn('status_assignment', function ($datatable) {
-                $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignCourier" data-uuid="'.$datatable->uuid.'" data-code-product="'.$datatable->code_product.'">Assign Courier</button>';
-                return ($datatable->courier_uuid == null) ? $button : $datatable->courier_uuid ;
+                if ($datatable->courierTask()->count() == 0) {
+                    $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignCourier" data-uuid="'.$datatable->uuid.'" data-DoNumber="'.$datatable->order()->first()->code_order_transaction.'">Assign Courier</button>';
+                    return $button;
+                } else {
+                    $courierName = $datatable->courierTask()->first()->courier()->first()->fullname;
+                    return $datatable->courierTask()->first()->status_assignment . ($courierName == null ? 'unknown' : ' Oleh ' . $courierName);
+                }
             });
     }
 
@@ -57,7 +59,7 @@ class CourierTaskDataTable extends DataTable
      * @param \App\Models\Courier/CourierTask $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(CourierTask $model)
+    public function query(Schedule $model)
     {
         if (auth()->user()->hasRole('bungadavi')) {
             return $model->newQuery();
@@ -103,8 +105,6 @@ class CourierTaskDataTable extends DataTable
                 ->title('Delivery Date'),
             Column::make('time_slot_name')
                 ->title('Time Slot'),
-            Column::make('fullname')
-                ->title('Courier Name'),
             Column::make('status_assignment')
                 ->title('Status Assign'),
             Column::make('status_order_transaction')

@@ -27,7 +27,7 @@ class CourierTask extends Model
         "courier_uuid",
         "delivery_number_assignment",
         "status_assignment",
-        "notes_assignment",
+        "notes_assigment",
         'browse_image',
         'image_pickup',
     ];
@@ -43,6 +43,7 @@ class CourierTask extends Model
 
         self::creating(function ($model) {
             $model['uuid'] = Uuid::uuid4()->toString();
+            $model['delivery_number_assignment']  = "DN" . date('ymdhis') . str_pad((self::get()->count()) + 1, 4, "0", STR_PAD_LEFT);
             return $model;
         });
     }

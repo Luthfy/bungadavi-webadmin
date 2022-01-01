@@ -36,7 +36,7 @@
                 </div>
                 <div class="card-body">
 
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                           <a class="nav-link" id="home-tab" data-toggle="tab" href="#newOrder" role="tab" aria-controls="newOrder" aria-selected="true">New Order</a>
                         </li>
@@ -46,7 +46,7 @@
                         <li class="nav-item">
                           <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">Cancel Order</a>
                         </li>
-                    </ul>
+                    </ul> --}}
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="newOrder" role="tabpanel" aria-labelledby="newOrder-tab">
                             <div class="table-responsive">
@@ -77,19 +77,29 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="">Order Number</label>
+                    {!! Form::text('order_number', null, ['class' => 'form-control', 'id' => 'do_number', 'disabled' => true]) !!}
+                    {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
+                </div>
+
+                <div class="form-group">
                     <label for="">Courier</label>
-                    {{-- belom bisa --}}
                     {!! Form::select('courier_uuid', [], null, ['class' => 'form-control', 'id' => 'courier_uuid']) !!}
                 </div>
 
                 <div class="form-group">
+                    <label for="">Browse Image</label>
+                    {!! Form::select('browse_image', ["1" => "Izinkan Browse Image", "0" => "Tidak Izinkan Browse Image"], null, ['class' => 'form-control', 'id' => 'browse_image']) !!}
+                </div>
+
+                <div class="form-group">
                     <label for="">Notes Assignment</label>
-                    {!! Form::textarea('notes_assignment', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('notes_assignment', null, ['class' => 'form-control', 'id' => 'notes']) !!}
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSelectFloristAssign">Select</button>
+                <button type="button" class="btn btn-primary" id="btnAssignCourier">Select</button>
             </div>
         </div>
         </div>
@@ -110,32 +120,23 @@
 
     <script>
         $(document).ready(function (e) {
-            getFloristAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
+            getCourierAjax("{{ route('bungadavi.courier.ajax.list') }}" + "/" + "{{auth()->user()->customer_uuid ?? ''}}");
         });
 
-        $('#addModalAssignFlorist').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var uuid = button.data('uuid')
-            var codeProduct = button.data('code-product')
+        $("#btnAssignCourier").click(function (e) {
+            let scheduleId = $("#uuid").val();
 
-            var modal = $(this)
-
-            modal.find('.modal-body #uuid').val(uuid)
-            modal.find('.modal-body #code_product').val(codeProduct)
-        })
-
-        $("#btnSelectFloristAssign").click(function (e) {
-            let id = $("#uuid").val();
-            updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id);
-        })
-
-        function updateOrderAssignToFlorist(url)
-        {
             $.ajax({
-                url: url,
+                url: "{{ url('bungadavi/couriertask/assigned') }}" + "/" + scheduleId,
                 type: 'POST',
                 dataType: 'json',
-                data: JSON.stringify({"_token" : "{{ csrf_token() }}",'florist_uuid': $("#florist_uuid option:selected").val()}),
+                data: JSON.stringify({
+                    "_token" : "{{ csrf_token() }}",
+                    "courier_uuid" : $("#courier_uuid option:selected").val(),
+                    "status" : "ASSIGNED",
+                    "notes" : $("#notes").val(),
+                    "browse_image" : $("#browse_image option:selected").val()
+                }),
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
@@ -156,9 +157,20 @@
                     }
                 },
             });
-        }
+        })
 
-        function getFloristAjax(url)
+        $('#addModalAssignCourier').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var uuid = button.data('uuid')
+            var codeProduct = button.data('donumber')
+
+            var modal = $(this)
+
+            modal.find('.modal-body #uuid').val(uuid)
+            modal.find('.modal-body #do_number').val(codeProduct)
+        })
+
+        function getCourierAjax(url)
         {
             $.ajax({
                 url: url,
@@ -172,9 +184,9 @@
                     client_result = result;
                     let html = "";
                     result.forEach((res) => {
-                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
+                        html += "<option value='"+res.uuid+"'>"+res.username+"</option>";
                     })
-                    $("#florist_uuid").html(html);
+                    $("#courier_uuid").html(html);
                 },
             });
         }

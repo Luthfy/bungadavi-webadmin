@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Courier;
 
 use App\DataTables\Courier\CourierTaskDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Courier\CourierTask;
+use App\Models\Transaction\Schedule;
 use Illuminate\Http\Request;
 
 class CourierTaskController extends Controller
@@ -90,5 +92,22 @@ class CourierTaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function assignToCourier(Request $request, $scheduleOrderId)
+    {
+        $scheduleOrder = Schedule::findOrFail($scheduleOrderId);
+
+        $task = new CourierTask();
+        $task->order_transactions_uuid  = $scheduleOrder->order_transactions_uuid;
+        $task->delivery_schedule_uuid   = $scheduleOrder->uuid;
+        $task->status_assignment        = $request->status;
+        $task->notes_assigment          = $request->notes;
+        $task->browse_image             = $request->browse_image ?? 1;
+        $task->courier_uuid             = $request->courier_uuid;
+        $task->user_uuid                = auth()->user()->uuid ?? null;
+        $task->save();
+
+        return response(['message' => 'ok']);
     }
 }

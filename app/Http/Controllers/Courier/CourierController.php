@@ -271,5 +271,14 @@ class CourierController extends Controller
         return Courier::find($id)->delete();
     }
 
+    public function list($idFlorist = null)
+    {
+        if ($idFlorist == null) {
+            return response(Courier::all());
+        } else {
+            return response(Courier::where('florist_uuid', $idFlorist)->get());
+        }
+    }
+
 
 }
