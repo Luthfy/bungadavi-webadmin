@@ -78,7 +78,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="">Code Product</label>
-                    {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product']) !!}
+                    {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product', 'disabled' => true]) !!}
                     {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
                 </div>
                 <div class="form-group">
@@ -115,7 +115,7 @@
         $('#addModalAssignFlorist').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var uuid = button.data('uuid')
-            var codeProduct = button.data('code-product')
+            var codeProduct = button.data('codeproduct')
 
             var modal = $(this)
 

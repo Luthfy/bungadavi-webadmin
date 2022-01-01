@@ -4,17 +4,26 @@ namespace App\Http\Controllers\Bungadavi\Transaction;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Location\City;
+use App\Models\Client\Florist;
+use App\Models\Location\Country;
+use App\Models\Location\Village;
+use App\Models\Location\ZipCode;
+use App\Models\Location\District;
+use App\Models\Location\Province;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Payment;
 use App\Models\Transaction\Product;
 use App\Http\Controllers\Controller;
+use App\Models\BasicSetting\OurBank;
 use App\Models\Transaction\Delivery;
 use App\Models\Transaction\Schedule;
+use App\Models\Client\FloristRecipient;
 use App\DataTables\Order\OrderDataTable;
-use App\Models\BasicSetting\DeliveryRemark;
-use App\Models\BasicSetting\OurBank;
+use App\Models\Client\PersonalRecipient;
 use App\Models\Transaction\ProductCustom;
 use App\Models\Transaction\SenderReceiver;
+use App\Models\BasicSetting\DeliveryRemark;
 use App\Models\Product\Product as ProductStock;
 
 class OrderController extends Controller
@@ -69,6 +78,35 @@ class OrderController extends Controller
         if ($request->ajax()) {
 
             // validasi
+
+            if ($request->sender_recipient['is_create_new']) {
+                switch ($request->sender_recipient['client_type']) {
+                    case 'affiliate':
+                        $recipient = new FloristRecipient();
+                        $recipient->save();
+                        break;
+
+                    case 'personal':
+                        $recipient = new PersonalRecipient();
+                        $recipient->firstname   = $request->sender_recipient['receiver_name'];
+                        $recipient->phone       = $request->sender_recipient['receiver_phone_number'];
+                        $recipient->address     = $request->sender_recipient['receiver_address'];
+                        $recipient->country_id  = Country::where('name', $request->sender_recipient['receiver_country'])->first()->id;
+                        $recipient->province_id = Province::where('name', $request->sender_recipient['receiver_province'])->first()->id;
+                        $recipient->city_id     = City::where('name', $request->sender_recipient['receiver_city'])->first()->id;
+                        $recipient->district_id = District::where('name', $request->sender_recipient['receiver_district'])->first()->id;
+                        $recipient->village_id  = Village::where('name', $request->sender_recipient['receiver_village'])->first()->id;
+                        $recipient->zipcode_id  = ZipCode::where('postal_code', $request->sender_recipient['receiver_zipcode'])->first()->id;
+                        $recipient->client_personal_uuid = $request->sender_recipient['client_uuid'];
+                        $recipient->save();
+
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
+            }
 
             // insert order
             $codeOrderTransaction = date('Ymdhis');

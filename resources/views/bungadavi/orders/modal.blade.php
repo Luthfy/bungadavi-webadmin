@@ -99,7 +99,17 @@
           </button>
         </div>
         <div class="modal-body">
-            {!! Form::select('recipient_id', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'recipient_id']) !!}
+
+            <div class="col-12">
+                <div class="row my-4">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="inputDeliveryDate">Recipient Name</label>
+                            {!! Form::select('recipient_id', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'recipient_id']) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-12">
                 <div class="row my-4">
@@ -109,27 +119,37 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-12 d-none" id="form-new-recipient">
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="inputDeliveryDate">Receiver Name</label>
-                            {!! Form::text('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                            <label for="inputDeliveryDate">Recipient Name</label>
+                            {!! Form::text('recipient_name', null, [ "class" => "form-control", "id" => "recipientName", "aria-describedby" => "recipientNameHelp"]) !!}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="inputDeliveryDate">Receiver Phone</label>
-                            {!! Form::text('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                            <label for="inputDeliveryDate">Recipient Email</label>
+                            {!! Form::text('recipient_email', null, [ "class" => "form-control", "id" => "recipientEmail", "aria-describedby" => "recipientEmailHelp"]) !!}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="inputDeliveryDate">Receiver Address</label>
-                            {!! Form::text('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "inputDeliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                            <label for="inputDeliveryDate">Recipient Phone</label>
+                            {!! Form::text('recipient_phone', null, [ "class" => "form-control", "id" => "recipientPhone", "aria-describedby" => "recipientPhoneHelp"]) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="inputDeliveryDate">Recipient Address</label>
+                            {!! Form::textarea('recipient_address', null, [ "class" => "form-control", "id" => "recipientAddress", "aria-describedby" => "recipientAddressHelp", 'rows' => '4']) !!}
                         </div>
                     </div>
                 </div>
@@ -137,19 +157,19 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">Country</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('country', [], null, ['class' => 'form-control', 'id' => 'country-id']) !!}
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">Province</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('province', [], null, ['class' => 'form-control', 'id' => 'province-id']) !!}
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">City</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('city', [], null, ['class' => 'form-control', 'id' => 'city-id']) !!}
                         </div>
                     </div>
                 </div>
@@ -157,19 +177,19 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">District</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('district', [], null, ['class' => 'form-control', 'id' => 'district-id']) !!}
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">Village</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('village', [], null, ['class' => 'form-control', 'id' => 'village-id']) !!}
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="inputDeliveryDate">Zipcode</label>
-                            {!! Form::select('country', [], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('zipcode', [], null, ['class' => 'form-control', 'id' => 'zipcode-id']) !!}
                         </div>
                     </div>
                 </div>
@@ -177,7 +197,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="btnRecipientAdd">Understood</button>
+          <button type="button" class="btn btn-primary" id="btnRecipientAdd">Select</button>
         </div>
       </div>
     </div>

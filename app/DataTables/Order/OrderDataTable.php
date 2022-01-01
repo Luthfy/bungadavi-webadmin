@@ -35,7 +35,7 @@ class OrderDataTable extends DataTable
                 return $html;
             })
             ->editColumn('florist_uuid', function ($datatable) {
-                $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-code-product="'.$datatable->code_product.'">Assign To Florist</button>';
+                $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
                 return ($datatable->florist_uuid == null) ? $button : $datatable->florist_uuid ;
             });
     }

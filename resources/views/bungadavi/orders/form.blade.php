@@ -286,22 +286,44 @@
 
         // cliek set Click Recipient Data
         $("#btnRecipientAdd").click(function (e) {
-            let recipient_selected = recipient_result.find(x => x.uuid === $("#recipient_id").val());
+            if ($("#create_new_recipient:checked").val() == "on") {
+                Object.assign(senderRecipientOrder, {
+                    is_create_new: true,
+                    is_secret: false,
+                    receiver_name           : $("#recipientName").val(),
+                    receiver_phone_number   : $("#recipientPhone").val(),
+                    receiver_email      : $("#recipientEmail").val(),
+                    receiver_address    : $("#recipientPhone").val(),
+                    receiver_country    : $("#country-id option:checked").text(),
+                    receiver_province   : $("#province-id option:checked").text(),
+                    receiver_city       : $("#city-id option:checked").text(),
+                    receiver_district   : $("#district-id option:checked").text(),
+                    receiver_village    : $("#village-id option:checked").text(),
+                    receiver_zipcode    : $("#zipcode-id option:checked").text(),
+                });
 
-            Object.assign(senderRecipientOrder, {
-                is_secret: false,
-                receiver_name : recipient_selected.firstname + " " + recipient_selected.lastname,
-                receiver_phone_number : recipient_selected.phone,
-                receiver_address : recipient_selected.address,
-                receiver_country : recipient_selected.country_id,
-                receiver_province : recipient_selected.province_id,
-                receiver_city : recipient_selected.city_id,
-                receiver_district : recipient_selected.district_id,
-                receiver_village : recipient_selected.village_id,
-                receiver_zipcode : recipient_selected.zipcode_id,
-            });
+                setRecipientData(senderRecipientOrder)
+            } else {
+                let recipient_selected = recipient_result.find(x => x.uuid === $("#recipient_id").val());
 
-            setRecipientData(senderRecipientOrder)
+                Object.assign(senderRecipientOrder, {
+                    is_create_new: false,
+                    is_secret: false,
+                    receiver_name : recipient_selected.firstname + " " + recipient_selected.lastname,
+                    receiver_phone_number : recipient_selected.phone,
+                    receiver_email      : recipient_selected.email,
+                    receiver_address : recipient_selected.address,
+                    receiver_country : recipient_selected.country_id,
+                    receiver_province : recipient_selected.province_id,
+                    receiver_city : recipient_selected.city_id,
+                    receiver_district : recipient_selected.district_id,
+                    receiver_village : recipient_selected.village_id,
+                    receiver_zipcode : recipient_selected.zipcode_id,
+                });
+
+                setRecipientData(senderRecipientOrder)
+            }
+
 
             $("#btnOpenModalAddRecipient").html('Change Recipient');
             $("#addClientRecipient").modal('hide');
@@ -371,6 +393,15 @@
         {
             getProductAjax("{{ url('bungadavi/products/ajax-list?data=') }}" + productData);
         }
+
+        $("#create_new_recipient").change(function() {
+            if(this.checked) {
+                getCountriesAjax("{{ url('bungadavi/location/ajax/country')}}")
+                $("#form-new-recipient").removeClass('d-none');
+            } else {
+                $("#form-new-recipient").addClass('d-none');
+            }
+        });
 
         $('input[type=radio][name=radioButtonClientType]').change(function() {
             if (this.value == 'personal') {
@@ -469,11 +500,13 @@
                     let html_product = "";
                     product_result = result;
                     result.forEach( (x, i) => {
+                        let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
+                        html_product += "<div class='row'>";
                         html_product += "<div class='col-6'>";
-                        html_product += "<img src='{{ url(\'"+"storage/"+x.product_main_image+"\') }}'/>";
+                        html_product += "<img src='"+image_url+"' class='img-thumbnail' style='max-width=120px !important;' />";
                         html_product += "</div>";
                         html_product += "<div class='col-6'>";
-                        html_product += "<h3 class='h6'>"+ x.code_product +"</h3>";
+                        html_product += "<h3 class='h4'>"+ x.code_product +"</h3>";
                         html_product += "<h3 class='h3'>"+ x.name_product +"</h3>";
                         html_product += "<div class='form-group'>";
                         html_product += "<label>Qty</label>";
@@ -490,6 +523,7 @@
                         html_product += "<div class='form-group'>";
                         html_product += "<label>Product Remarks</label>";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
+                        html_product += "</div>";
                         html_product += "</div>";
                         html_product += "</div>";
 
@@ -722,6 +756,31 @@
                 payment_type_uuid : "Manual-UUID",
             };
         }
+
+        $("#village-id").change(function (e) {
+        let url = "{{url('bungadavi/location/ajax/zipcode')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val() + "&village-id=" + $("#village-id").val();
+        getZipCodesAjax(url)
+    });
+
+    $("#district-id").change(function (e) {
+        let url = "{{url('bungadavi/location/ajax/village')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val();
+        getVillagesAjax(url)
+    });
+
+    $("#city-id").change(function (e) {
+        let url = "{{url('bungadavi/location/ajax/district')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val();
+        getDistrictsAjax(url)
+    });
+
+    $("#province-id").change(function (e) {
+        let url = "{{url('bungadavi/location/ajax/city')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val();
+        getCitiesAjax(url)
+    });
+
+    $("#country-id").change(function (e) {
+        let url = "{{url('bungadavi/location/ajax/province')}}" + "?country-id=" + $("#country-id").val();
+        getProvincesAjax(url)
+    });
 
     </script>
 @endpush
