@@ -94,6 +94,40 @@
         </div>
     </div>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateStatusOrder" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update Status Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Code Product</label>
+                    {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product', 'disabled' => true]) !!}
+                    {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
+                </div>
+                <div class="form-group">
+                    <label for="">Florist Name</label>
+                    {!! Form::select('florist_uuid', [], null, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
+                </div>
+                <div class="form-group">
+                    <label for="">Status</label>
+                    {!! Form::select('status_order', ["Accept Florist" => "Accept", "Reject Florist" => "Reject", "Read To Pickup" => "Ready To Pickup"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnUpdateStatus">Select</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -123,6 +157,22 @@
             modal.find('.modal-body #code_product').val(codeProduct)
         })
 
+        $('#updateStatusOrder').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var uuid = button.data('uuid')
+            var codeProduct = button.data('codeproduct')
+
+            var modal = $(this)
+
+            modal.find('.modal-body #uuid').val(uuid)
+            modal.find('.modal-body #code_product').val(codeProduct)
+        })
+
+        $("#btnUpdateStatus").click(function (e) {
+            let id = $("#updateStatusOrder #uuid").val();
+            updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id + "/status");
+        });
+
         $("#btnSelectFloristAssign").click(function (e) {
             let id = $("#uuid").val();
             updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id);
@@ -134,7 +184,11 @@
                 url: url,
                 type: 'POST',
                 dataType: 'json',
-                data: JSON.stringify({"_token" : "{{ csrf_token() }}",'florist_uuid': $("#florist_uuid option:selected").val()}),
+                data: JSON.stringify({
+                    "_token" : "{{ csrf_token() }}",
+                    'florist_uuid': $("#florist_uuid option:selected").val(),
+                    'status': $("#status_order option:selected").val(),
+                }),
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
@@ -142,11 +196,11 @@
                 success: function (result) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Order Assign To Florist',
-                        text: 'New Order Has Been Assign To Florist!',
+                        title: 'Status Changed',
+                        text: 'Order Has Been Updated!',
                     });
 
-                    $('#addModalAssignFlorist').modal('hide')
+                    $('#updateStatusOrder').modal('hide')
 
                     if ($('#datatablesserverside').length > 0) {
                         $('#datatablesserverside').DataTable().ajax.reload();
@@ -174,6 +228,7 @@
                         html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
                     })
                     $("#florist_uuid").html(html);
+                    $("#updateStatusOrder #florist_uuid").html(html);
                 },
             });
         }

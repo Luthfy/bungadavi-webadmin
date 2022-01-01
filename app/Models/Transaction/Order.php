@@ -2,6 +2,7 @@
 
 namespace App\Models\Transaction;
 
+use App\Models\Client\Florist;
 use App\Models\Client\Personal;
 use App\Models\Courier\CourierTask;
 use Ramsey\Uuid\Uuid;
@@ -46,6 +47,16 @@ class Order extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
+    }
+
+    /**
+     * Get the floristName that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function floristName()
+    {
+        return $this->belongsTo(Florist::class, 'florist_uuid', 'uuid')->first()->fullname ?? '-';
     }
 
     /**

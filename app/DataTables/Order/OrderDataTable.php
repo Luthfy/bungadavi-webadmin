@@ -21,7 +21,7 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->rawColumns(['florist_uuid', 'action'])
+            ->rawColumns(['florist_uuid', 'action', 'status_order_transaction'])
             ->addColumn('action', function ($datatable) {
                 $html  = "";
                 if (auth()->user()->hasRole('bungadavi')) {
@@ -34,11 +34,15 @@ class OrderDataTable extends DataTable
                 }
                 return $html;
             })
+            ->editColumn('status_order_transaction', function ($datatable) {
+                $button = '<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateStatusOrder" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">'.$datatable->status_order_transaction.'</button>';
+                return $button;
+            })
             ->editColumn('pic_name', function ($datatable) {
                 return $datatable->sender_receiver()->first()->pic_name ?? '-';
             })
             ->editColumn('fullname', function ($datatable) {
-                return $datatable->sender_receiver()->first()->client_personal()->fullname ?? '-';
+                return $datatable->sender_receiver()->first()->receiver_name ?? '-';
             })
             ->editColumn('po_referrence', function ($datatable) {
                 return $datatable->sender_receiver()->first()->po_referrence ?? '-';
@@ -55,6 +59,9 @@ class OrderDataTable extends DataTable
             ->editColumn('receiver_phone_number', function ($datatable) {
                 return $datatable->sender_receiver()->first()->receiver_phone_number ?? '-';
             })
+            ->editColumn('receiver_city', function ($datatable) {
+                return $datatable->sender_receiver()->first()->receiver_city ?? '-';
+            })
             ->editColumn('delivery_date', function ($datatable) {
                 return $datatable->delivery_schedule()->first()->delivery_date ?? '-';
             })
@@ -66,7 +73,7 @@ class OrderDataTable extends DataTable
             })
             ->editColumn('florist_uuid', function ($datatable) {
                 $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
-                return ($datatable->florist_uuid == null) ? $button : $datatable->florist_uuid ;
+                return ($datatable->florist_uuid == null) ? $button : $datatable->floristName() ;
             });
     }
 
@@ -133,7 +140,7 @@ class OrderDataTable extends DataTable
                 ->title('Receiver Name'),
             Column::make('receiver_phone_number')
                 ->title('Receiver Mobile'),
-            Column::make('total_order_transaction')
+            Column::make('receiver_city')
                 ->title('City Name'),
             Column::make('delivery_date')
                 ->title('Delivery Date'),

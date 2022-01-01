@@ -3,6 +3,7 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
+use App\Models\Product\Product as ProductStock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,5 +43,10 @@ class Product extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(ProductStock::class, 'product_uuid', 'uuid');
     }
 }
