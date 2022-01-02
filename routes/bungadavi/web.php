@@ -58,7 +58,7 @@ Route::group([
     Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
     Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
-    // Route::get('floritsrecipient/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
+    Route::get('floristrecipient/ajax-list/{user}', [AffiliateController::class, 'listRecipient'])->name('affiliaterecipient.ajax.list');
     Route::get('products/ajax-list', [ProductController::class, 'list'])->name('products.ajax.list');
     Route::get('cardmessagecategory/ajax-list', [CardMessageCategoryController::class, 'list'])->name('cardmessagecategory.ajax.list');
     Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');

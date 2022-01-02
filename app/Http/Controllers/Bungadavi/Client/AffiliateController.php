@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bungadavi\Client;
 use Illuminate\Http\Request;
 use App\Models\Customer\Affiliate;
 use App\Http\Controllers\Controller;
+use App\Models\Client\FloristRecipient;
 
 class AffiliateController extends Controller
 {
@@ -84,10 +85,17 @@ class AffiliateController extends Controller
         //
     }
 
-    public function list(Request $request)
+    public function list()
     {
         return response()->json(
             Affiliate::all()
+        );
+    }
+
+    public function listRecipient($user)
+    {
+        return response()->json(
+            FloristRecipient::where('client_affiliate_uuid', $user)->get()
         );
     }
 }

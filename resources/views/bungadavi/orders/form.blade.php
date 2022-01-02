@@ -278,7 +278,12 @@
             }
 
             setSenderData(senderRecipientOrder)
-            getRecipientAjax("{{ url('bungadavi/personalrecipient/ajax-list') }}"+ "/" + client_selected.uuid);
+
+            if ($('input[type=radio][name=radioButtonClientType]:checked').val() == 'personal') {
+                getRecipientAjax("{{ url('bungadavi/personalrecipient/ajax-list') }}"+ "/" + client_selected.uuid);
+            } else {
+                getFloristRecipientAjax("{{ url('bungadavi/floristrecipient/ajax-list') }}"+ "/" + client_selected.uuid);
+            }
 
             $("#btnOpenModalAddSender").html('Change Sender');
             $("#addClientSender").modal('hide');
@@ -309,7 +314,7 @@
                 Object.assign(senderRecipientOrder, {
                     is_create_new: false,
                     is_secret: false,
-                    receiver_name : recipient_selected.firstname + " " + recipient_selected.lastname,
+                    receiver_name : ( $('input[type=radio][name=radioButtonClientType]:checked').val() == "personal" ? recipient_selected.firstname + " " + recipient_selected.lastname : recipient_selected.fullname),
                     receiver_phone_number : recipient_selected.phone,
                     receiver_email      : recipient_selected.email,
                     receiver_address : recipient_selected.address,
@@ -412,7 +417,7 @@
                 getClientAjax("{{ route('bungadavi.corporate.ajax.list') }}");
                 $("#formPICName").removeClass("d-none");
                 $("#formSenderName").addClass("d-none");
-            } else if (this.value == 'affilaite') {
+            } else if (this.value == 'affiliate') {
                 getClientAjax("{{ route('bungadavi.affiliate.ajax.list') }}");
                 $("#formPICName").removeClass("d-none");
                 $("#formSenderName").removeClass("d-none");
@@ -480,6 +485,27 @@
                     let html = "";
                     result.forEach((res) => {
                         html += "<option value='"+res.uuid+"'>"+res.firstname+"</option>";
+                    })
+                    $("#recipient_id").html(html);
+                },
+            });
+        }
+
+        function getFloristRecipientAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    recipient_result = result;
+                    let html = "";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
                     })
                     $("#recipient_id").html(html);
                 },
