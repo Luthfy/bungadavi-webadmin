@@ -96,7 +96,7 @@ class OrderController extends Controller
                         $recipient->district_id = District::where('name', $request->sender_recipient['receiver_district'])->first()->id;
                         $recipient->village_id  = Village::where('name', $request->sender_recipient['receiver_village'])->first()->id;
                         $recipient->zipcode_id  = ZipCode::where('postal_code', $request->sender_recipient['receiver_zipcode'])->first()->id;
-                        $recipient->client_affiliate_uuid = $request->sender_recipient[''];
+                        $recipient->client_affiliate_uuid = $request->sender_recipient['client_uuid'];
                         $recipient->save();
                         break;
 
@@ -173,7 +173,7 @@ class OrderController extends Controller
                 'sender_name'               => $request->sender_recipient['sender_name'],
                 'po_referrence'             => $request->sender_recipient['po_referrence'],
                 'sender_phone_number'       => $request->sender_recipient['sender_phone_number'],
-                'sender_address'            => $request->sender_recipient['sender_address'],
+                'sender_address'            => $request->sender_recipient['sender_address'] ?? "",
                 'sender_country'            => $request->sender_recipient['sender_country'],
                 'sender_province'           => $request->sender_recipient['sender_province'],
                 'sender_city'               => $request->sender_recipient['sender_city'],

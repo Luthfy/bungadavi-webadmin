@@ -27,7 +27,7 @@
                                 </label>
                             </div>
                             <div class="form-check ml-0">
-                                <input type="radio" id="radioButtonClientType" name="radioButtonClientType" class="radioButtonClientType" value="affilaite">
+                                <input type="radio" id="radioButtonClientType" name="radioButtonClientType" class="radioButtonClientType" value="affiliate">
                                 <label class="form-check-label" for="exampleRadios3">
                                     Affiliate
                                 </label>
