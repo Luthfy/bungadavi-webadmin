@@ -47,7 +47,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if (auth()->user()->hasRole('superadmin')) {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            // return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->route('bungadavi.dashboard');
         } else if (auth()->user()->hasRole('bungadavi')) {
             return redirect()->route('bungadavi.dashboard');
         } else if (auth()->user()->hasRole('corporate')) {
