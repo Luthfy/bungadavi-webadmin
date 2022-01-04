@@ -462,6 +462,7 @@
                 success: function (result) {
                     client_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Client -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
                     })
@@ -483,6 +484,7 @@
                 success: function (result) {
                     recipient_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Recipient -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.uuid+"'>"+res.firstname+"</option>";
                     })
@@ -504,6 +506,7 @@
                 success: function (result) {
                     recipient_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Florist Recipient -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
                     })
@@ -587,6 +590,7 @@
                 success: function (result) {
                     recipient_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Card Message Category -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.id+"'>"+res.name+"</option>";
                     })
@@ -608,6 +612,7 @@
                 success: function (result) {
                     recipient_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Card Message Sub Category -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.id+"'>"+res.name+"</option>";
                     })
@@ -629,6 +634,7 @@
                 success: function (result) {
                     timeslot_result = result;
                     let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Timeslot -</option>";
                     result.forEach((res) => {
                         html += "<option value='"+res.id+"'>"+res.time_slot_name+"</option>";
                     })
@@ -685,12 +691,15 @@
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (e) {
-                    console.log(e)
+
                     Swal.fire({
                         icon: 'success',
                         title: 'New Order Created',
                         text: 'New Order Has Been Created!',
-                    })
+                    });
+
+                    window.location.href = "{{ route('bungadavi.orders.index') }}";
+
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
