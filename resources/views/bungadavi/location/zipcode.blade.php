@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.bungadavi')
 
 @section('body')
 <div class="content container-fluid">
