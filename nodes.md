@@ -75,4 +75,6 @@ status
 -> api gambar product dan main gambar! (cancel)
 -> Laravel ngirim FCM ke firebase
 
+-> Order PIC Tidak tampil ajax
+
 
