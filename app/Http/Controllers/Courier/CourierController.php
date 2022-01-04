@@ -14,6 +14,7 @@ use App\Models\Location\District;
 use App\Models\Location\Province;
 use App\Models\Location\Village;
 use App\Models\Location\ZipCode;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class CourierController extends Controller
@@ -91,7 +92,7 @@ class CourierController extends Controller
         Courier::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'fullname' => $request->fullname,
             'mobile' => $request->mobile,
             'gender' => $request->gender,
@@ -206,7 +207,7 @@ class CourierController extends Controller
         $courier = Courier::findOrFail($id);
         $courier->username = $request->username;
         $courier->email = $request->email;
-        $courier->password = $request->password;
+        $courier->password = Hash::make($request->password);
         $courier->fullname = $request->fullname;
         $courier->mobile = $request->mobile;
         $courier->gender = $request->gender;
