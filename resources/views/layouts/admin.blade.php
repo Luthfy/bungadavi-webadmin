@@ -10,7 +10,7 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <title>Dashboard - Bunga Davi</title>
+        <title>{{ $title ?? 'Dashboard'}} - Bunga Davi</title>
 
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('theme_be/img/favicon.png')}}">
@@ -25,10 +25,11 @@
 
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="{{asset('theme_be/css/font-awesome.min.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}"> --}}
 
 		<!-- Lineawesome CSS -->
-        <link rel="stylesheet" href="{{asset('theme_be/css/line-awesome.min.css')}}">
-
+        {{-- <link rel="stylesheet" href="{{asset('theme_be/css/line-awesome.min.css')}}"> --}}
+        {{-- <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"> --}}
 
         <!-- SELECT2 CSS -->
 		<link rel="stylesheet" href="{{asset('theme_be/css/select2.min.css')}}">
@@ -62,7 +63,7 @@
 
 				<!-- Logo -->
                 <div class="header-left">
-                    <a href="{{ url($guard ?? '/') }}" class="logo">
+                    <a href="{{ url('/') }}" class="logo">
 						<img src="{{asset("img/bungadavi-logo.png")}}" height="40" alt="">
 					</a>
                 </div>
@@ -77,17 +78,15 @@
 				</a> --}}
 
 				<!-- Header Title -->
-                <div class="page-title-box">
+                {{-- <div class="page-title-box">
 					<h3>BUNGA DAVI</h3>
-                </div>
+                </div> --}}
 				<!-- /Header Title -->
 
-				<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+				{{-- <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a> --}}
 
 				<!-- Header Menu -->
 				<ul class="nav user-menu">
-
-
 					<li class="nav-item dropdown has-arrow main-drop">
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 							<span class="user-img"><img src="{{ asset('theme_be/img/profiles/avatar-21.jpg') }}" alt="">
@@ -115,7 +114,12 @@
 					<div class="dropdown-menu dropdown-menu-right">
 						<a class="dropdown-item" href="profile.html">My Profile</a>
 						<a class="dropdown-item" href="settings.html">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
 					</div>
 
 				</div>
@@ -128,7 +132,19 @@
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-inner slimscroll">
 					<div id="sidebar-menu" class="sidebar-menu">
-						@include('layouts.menu_bungadavi')
+                        @if (auth()->user()->hasRole('superadmin'))
+                            @include('layouts.menu_bungadavi')
+                            <hr>
+                            @include('layouts.menu_florist')
+                            <hr>
+                            @include('layouts.menu_corporate')
+						@elseif (auth()->user()->hasRole('bungadavi'))
+                            @include('layouts.menu_bungadavi')
+                        @elseif (auth()->user()->hasRole('affiliate'))
+                            @include('layouts.menu_florist')
+                        @elseif (auth()->user()->hasRole('corporate'))
+                            @include('layouts.menu_corporate')
+                        @endif
 					</div>
                 </div>
             </div>

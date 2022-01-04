@@ -10,7 +10,7 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <title>Dashboard - Bunga Davi</title>
+        <title>{{ $title ?? 'Dashboard'}} - Bunga Davi</title>
 
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('theme_be/img/favicon.png')}}">

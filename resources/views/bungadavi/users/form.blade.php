@@ -22,16 +22,16 @@
 
     <!-- /Page Header -->
     @if ($data == null)
-        {!! Form::open(['route' => 'bungadavi.floristadmin.store', 'method' => 'POST','files' => true]) !!}
+        {!! Form::open(['route' => 'bungadavi.users.store', 'method' => 'POST','files' => true]) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.floristadmin.update', ['floristadmin' => $data->uuid]], 'method' => 'PUT','files' => true]) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.users.update', ['user' => $data->uuid]], 'method' => 'PUT','files' => true]) !!}
     @endif
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="h4">Florist Information</h4>
+                    <h4 class="h4">Admin Information</h4>
                 </div>
                 <div class="card-body">
                     <div class="row pb-4">

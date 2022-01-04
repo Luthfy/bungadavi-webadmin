@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +46,9 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $logText = "User " . auth()->user()->name . " has been logged in " . Carbon::now()->format('y-m-d h:i:s');
+        activity('login')->log($logText);
 
         if (auth()->user()->hasRole('superadmin')) {
             // return redirect()->intended(RouteServiceProvider::HOME);

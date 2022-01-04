@@ -20,8 +20,8 @@
         </a>
         <ul style="display: none;">
             <li><a href="{{ url('admin/usergroup') }}">User Group</a></li>
-            <li><a href="{{ url('admin/userdetail') }}">User Detail</a></li>
-            <li><a href="{{ url('admin/userlog') }}">User Log</a></li>
+            <li><a href="{{ route('bungadavi.users.index') }}">User List</a></li>
+            <li><a href="{{ route('bungadavi.log.activity') }}">User Log</a></li>
         </ul>
     </li>
 
