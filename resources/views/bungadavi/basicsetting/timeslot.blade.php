@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="form-group row pb-4">
-                        <label class="col-form-label col-sm-12 col-md-2">Time To <span class="text-danger">*</span></label>
+                        <label class="col-form-label col-sm-12 col-md-2">Time To</label>
                         <div class="col-sm-12 col-md-10">
                             {!! Form::input('time','time_to', null, ['class' => 'form-control']) !!}
                         </div>

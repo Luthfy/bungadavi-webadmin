@@ -24,6 +24,8 @@ class CreateOrdersTransactionTable extends Migration
             $table->boolean('is_guest')->default(false);
             $table->string('code_currency')->default('IDR')->comment('default is Indonesian Rupiah');
             $table->bigInteger('rates_currency')->default(1)->comment('if code currency is IDR it will be enter 1');
+            $table->string('from_message_order')->nullable();
+            $table->string('to_message_order')->nullable();
             $table->string('card_message_category')->nullable();
             $table->string('card_message_subcategory')->nullable();
             $table->text('card_message_message')->nullable();
@@ -78,8 +80,6 @@ class CreateOrdersTransactionTable extends Migration
             $table->string('name_product');
             $table->integer('qty_product');
             $table->bigInteger('price_product');
-            $table->string('from_message_product')->nullable();
-            $table->string('to_message_product')->nullable();
             $table->string('city_product')->nullable();
             $table->text('remarks_product')->nullable();
             $table->timestamps();

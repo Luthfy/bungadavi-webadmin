@@ -38,12 +38,10 @@ use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController
 use App\Http\Controllers\Bungadavi\Client\FloristAdminController;
 use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
+use App\Http\Controllers\Bungadavi\User\GroupController;
 use App\Http\Controllers\Bungadavi\User\UserController;
 use App\Http\Controllers\Courier\CourierTaskController;
 use App\Http\Controllers\Log\ActivityLogController;
-use App\Models\BasicSetting\CardMessageCategory;
-use App\Models\BasicSetting\CardMessageSubCategory;
-use App\Models\BasicSetting\TimeSlot;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -58,9 +56,14 @@ Route::group([
     // CLIENT
     Route::get('personal/ajax-list', [PersonalController::class, 'list'])->name('personals.ajax.list');
     Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
-    Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
+
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
     Route::get('floristrecipient/ajax-list/{user}', [AffiliateController::class, 'listRecipient'])->name('affiliaterecipient.ajax.list');
+    Route::get('florist/pic/{customerId}', [UserController::class, 'picFlorist'])->name('florist.piclist.ajax');
+
+    Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
+    Route::get('corporate/pic/{customerId}', [UserController::class, 'picCorporate'])->name('corporate.piclist.ajax');
+
     Route::get('products/ajax-list', [ProductController::class, 'list'])->name('products.ajax.list');
     Route::get('cardmessagecategory/ajax-list', [CardMessageCategoryController::class, 'list'])->name('cardmessagecategory.ajax.list');
     Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');
@@ -146,5 +149,5 @@ Route::group([
     });
 
     Route::resource('users', UserController::class)->names('users');
-
+    Route::resource('groups', GroupController::class)->names('groups');
 });

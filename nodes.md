@@ -75,6 +75,23 @@ status
 -> api gambar product dan main gambar! (cancel)
 -> Laravel ngirim FCM ke firebase
 
--> Order PIC Tidak tampil ajax
+-> Order PIC Tidak tampil ajax (done)
+-> Tombol Order disable sampai proses selesai (done)
+-> Delivery Remark auto fill dari radio button (done)
+-> Message From Message To Order (testing)
 
+-> User Team Group Membatasi Menu
+-> User Team List Permission 
+-> User Log (done)
 
+-> Order List
+-> Ajax ZIPCODE
+
+-> QTY Stock pada Modal Product
+-> Description Product pada Modal Product
+
+-> restrict [button accept]
+-> Real time order Done [Ready To Pickup]
+-> ON PROGRESS KURIR BISA DI ASSIGNED KURIR
+
+-> ACCEPT -> ON PROGRESS DATA TAMPIL COURIER ASSIGN

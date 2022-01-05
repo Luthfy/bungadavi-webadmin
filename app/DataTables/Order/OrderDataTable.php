@@ -35,7 +35,16 @@ class OrderDataTable extends DataTable
                 return $html;
             })
             ->editColumn('status_order_transaction', function ($datatable) {
-                $button = '<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateStatusOrder" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">'.$datatable->status_order_transaction.'</button>';
+                $button = "";
+                if ($datatable->florist_uuid != null) {
+                    if ($datatable->status_order_transaction == 'New Order') {
+                        $button = '<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateStatusOrder" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">'.$datatable->status_order_transaction.'</button>';
+                    } else {
+                        $button = $datatable->status_order_transaction;
+                    }
+                } else {
+                    $button = $datatable->status_order_transaction;
+                }
                 return $button;
             })
             ->editColumn('pic_name', function ($datatable) {

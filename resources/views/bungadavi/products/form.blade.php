@@ -595,7 +595,7 @@
         let table_row = $("#row-product-materials");
         let html = "";
             product_materials.forEach((arr) => {
-                html += "<tr><td class='text-center'><a onclick='removeList(\""+arr.stocks_uuid+"\")'><span class='btn btn-danger fas fa-close'></span></a></td><td>"+ arr.stocks_name +"</td><td>"+ arr.qty +"</td></tr>";
+                html += "<tr><td class='text-center'><a onclick='removeList(\""+arr.stocks_uuid+"\")'><i class='fa fa-times' aria-hidden='true'></i></a></td><td>"+ arr.stocks_name +"</td><td>"+ arr.qty +"</td></tr>";
             })
 
             table_row.html(html);

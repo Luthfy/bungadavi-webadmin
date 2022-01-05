@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <h4 class="h5">RECEIVER</h4>
+                                <h4 class="h5">RECIPIENT</h4>
                                 <hr>
                                 <div id="recipientData">
 
@@ -79,6 +79,20 @@
                             <div class="col-12">
                                 <h4 class="h5">CARD MESSAGE</h4>
                                 <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <input type='text' class='form-control' id='fromMessageOrder' value='' name="from_message_order" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <input type='text' class='form-control' id='toMessageOrder' value='' name="to_message_order" />
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
@@ -143,14 +157,14 @@
                                         <label>Delivery Remarks</label>
                                         @foreach ($deliveryRemarks as $item)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="option1" checked>
+                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="{{ $item->description }}" checked>
                                             <label class="form-check-label" for="exampleRadios1">
                                               {{ $item->description }}
                                             </label>
                                         </div>
                                         @endforeach
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="option1" checked>
+                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="Custom Remarks" checked>
                                             <label class="form-check-label" for="exampleRadios1">
                                               Custom Remarks
                                             </label>
@@ -205,7 +219,7 @@
                                 <h4 class="mb-0">Select Payment</h4>
                                 @foreach ($ourBank as $item)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                    <input class="form-check-input" type="radio" name="bankOption" id="exampleRadios1" value="{{ $item->bank_name ."<br/>". $item->bank_account_number ."<br/>". $item->bank_code ."<br/>". $item->bank_beneficiary_name }}" checked>
                                     <label class="form-check-label" for="exampleRadios1">
                                         <p>{{ $item->bank_name }} <br>
                                         {{ $item->bank_account_number }} ({{ $item->bank_code }}) <br>
@@ -247,6 +261,7 @@
         var product_result;
         var timeslot_result;
         var card_message_sub_result;
+        var deliveryRemark = "";
 
         $(document).ready(function (e) {
             getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}")
@@ -254,13 +269,15 @@
 
         // click process order
         $("#createNewOrder").click(function (e) {
+            $("#createNewOrder").val("Process Download");
+            $("#createNewOrder").addClass("disabled");
             postOrder();
         });
 
         // click set client sender data
         $("#btnClientType").click(function (e) {
             let client_selected = client_result.find(x => x.uuid === $("#client_id").val());
-
+            console.log(client_selected)
             senderRecipientOrder = {
                 client_type : ($('input[type=radio][name=radioButtonClientType]:checked').val() == (null || undefined || "") ? "undefined" :  $('input[type=radio][name=radioButtonClientType]:checked').val()),
                 client_uuid : client_selected.uuid,
@@ -288,6 +305,11 @@
             $("#btnOpenModalAddSender").html('Change Sender');
             $("#addClientSender").modal('hide');
         });
+
+        $("#client_id").change(function (e) {
+            getPICAjax("{{ url('bungadavi/florist/pic') }}" + "/" + $("#client_id option:selected").val()
+);
+        })
 
         // cliek set Click Recipient Data
         $("#btnRecipientAdd").click(function (e) {
@@ -408,6 +430,13 @@
             }
         });
 
+        $('input[type=radio][name=radioButtonsDeliveryRemarks]').change(function (e) {
+            console.log(this.value)
+            if (this.value != "Custom Remarks") {
+                $("#custom_delivery_remark").val(this.value);
+            }
+        })
+
         $('input[type=radio][name=radioButtonClientType]').change(function() {
             if (this.value == 'personal') {
                 getClientAjax("{{ route('bungadavi.personals.ajax.list') }}");
@@ -435,7 +464,6 @@
 
         $("#cardMessageSubCategory").change(function (e) {
             let message_selected = card_message_sub_result.find(x => x.id === $("#cardMessageSubCategory option:selected").val());
-
             $("#cardMessage").val(message_selected.description);
         });
 
@@ -447,7 +475,28 @@
         $("#selectTimeSlot").change(function (e) {
             let timeslot_selected = timeslot_result.find(x => x.id === $("#selectTimeSlot option:selected").val());
             $("#deliveryChargeTimeslot").val(timeslot_result.price);
-        })
+        });
+
+        function getPICAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    let html = "";
+                    html += "<option value='' disabled readonly selected>- Select PIC Name -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.name+"</option>";
+                    })
+                    $("#PicName").html(html);
+                },
+            });
+        }
 
         function getClientAjax(url)
         {
@@ -460,6 +509,7 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
+                    console.log(result)
                     client_result = result;
                     let html = "";
                     html += "<option value='' disabled readonly selected>- Select Client -</option>";
@@ -542,12 +592,12 @@
                         html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
                         html_product += "</div>";
                         html_product += "<div class='form-group'>";
-                        html_product += "<label>Message From</label>";
-                        html_product += "<input type='text' class='form-control' id='fromMessageProduct' value='' />";
+                        html_product += "<label>Cost Price</label>";
+                        html_product += "<input type='number' class='form-control' id='costPrice' value='"+ x.cost_product +"' />";
                         html_product += "</div>";
                         html_product += "<div class='form-group'>";
-                        html_product += "<label>Message To</label>";
-                        html_product += "<input type='text' class='form-control' id='toMessageProduct' value='' />";
+                        html_product += "<label>Cost Selling Price</label>";
+                        html_product += "<input type='number' class='form-control' id='costSellingPrice' value='"+ x.selling_price_product +"' />";
                         html_product += "</div>";
                         html_product += "<div class='form-group'>";
                         html_product += "<label>Product Remarks</label>";
@@ -571,8 +621,6 @@
                     })
 
                     $("#productData").html(html_product);
-
-
                 },
             });
         }
@@ -698,10 +746,15 @@
                         text: 'New Order Has Been Created!',
                     });
 
+                    $("#createNewOrder").val("Create New Order");
+                    $("#createNewOrder").removeClass("disabled");
+
                     window.location.href = "{{ route('bungadavi.orders.index') }}";
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    $("#createNewOrder").val("Create New Order");
+                    $("#createNewOrder").removeClass("disabled");
                     console.log(textStatus, errorThrown);
                 }
             })
@@ -771,12 +824,10 @@
 
         function setDeliverySchedule()
         {
-            var deliveryRemark = "";
-
             return {
                 time_slot_name : $("#selectTimeSlot option:selected").text(),
                 time_slot_id : $("#selectTimeSlot option:selected").val(),
-                delivery_remarks : deliveryRemark,
+                delivery_remarks : $("#custom_delivery_remark").val(),
                 internal_notes: $("#internalNotes").val(),
                 time_slot_charge : $("#deliveryChargeTimeslot").val(),
                 delivery_charge : $("#deliveryCharge").val(),
@@ -787,7 +838,7 @@
         function setPaymentOrder()
         {
             return {
-                data_payment_order : "BCA 0000000 \na.n Testing Rekening",
+                data_payment_order : $('input[type=radio][name=bankOption]:checked').val(),
                 payment_type_uuid : "Manual-UUID",
             };
         }

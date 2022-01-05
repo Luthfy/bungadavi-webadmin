@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers\Bungadavi\User;
 
-use App\DataTables\User\UserDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Menu\Group;
+use App\Models\Menu\Submenu;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Controller;
+use App\DataTables\User\GroupDataTable;
+use App\Models\Menu\Position;
+use App\Models\Menu\PositionHasMenu;
 
-class UserController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserDataTable $datatables)
+    public function index(GroupDataTable $datatables)
     {
         $data = [
-            'title'         => 'User Admin Management',
-            'subtitle'      => 'User Admin List',
-            'description'   => 'For Management List User Admin',
-            'breadcrumb'    => ['User Admin Management', 'User Admin List'],
-            'button'        => ['name' => 'Add User', 'link' => 'bungadavi.users.create'],
+            'title'         => 'User Group Position Management',
+            'subtitle'      => 'User Group Position List',
+            'description'   => 'For Management List Group Position Admin',
+            'breadcrumb'    => ['User Group Admin Position Management', 'User Group Admin Position List'],
+            'button'        => ['name' => 'Add Group', 'link' => 'bungadavi.groups.create'],
         ];
 
         return $datatables->render('commons.datatable', $data);
@@ -40,11 +42,11 @@ class UserController extends Controller
             'subtitle'      => 'User Admin Form',
             'description'   => 'For Management Form User Admin',
             'breadcrumb'    => ['User Admin Management', 'User Admin Form'],
+            'menu'          => Group::all(),
             'data'          => null,
-            'permissions'   => Permission::all()
         ];
 
-        return view('bungadavi.users.form', $data);
+        return view('bungadavi.groups.form', $data);
     }
 
     /**
@@ -55,13 +57,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->request->add(['user_type' => 'bungadavi']);
-        $request->merge([ 'password' => bcrypt($request->password) ]);
+        $positionId = Position::create($request->only('name'))->id;
+        foreach ($request->menus as $menuId) {
+            $value = Submenu::where('uuid', $menuId)->select("uuid as submenu_uuid", "menu_uuid", 'groups_uuid')->first()->toArray();
+            $value['position_id'] = $positionId;
+            PositionHasMenu::create($value);
+        }
 
-        $florist = User::create($request->all());
-        $florist->assignRole('bungadavi');
+        return redirect()->route('bungadavi.groups.index')->with('info', 'Group Has Been Added');
 
-        return redirect()->route('bungadavi.users.index')->with('info', 'Admin Has Been Added');
     }
 
     /**
@@ -88,10 +92,11 @@ class UserController extends Controller
             'subtitle'      => 'User Admin Form',
             'description'   => 'For Management Form User Admin',
             'breadcrumb'    => ['User Admin Management', 'User Admin Form'],
-            'data'          => User::where('uuid',$id)->first()
+            'menu'          => Group::all(),
+            'data'          => Position::findOrFail($id),
         ];
 
-        return view('bungadavi.users.form', $data);
+        return view('bungadavi.groups.form', $data);
     }
 
     /**
@@ -103,12 +108,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->merge(['password' => bcrypt($request->password) ]);
+        $positoin = Position::findOrFail($id);
+        $positoin->name = $request->name;
+        $positoin->save();
 
-        $florist = User::where('uuid', $id)->first();
-        $florist->update($request->all());
+        PositionHasMenu::where('position_id', $id)->delete();
+        foreach ($request->menus as $menuId) {
+            $value = Submenu::where('uuid', $menuId)->select("uuid as submenu_uuid", "menu_uuid", 'groups_uuid')->first()->toArray();
+            $value['position_id'] = $id;
+            PositionHasMenu::create($value);
+        }
 
-        return redirect()->route('bungadavi.users.index')->with('info', 'User Admin Has Been Updated');
+        return redirect()->route('bungadavi.groups.index')->with('info', 'Position Has Been Updated');
+
     }
 
     /**
@@ -119,20 +131,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return $user = User::where('uuid', $id)->first()->delete();
+        return $position = Position::findOrFail($id)->delete();
     }
 
-    public function picFlorist($userId)
-    {
-        if ($userId) {
-            return User::where('customer_uuid', $userId)->get();
-        }
-    }
-
-    public function picCorporate($userId)
-    {
-        if ($userId) {
-            return User::where('customer_uuid', $userId)->get();
-        }
-    }
 }
