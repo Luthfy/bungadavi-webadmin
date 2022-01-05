@@ -6,6 +6,7 @@ use App\DataTables\User\UserDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -39,7 +40,8 @@ class UserController extends Controller
             'subtitle'      => 'User Admin Form',
             'description'   => 'For Management Form User Admin',
             'breadcrumb'    => ['User Admin Management', 'User Admin Form'],
-            'data'          => null
+            'data'          => null,
+            'permissions'   => Permission::all()
         ];
 
         return view('bungadavi.users.form', $data);
@@ -118,5 +120,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         return $user = User::where('uuid', $id)->first()->delete();
+    }
+
+    public function picFlorist($userId)
+    {
+        if ($userId) {
+            return User::where('customer_uuid', $userId)->get();
+        }
+    }
+
+    public function picCorporate($userId)
+    {
+        if ($userId) {
+            return User::where('customer_uuid', $userId)->get();
+        }
     }
 }

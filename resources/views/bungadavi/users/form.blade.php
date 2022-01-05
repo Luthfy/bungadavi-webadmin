@@ -118,6 +118,28 @@
                         </div>
                     </div>
 
+                    <div class="row pb-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <label class="col-form-label col-sm-12 col-md-12">Permission <span class="text-danger">*</span></label>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        @foreach ($permissions as $permission)
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" id="permissionId">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                  {{ $permission->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
