@@ -38,12 +38,10 @@ use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController
 use App\Http\Controllers\Bungadavi\Client\FloristAdminController;
 use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
+use App\Http\Controllers\Bungadavi\User\GroupController;
 use App\Http\Controllers\Bungadavi\User\UserController;
 use App\Http\Controllers\Courier\CourierTaskController;
 use App\Http\Controllers\Log\ActivityLogController;
-use App\Models\BasicSetting\CardMessageCategory;
-use App\Models\BasicSetting\CardMessageSubCategory;
-use App\Models\BasicSetting\TimeSlot;
 
 Route::group([
     'prefix' => 'bungadavi',
@@ -151,5 +149,5 @@ Route::group([
     });
 
     Route::resource('users', UserController::class)->names('users');
-
+    Route::resource('groups', GroupController::class)->names('groups');
 });

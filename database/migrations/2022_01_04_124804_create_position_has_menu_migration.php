@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupMigration extends Migration
+class CreatePositionHasMenuMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateGroupMigration extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('positions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->softDeletes();
         });
 
-        Schema::create('group_has_permissions', function (Blueprint $table) {
+        Schema::create('position_has_menu', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->nullable()->index();
-            $table->foreignId('permission_id')->nullable()->index();
+            $table->uuid('position_id')->nullable()->index();
+            $table->uuid('groups_uuid')->nullable()->index();
+            $table->uuid('menu_uuid')->nullable()->index();
+            $table->uuid('submenu_uuid')->nullable()->index();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -36,7 +36,7 @@ class CreateGroupMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_has_permissions');
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('position_has_menu');
+        Schema::dropIfExists('positions');
     }
 }

@@ -19,8 +19,8 @@
             <span class="menu-arrow"></span>
         </a>
         <ul style="display: none;">
-            <li><a href="{{ url('admin/usergroup') }}">User Group</a></li>
-            <li><a href="{{ route('bungadavi.users.index') }}">User List</a></li>
+            <li><a href="{{ route('bungadavi.groups.index') }}">User Group Position</a></li>
+            <li><a href="{{ route('bungadavi.users.index') }}">User Admin List</a></li>
             <li><a href="{{ route('bungadavi.log.activity') }}">User Log</a></li>
         </ul>
     </li>

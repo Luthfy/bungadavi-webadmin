@@ -592,6 +592,14 @@
                         html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
                         html_product += "</div>";
                         html_product += "<div class='form-group'>";
+                        html_product += "<label>Cost Price</label>";
+                        html_product += "<input type='number' class='form-control' id='costPrice' value='"+ x.cost_product +"' />";
+                        html_product += "</div>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<label>Cost Selling Price</label>";
+                        html_product += "<input type='number' class='form-control' id='costSellingPrice' value='"+ x.selling_price_product +"' />";
+                        html_product += "</div>";
+                        html_product += "<div class='form-group'>";
                         html_product += "<label>Product Remarks</label>";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
                         html_product += "</div>";
