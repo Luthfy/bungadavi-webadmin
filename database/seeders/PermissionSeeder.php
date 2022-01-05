@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Permission::create(['name' => 'create order']);
+        Permission::create(['name' => 'view order']);
+        Permission::create(['name' => 'edit order']);
+        Permission::create(['name' => 'delete order']);
     }
 }

@@ -156,6 +156,8 @@ class OrderController extends Controller
                 "status_order_transaction"          => $request->order_transaction['status_order_transaction'],
                 // "currency_id"                       => $request->order_transaction['currency_id'],
                 "is_guest"                          => $request->order_transaction['is_guest'],
+                'from_message_order'                => $product['from_message_order'] ?? "",
+                'to_message_order'                  => $product['from_message_order'] ?? "",
                 'card_message_category'             => $request->order_transaction['card_message_category'],
                 'card_message_subcategory'          => $request->order_transaction['card_message_subcategory'],
                 'card_message_message'              => $request->order_transaction['card_message_message'],
@@ -233,8 +235,6 @@ class OrderController extends Controller
                     'name_product'              => $product['name_product'],
                     'qty_product'               => $product['qty_product'] ?? 1,
                     'price_product'             => $product['price_product'],
-                    'from_message_product'      => $product['from_message_product'] ?? "",
-                    'to_message_product'        => $product['to_message_product'] ?? "",
                     'remarks_product'           => $product['remarks_product'] ?? "",
                 ];
 

@@ -25,8 +25,6 @@ class Product extends Model
         'name_product',
         'qty_product',
         'price_product',
-        'from_message_product',
-        'to_message_product',
         'remarks_product',
     ];
 

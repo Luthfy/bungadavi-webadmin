@@ -72,7 +72,7 @@
                         <div class="row">
                             <h5 class="mb-2 ml-3">PIC Name <span class="text-danger">*</span></h5>
                             <div class="col-sm-12 col-md-12">
-                                {!! Form::text('pic_name', null, ['class' => 'form-control', 'required' => true, 'id' => 'PicName']) !!}
+                                {!! Form::select('pic_name', [], null, ['class' => 'form-control', 'required' => true, 'id' => 'PicName']) !!}
                             </div>
                         </div>
                     </div>

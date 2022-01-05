@@ -22,16 +22,16 @@
 
     <!-- /Page Header -->
     @if ($data == null)
-        {!! Form::open(['route' => 'bungadavi.floristadmin.store', 'method' => 'POST','files' => true]) !!}
+        {!! Form::open(['route' => 'bungadavi.users.store', 'method' => 'POST','files' => true]) !!}
     @else
-        {!! Form::model($data, ['route' => ['bungadavi.floristadmin.update', ['floristadmin' => $data->uuid]], 'method' => 'PUT','files' => true]) !!}
+        {!! Form::model($data, ['route' => ['bungadavi.users.update', ['user' => $data->uuid]], 'method' => 'PUT','files' => true]) !!}
     @endif
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="h4">Florist Information</h4>
+                    <h4 class="h4">Admin Information</h4>
                 </div>
                 <div class="card-body">
                     <div class="row pb-4">
@@ -113,6 +113,28 @@
                                 <label class="col-form-label col-sm-12 col-md-12">Group <span class="text-danger">*</span></label>
                                 <div class="col-sm-12 col-md-12">
                                     {!! Form::select('position', ['admin' => 'Admin', 'staff' => 'Staff'],null, ['class' => 'form-control', 'required' => true]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pb-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <label class="col-form-label col-sm-12 col-md-12">Permission <span class="text-danger">*</span></label>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        @foreach ($permissions as $permission)
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" id="permissionId">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                  {{ $permission->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>

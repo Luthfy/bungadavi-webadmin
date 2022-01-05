@@ -8,6 +8,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\StockSeeder;
 use Database\Seeders\OurBankSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\MenuSeeder;
 use Database\Seeders\CourierSeeder;
 use Database\Seeders\Location\CitySeeder;
 use Database\Seeders\Location\CountrySeeder;
@@ -52,6 +53,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(OurBankSeeder::class);
         $this->call(DeliveryRemarkSeeder::class);
+
+        $this->call(MenuSeeder::class);
 
         // $this->call(CourierSeeder::class);
 

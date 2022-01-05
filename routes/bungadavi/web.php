@@ -38,7 +38,9 @@ use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController
 use App\Http\Controllers\Bungadavi\Client\FloristAdminController;
 use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
+use App\Http\Controllers\Bungadavi\User\UserController;
 use App\Http\Controllers\Courier\CourierTaskController;
+use App\Http\Controllers\Log\ActivityLogController;
 use App\Models\BasicSetting\CardMessageCategory;
 use App\Models\BasicSetting\CardMessageSubCategory;
 use App\Models\BasicSetting\TimeSlot;
@@ -56,9 +58,14 @@ Route::group([
     // CLIENT
     Route::get('personal/ajax-list', [PersonalController::class, 'list'])->name('personals.ajax.list');
     Route::get('personalrecipient/ajax-list/{user}', [PersonalRecipientController::class, 'list'])->name('personalsrecipient.ajax.list');
-    Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
+
     Route::get('florist/ajax-list', [AffiliateController::class, 'list'])->name('affiliate.ajax.list');
     Route::get('floristrecipient/ajax-list/{user}', [AffiliateController::class, 'listRecipient'])->name('affiliaterecipient.ajax.list');
+    Route::get('florist/pic/{customerId}', [UserController::class, 'picFlorist'])->name('florist.piclist.ajax');
+
+    Route::get('corporate/ajax-list', [CorporateController::class, 'list'])->name('corporate.ajax.list');
+    Route::get('corporate/pic/{customerId}', [UserController::class, 'picCorporate'])->name('corporate.piclist.ajax');
+
     Route::get('products/ajax-list', [ProductController::class, 'list'])->name('products.ajax.list');
     Route::get('cardmessagecategory/ajax-list', [CardMessageCategoryController::class, 'list'])->name('cardmessagecategory.ajax.list');
     Route::get('cardmessagesubcategory/ajax-list/{cardmessagecategory}', [CardMessageSubCategoryController::class, 'list'])->name('cardmessagesubcategory.ajax.list');
@@ -138,14 +145,11 @@ Route::group([
     // Courier
     Route::resource('courier', CourierController::class)->names('courier');
     Route::resource('couriertask', CourierTaskController::class)->names('couriertask');
-    // Route::get('create_courier', [CourierController::class, 'form_create']);
-    // Route::get('courier_list',[CourierController::class, 'index']);
-    // Route::get('courier_list_ajax',[CourierController::class, 'dataAjaxCourier']);
-    // Route::post('save_courier',[CourierController::class, 'save_courier']);
-    // Route::get('courier_detail/{uuid}', [CourierController::class, 'detail_courier']);
-    // Route::put('update_courier', [CourierController::class, 'update_courier']);
-    // Route::get('courier_task', [CourierController::class, 'courier_task']);
-    // Route::get('courier_task_detail/{uuid}', [CourierController::class, 'courier_task_detail']);
-    // Route::put('update_courier_task', [CourierController::class, 'update_courier_task']);
+
+    Route::prefix('log')->group(function () {
+        Route::get('activity-log', [ActivityLogController::class, 'index'])->name('log.activity');
+    });
+
+    Route::resource('users', UserController::class)->names('users');
 
 });
