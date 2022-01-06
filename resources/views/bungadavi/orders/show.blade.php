@@ -248,6 +248,8 @@
                                 </div>
                                 <div class="form-group">
                                     <strong>Total Price</strong>
+                                    <br>
+                                    <div>{{$data->total_order_transaction}}</div>
                                 </div>
                             </div>
                         </div>
