@@ -37,7 +37,7 @@ class OrderDataTable extends DataTable
             ->editColumn('status_order_transaction', function ($datatable) {
                 $button = "";
                 if ($datatable->florist_uuid != null) {
-                    if ($datatable->status_order_transaction == 'New Order') {
+                    if ($datatable->status_order_transaction == 'NEEDED CONFIRMATION') {
                         $button = '<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateStatusOrder" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">'.$datatable->status_order_transaction.'</button>';
                     } else {
                         $button = $datatable->status_order_transaction;

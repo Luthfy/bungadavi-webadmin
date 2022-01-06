@@ -200,7 +200,7 @@
                         text: 'Order Has Been Updated!',
                     });
 
-                    $('#updateStatusOrder').modal('hide')
+                    $('#updateStatusOrder').modal('hide');
 
                     if ($('#datatablesserverside').length > 0) {
                         $('#datatablesserverside').DataTable().ajax.reload();
