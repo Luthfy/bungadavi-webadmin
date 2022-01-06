@@ -714,7 +714,7 @@
                 "_token"                : "{{ csrf_token() }}",
                 "order_transaction"     : {
                                             type_order_transaction : "backoffice_bungadavi",
-                                            total_order_transaction : "1000000",
+                                            total_order_transaction : total_order,
                                             shipping_price_order_transaction : $("#deliveryCharge").val() + $("#deliveryChargeTimeslot").val(),
                                             status_order_transaction : "New Order",
                                             currency_id : "Rp",
