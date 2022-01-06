@@ -154,7 +154,6 @@
             <div class="page-wrapper">
 
 				@yield('body')
-
             </div>
 			<!-- /Page Wrapper -->
 

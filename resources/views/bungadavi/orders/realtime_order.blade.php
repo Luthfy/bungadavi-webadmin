@@ -64,6 +64,8 @@
                                 <div class="card-body">
                                     <div class="col-12">
                                         <h3 class="h5">{{ $item->order()->first()->code_order_transaction }}</h3>
+                                        <p>Tanggal Pengiriman : {{ $item->order()->first()->delivery_schedule()->first()->delivery_date ?? '-' }}</p>
+                                        <hr>
                                         @foreach($item->order()->first()->products()->get() as $prod)
                                         <div class="row mt-4">
                                             <div class="col-4">
