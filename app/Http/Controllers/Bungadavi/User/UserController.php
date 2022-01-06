@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use App\Models\Menu\Position;
 
 class UserController extends Controller
 {
@@ -41,7 +42,8 @@ class UserController extends Controller
             'description'   => 'For Management Form User Admin',
             'breadcrumb'    => ['User Admin Management', 'User Admin Form'],
             'data'          => null,
-            'permissions'   => Permission::all()
+            'permissions'   => Permission::all(),
+            'positions'     => Position::pluck('name', 'id')
         ];
 
         return view('bungadavi.users.form', $data);
@@ -60,6 +62,8 @@ class UserController extends Controller
 
         $florist = User::create($request->all());
         $florist->assignRole('bungadavi');
+
+        $florist->givePermissionTo($request->permissions);
 
         return redirect()->route('bungadavi.users.index')->with('info', 'Admin Has Been Added');
     }
@@ -88,7 +92,9 @@ class UserController extends Controller
             'subtitle'      => 'User Admin Form',
             'description'   => 'For Management Form User Admin',
             'breadcrumb'    => ['User Admin Management', 'User Admin Form'],
-            'data'          => User::where('uuid',$id)->first()
+            'data'          => User::where('uuid',$id)->first(),
+            'permissions'   => Permission::all(),
+            'positions'     => Position::pluck('name', 'id')
         ];
 
         return view('bungadavi.users.form', $data);
@@ -107,6 +113,8 @@ class UserController extends Controller
 
         $florist = User::where('uuid', $id)->first();
         $florist->update($request->all());
+
+        $florist->syncPermissions($request->permissions);
 
         return redirect()->route('bungadavi.users.index')->with('info', 'User Admin Has Been Updated');
     }

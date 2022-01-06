@@ -112,7 +112,7 @@
                             <div class="row">
                                 <label class="col-form-label col-sm-12 col-md-12">Group <span class="text-danger">*</span></label>
                                 <div class="col-sm-12 col-md-12">
-                                    {!! Form::select('position', ['admin' => 'Admin', 'staff' => 'Staff'],null, ['class' => 'form-control', 'required' => true]) !!}
+                                    {!! Form::select('position', $positions ?? [],null, ['class' => 'form-control', 'required' => true]) !!}
                                 </div>
                             </div>
                         </div>
@@ -127,9 +127,9 @@
                                         @foreach ($permissions as $permission)
                                         <div class="col-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" id="permissionId">
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $permission->id }}" id="permissionId" {{ ($data->hasPermissionTo($permission)) ? "checked" : ""}}>
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                  {{ $permission->name }}
+                                                    {{ $permission->name }}
                                                 </label>
                                             </div>
                                         </div>
