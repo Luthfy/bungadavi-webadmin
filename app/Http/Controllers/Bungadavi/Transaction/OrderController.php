@@ -270,7 +270,29 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $data = Order::findOrFail($id);
+        $get_sender = SenderReceiver::where('order_transactions_uuid', $data->uuid)->first();
+        $get_list_product = Product::where('order_transactions_uuid', $data->uuid)->first();
+        $data_product = ProductStock::findOrFail($get_list_product->product_uuid);
+        $get_delivery = Delivery::where('order_transactions_uuid', $data->uuid)->first();
+        $get_payment = Payment::where('order_transactions_uuid', $data->uuid)->first();
+
+        $data = [
+            'title'         => 'Customer Florist Management',
+            'subtitle'      => 'Form Customer Florist',
+            'description'   => 'For Management Customer Florist User',
+            'breadcrumb'    => ['Customer Florist Management', 'Form Customer Florist'],
+            'guard'         => auth()->user()->group,
+            'data'          => $data,
+            'sender'        => $get_sender,
+            'data_product'  => $data_product,
+            'list_product'  => $get_list_product,
+            'delivery'      => $get_delivery,
+            'payment'       => $get_payment,
+        ];
+
+        return view('bungadavi.orders.show', $data);
     }
 
     /**
