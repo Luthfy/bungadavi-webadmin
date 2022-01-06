@@ -18,6 +18,7 @@ Route::group([
     // PRODUCT CONTROL
     Route::get('products', [ProductController::class, "index"])->name('products');
     Route::resource('transaction', OrderController::class)->names('orders');
+    Route::post('transaction/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update_status');
 
     Route::resource('couriertask', CourierTaskController::class)->names('couriertask');
 });
