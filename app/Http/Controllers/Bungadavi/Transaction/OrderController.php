@@ -332,6 +332,7 @@ class OrderController extends Controller
     public function assignFlorist(Request $request, $id)
     {
         $order = Order::find($id);
+        $order->status_order_transaction = "NEEDED CONFIRMATION";
         $order->florist_uuid = $request->florist_uuid;
         return response()->json($order->save());
     }
@@ -339,6 +340,14 @@ class OrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $order = Order::find($id);
+
+        if ($request->status == "Reject Florist") {
+            $order->status_order_transaction = $request->status;
+            $order->florist_uuid = NULL;
+
+            return response()->json($order->save());
+        }
+
         $order->status_order_transaction = $request->status;
         return response()->json($order->save());
     }
