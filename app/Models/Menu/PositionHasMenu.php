@@ -25,7 +25,7 @@ class PositionHasMenu extends Model
      */
     public function hasMenu()
     {
-        return $this->hasMany(Menu::class, 'menu_uuid', 'uuid');
+        return $this->hasMany(Menu::class, 'uuid', 'menu_uuid');
     }
 
     /**
@@ -35,6 +35,6 @@ class PositionHasMenu extends Model
      */
     public function hasSubmenu()
     {
-        return $this->hasMany(Submenu::class, 'submenu_uuid', 'uuid');
+        return $this->hasMany(Submenu::class, 'uuid', 'submenu_uuid');
     }
 }

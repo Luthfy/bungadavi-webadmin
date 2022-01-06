@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Client\Florist;
 use Ramsey\Uuid\Uuid;
+use App\Models\Menu\Position;
+use App\Models\Client\Florist;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
@@ -81,6 +82,16 @@ class User extends Authenticatable
     public function affiliate()
     {
         return $this->belongsTo(Florist::class, 'customer_uuid', 'uuid');
+    }
+
+    /**
+     * Get the position that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position')->first();
     }
 
 }

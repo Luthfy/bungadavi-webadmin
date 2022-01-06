@@ -127,10 +127,17 @@
                                         @foreach ($permissions as $permission)
                                         <div class="col-3">
                                             <div class="form-check">
+                                                @if ($data == null)
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $permission->id }}" id="permissionId">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    {{ $permission->name }}
+                                                </label>
+                                                @else
                                                 <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $permission->id }}" id="permissionId" {{ ($data->hasPermissionTo($permission)) ? "checked" : ""}}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     {{ $permission->name }}
                                                 </label>
+                                                @endif
                                             </div>
                                         </div>
                                         @endforeach
