@@ -82,4 +82,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Florist::class, 'customer_uuid', 'uuid');
     }
+
 }
