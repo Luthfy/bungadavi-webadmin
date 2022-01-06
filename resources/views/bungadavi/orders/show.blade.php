@@ -254,7 +254,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="mb-0">Select Payment</h4>
-                                <div>{{$payment->data_payment_order}}</div>
+                                <div>{!!$payment->data_payment_order!!}</div>
                             </div>
                         </div>
                     </div>
