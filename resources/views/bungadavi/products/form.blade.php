@@ -311,7 +311,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="row" id="form-product-materials">
+                                            <div class="row" id="form-product-materials">
                                                 <div class="col-lg-4 p-4">
                                                     <img src="" alt="" id="product_image_1_preview" class="img-thumbnail mb-3" style="max-width:100%">
                                                     <div><label>Image 1</label></div>
@@ -360,7 +360,7 @@
                                                         <label class="custom-file-label" for="customFile" id="product_image_label_6">Choose file</label>
                                                     </div>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

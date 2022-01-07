@@ -21,7 +21,7 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->rawColumns(['florist_uuid', 'action', 'status_order_transaction', 'pic_name', 'sender_info', 'recipient_info', 'delivery_info'])
+            ->rawColumns(['florist_uuid', 'action', 'status_order_transaction', 'pic_name', 'sender_info', 'recipient_info', 'delivery_info', 'code_order_transaction'])
             ->addColumn('action', function ($datatable) {
                 $html  = "";
                 if (auth()->user()->hasRole('bungadavi')) {
@@ -33,6 +33,9 @@ class OrderDataTable extends DataTable
                     $html .= "<a href='".route('affiliate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                 }
                 return $html;
+            })
+            ->editColumn('code_order_transaction', function ($datatable) {
+                return $datatable->code_order_transaction . "<br />" . $datatable->created_at;
             })
             ->editColumn('status_order_transaction', function ($datatable) {
                 $button = "";
@@ -62,13 +65,13 @@ class OrderDataTable extends DataTable
             ->addColumn('sender_info', function ($datatable) {
                 $text  = $datatable->sender_receiver()->first()->sender_name ?? '';
                 $text .= "<br />";
-                $text .= "(" .$datatable->sender_receiver()->first()->sender_phone_number . ")"?? '';
+                $text .= $datatable->sender_receiver()->first()->sender_phone_number != null ? "(" .$datatable->sender_receiver()->first()->sender_phone_number . ")" : '';
                 return $text;
             })
             ->addColumn('recipient_info', function ($datatable) {
                 $text  = $datatable->sender_receiver()->first()->receiver_name ?? '';
                 $text .= "<br />";
-                $text .= $datatable->sender_receiver()->first()->receiver_phone_number ?? '';
+                $text .= $datatable->sender_receiver()->first()->receiver_phone_number  != null ? "(". $datatable->sender_receiver()->first()->receiver_phone_number . ")": '';
                 return $text;
             })
             ->addColumn('delivery_info', function ($datatable) {
@@ -82,7 +85,7 @@ class OrderDataTable extends DataTable
             })
             ->editColumn('florist_uuid', function ($datatable) {
                 if (auth()->user()->hasRole('affiliate')) {
-                    return $datatable->florist_uuid;
+                    return $datatable->floristName();
                 } else {
                     $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
                     return ($datatable->florist_uuid == null) ? $button : "-" ;
