@@ -111,10 +111,18 @@
                     {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product', 'disabled' => true]) !!}
                     {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
                 </div>
+                @if (auth()->user()->hasRole('affiliate'))
+                <div class="form-group">
+                    {{-- <label for="">Florist Name</label> --}}
+                    {!! Form::hidden('florist_uuid', auth()->user()->uuid, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
+                </div>
+                @else
                 <div class="form-group">
                     <label for="">Florist Name</label>
                     {!! Form::select('florist_uuid', [], null, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
                 </div>
+                @endif
+
                 <div class="form-group">
                     <label for="">Status</label>
                     {!! Form::select('status_order', ["Accept Florist" => "Accept", "Reject Florist" => "Reject", "Read To Pickup" => "Ready To Pickup"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}

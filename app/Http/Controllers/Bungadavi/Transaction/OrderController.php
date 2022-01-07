@@ -141,7 +141,7 @@ class OrderController extends Controller
                             $codeOrderTransaction = $codeOrderTransaction . "U";
                             break;
                     }
-                    $codeOrderTransaction = $codeOrderTransaction . date('Ymdhis') . str_pad(Order::all()->count(), 4, "0", STR_PAD_LEFT);
+                    $codeOrderTransaction = $codeOrderTransaction . date('ym') . str_pad(mt_rand(1, 9999), 4, "0", STR_PAD_LEFT);
                     break;
                 default:
                     # code...

@@ -202,6 +202,9 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <strong>Product Price</strong>
+                                    <div id="productList">
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Delivery Charge</strong>
@@ -463,18 +466,19 @@
         });
 
         $("#cardMessageSubCategory").change(function (e) {
-            let message_selected = card_message_sub_result.find(x => x.id === $("#cardMessageSubCategory option:selected").val());
-            $("#cardMessage").val(message_selected.description);
+            var cms = card_message_sub_result.find(x => x.id === Number($("#cardMessageSubCategory").val()));
+            $("#cardMessage").val(cms.description);
         });
 
         // delivery date for timeslot
         $("#deliveryDate").change(function (e) {
             getTimeSlotAjax("{{url('bungadavi/timeslots/ajax-list/')}}/"+this.value);
+            $("#deliveryCharge").val(Number(0));
         })
 
         $("#selectTimeSlot").change(function (e) {
             let timeslot_selected = timeslot_result.find(x => x.id === $("#selectTimeSlot option:selected").val());
-            $("#deliveryChargeTimeslot").val(timeslot_result.price);
+            $("#deliveryChargeTimeslot").val(Number(timeslot_result.price));
         });
 
         function getPICAjax(url)
@@ -620,7 +624,30 @@
 
                     })
 
+                    var list_product = "<table class='table'>";
+
+                    result.forEach( (x, i) => {
+                        list_product += "<tr><td>"+ x.name_product +"</td><td>"+ x.cost_product +"</td></tr>";
+
+
+                        // listProductOrder[i] = {
+                        //     product_uuid : x.uuid,
+                        //     code_product : x.code_product,
+                        //     name_product : x.name_product,
+                        //     qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
+                        //     price_product : x.cost_product,
+                        //     from_message_product : $("#fromMessageProduct").val(),
+                        //     to_message_product : $("#romMessageProduct").val(),
+                        //     remarks_product : $("#remarkProduct").val(),
+                        //     custom_product: null
+                        // };
+
+                    })
+
+                    list_product += "</table>";
+
                     $("#productData").html(html_product);
+                    $("#productList").append(list_product);
                 },
             });
         }
@@ -658,7 +685,7 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
-                    recipient_result = result;
+                    card_message_sub_result = result;
                     let html = "";
                     html += "<option value='' disabled readonly selected>- Select Card Message Sub Category -</option>";
                     result.forEach((res) => {

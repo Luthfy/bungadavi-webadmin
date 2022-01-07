@@ -21,7 +21,7 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->rawColumns(['florist_uuid', 'action', 'status_order_transaction'])
+            ->rawColumns(['florist_uuid', 'action', 'status_order_transaction', 'pic_name', 'sender_info', 'recipient_info', 'delivery_info'])
             ->addColumn('action', function ($datatable) {
                 $html  = "";
                 if (auth()->user()->hasRole('bungadavi')) {
@@ -45,44 +45,48 @@ class OrderDataTable extends DataTable
                 } else {
                     $button = $datatable->status_order_transaction;
                 }
+
+
                 return $button;
             })
             ->editColumn('pic_name', function ($datatable) {
-                return $datatable->sender_receiver()->first()->pic_name ?? '-';
-            })
-            ->editColumn('fullname', function ($datatable) {
-                return $datatable->sender_receiver()->first()->receiver_name ?? '-';
+                $text  = "";
+                // $text .= $datatable->sender_receiver()->first()->po_reference ?? '';
+                // $text .= "<br />";
+                $text .= $datatable->sender_receiver()->first()->pic_name ?? '';
+                return $text;
             })
             ->editColumn('po_referrence', function ($datatable) {
                 return $datatable->sender_receiver()->first()->po_referrence ?? '-';
             })
-            ->editColumn('sender_name', function ($datatable) {
-                return $datatable->sender_receiver()->first()->sender_name ?? '-';
+            ->addColumn('sender_info', function ($datatable) {
+                $text  = $datatable->sender_receiver()->first()->sender_name ?? '';
+                $text .= "<br />";
+                $text .= "(" .$datatable->sender_receiver()->first()->sender_phone_number . ")"?? '';
+                return $text;
             })
-            ->editColumn('sender_phone_number', function ($datatable) {
-                return $datatable->sender_receiver()->first()->sender_phone_number ?? '-';
+            ->addColumn('recipient_info', function ($datatable) {
+                $text  = $datatable->sender_receiver()->first()->receiver_name ?? '';
+                $text .= "<br />";
+                $text .= $datatable->sender_receiver()->first()->receiver_phone_number ?? '';
+                return $text;
             })
-            ->editColumn('receiver_name', function ($datatable) {
-                return $datatable->sender_receiver()->first()->receiver_name ?? '-';
-            })
-            ->editColumn('receiver_phone_number', function ($datatable) {
-                return $datatable->sender_receiver()->first()->receiver_phone_number ?? '-';
-            })
-            ->editColumn('receiver_city', function ($datatable) {
-                return $datatable->sender_receiver()->first()->receiver_city ?? '-';
-            })
-            ->editColumn('delivery_date', function ($datatable) {
-                return $datatable->delivery_schedule()->first()->delivery_date ?? '-';
-            })
-            ->editColumn('time_slot_name', function ($datatable) {
-                return $datatable->delivery_schedule()->first()->time_slot_name ?? '-';
+            ->addColumn('delivery_info', function ($datatable) {
+                $text  = $datatable->delivery_schedule()->first()->delivery_date ?? '';
+                $text .= "<br />";
+                $text .= $datatable->delivery_schedule()->first()->time_slot_name ?? '';
+                return $text;
             })
             ->editColumn('delivery_remarks', function ($datatable) {
                 return $datatable->delivery_schedule()->first()->delivery_remarks ?? '-';
             })
             ->editColumn('florist_uuid', function ($datatable) {
-                $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
-                return ($datatable->florist_uuid == null) ? $button : $datatable->floristName() ;
+                if (auth()->user()->hasRole('affiliate')) {
+                    return $datatable->florist_uuid;
+                } else {
+                    $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
+                    return ($datatable->florist_uuid == null) ? $button : "-" ;
+                }
             });
     }
 
@@ -135,29 +139,16 @@ class OrderDataTable extends DataTable
                 ->title('Status'),
             Column::make('florist_uuid')
                 ->title('Florist Name'),
-            Column::make('fullname')
-                ->title('Client Name'),
             Column::make('pic_name')
-                ->title('PIC Name'),
+                ->title('Client Info'),
             Column::make('po_referrence')
                 ->title('PO Reference'),
-            Column::make('sender_name')
-                ->title('Sender Name'),
-            Column::make('sender_phone_number')
-                ->title('Sender Mobile'),
-            Column::make('receiver_name')
-                ->title('Receiver Name'),
-            Column::make('receiver_phone_number')
-                ->title('Receiver Mobile'),
-            Column::make('receiver_city')
-                ->title('City Name'),
-            Column::make('delivery_date')
-                ->title('Delivery Date'),
-            Column::make('time_slot_name')
-                ->title('Time Slot'),
-            Column::make('delivery_remarks')
-                ->title('Delivery Remarks'),
-            Column::make('created_at'),
+            Column::make('sender_info')
+                ->title('Sender Info'),
+            Column::make('recipient_info')
+                ->title('Recipient Info'),
+            Column::make('delivery_info')
+                ->title('Delivery Info'),
         ];
     }
 
