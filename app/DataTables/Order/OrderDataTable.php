@@ -84,11 +84,14 @@ class OrderDataTable extends DataTable
                 return $datatable->delivery_schedule()->first()->delivery_remarks ?? '-';
             })
             ->editColumn('florist_uuid', function ($datatable) {
-                if (auth()->user()->hasRole('affiliate')) {
+                if (auth()->user()->hasRole('bungadavi')) {
+                    $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
+                    return ($datatable->florist_uuid == null) ? $button : $datatable->floristName() ;
+                } elseif (auth()->user()->hasRole('affiliate')) {
                     return $datatable->floristName();
                 } else {
-                    $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
-                    return ($datatable->florist_uuid == null) ? $button : "-" ;
+                    // $button = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModalAssignFlorist" data-uuid="'.$datatable->uuid.'" data-codeproduct="'.$datatable->code_order_transaction.'">Assign To Florist</button>';
+                    // return ($datatable->florist_uuid == null) ? $button : "-" ;
                 }
             });
     }
