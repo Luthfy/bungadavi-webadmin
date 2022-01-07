@@ -20,7 +20,7 @@ class CourierTaskDataTable extends DataTable
             ->eloquent($query)
             ->rawColumns(['status_assignment', 'action'])
             ->addColumn('code_order_transaction', function ($datatable) {
-                return $datatable->order()->first()->code_order_transaction ?? '-';
+                return $datatable->courierTask()->first()->delivery_number_assignment ?? '-';
             })
             ->addColumn('village_id', function ($datatable) {
                 return $datatable->senderRecipient()->first()->receiver_village ?? '-';
