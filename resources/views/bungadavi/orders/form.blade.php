@@ -477,8 +477,8 @@
         })
 
         $("#selectTimeSlot").change(function (e) {
-            let timeslot_selected = timeslot_result.find(x => x.id === $("#selectTimeSlot option:selected").val());
-            $("#deliveryChargeTimeslot").val(Number(timeslot_result.price));
+            var timeslot_selected = timeslot_result.find(x => x.id === Number($("#selectTimeSlot option:selected").val()));
+            $("#deliveryChargeTimeslot").val(timeslot_selected.price);
         });
 
         function getPICAjax(url)
