@@ -81,7 +81,7 @@ class CourierTaskDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
-                    ->orderBy(1);
+                    ->orderBy(7);
     }
 
     /**
@@ -96,20 +96,28 @@ class CourierTaskDataTable extends DataTable
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),
+                  ->addClass('text-center')
+                  ->searchable(false),
             Column::make('code_order_transaction')
-                ->title('DO Number'),
+                ->title('DO Number')
+                ->searchable(false),
             Column::make('village_id')
-                ->title('Village'),
+                ->title('Village')
+                ->searchable(false),
             Column::make('delivery_date')
-                ->title('Delivery Date'),
+                ->title('Delivery Date')
+                ->searchable(false),
             Column::make('time_slot_name')
-                ->title('Time Slot'),
+                ->title('Time Slot')
+                ->searchable(false),
             Column::make('status_assignment')
-                ->title('Status Assign'),
+                ->title('Status Assign')
+                ->searchable(true),
             Column::make('status_order_transaction')
-                ->title('Status Order'),
-            Column::make('created_at'),
+                ->title('Status Order')
+                ->searchable(false),
+            Column::make('created_at')
+                ->searchable(false),
         ];
     }
 
