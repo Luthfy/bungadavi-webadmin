@@ -125,6 +125,7 @@ Route::group([
     });
 
     // PRODUCT CONTROL
+    Route::post('products/uploads', [ProductController::class, 'uploads'])->name('products.uploads');
     Route::resource('products', ProductController::class)->names('products');
 
     // STOCK CONTROL

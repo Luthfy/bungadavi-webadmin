@@ -3,6 +3,7 @@
 namespace App\Models\Product;
 
 use Ramsey\Uuid\Uuid;
+use App\Models\Stock\Stock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

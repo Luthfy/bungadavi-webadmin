@@ -456,6 +456,55 @@
             table_row.html(html);
     }
 
+    function uploadImages(id)
+    {
+        var product_images = [];
+        var imageForm = new FormData();
+
+        imageForm.append("_token", "{{ csrf_token() }}");
+        imageForm.append("id", id); // id productt
+
+        for (let index = 0; index < $(".product_images").length; index++) {
+            const element = $(".product_images")[index];
+
+            if (element.files.length == 1) {
+                imageForm.append("product_images[]", element.files[0])
+            }
+        }
+
+        $.ajax({
+            url: "{{ route('bungadavi.products.uploads') }}",
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: imageForm,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (res) {
+                console.log(res);
+                // if (res.status) {
+                //     uploadImages(res.data.uuid)
+                //     Swal.fire({
+                //         icon: 'success',
+                //         title: 'Congratulation',
+                //         text: 'Data has been added!',
+                //         timerProgressBar: true,
+                //     })
+
+                //     window.location.href = "{{ route('bungadavi.products.index') }}"
+                // } else {
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Something went wrong!',
+                //     })
+                // }
+            },
+        });
+    }
+
     function uploadFiles()
     {
         var mainImage = $("#product_main_image")[0].files[0];
@@ -506,6 +555,9 @@
             success: function (res) {
                 console.log(res);
                 if (res.status) {
+
+                    uploadImages(res.data.uuid)
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulation',
@@ -513,7 +565,7 @@
                         timerProgressBar: true,
                     })
 
-                    window.location.href = "{{ route('bungadavi.products.index') }}"
+                    // window.location.href = "{{ route('bungadavi.products.index') }}"
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -526,66 +578,8 @@
     }
 
     $("#form-product").submit((e) => {
-
         e.preventDefault();
         uploadFiles();
-        // Swal.fire({
-        //     title: 'Auto close alert!',
-        //     html: 'I will close in <b></b> milliseconds.',
-        //     // timer: 2000,
-        //     timerProgressBar: true,
-        //     didOpen: () => {
-        //         Swal.showLoading()
-        //         const b = Swal.getHtmlContainer().querySelector('b')
-        //         timerInterval = setInterval(() => {
-        //         b.textContent = Swal.getTimerLeft()
-        //         }, 100)
-        //     },
-        //     willClose: () => {
-        //         clearInterval(timerInterval)
-        //     }
-        //     }).then((result) => {
-        //     /* Read more about handling dismissals below */
-        //     if (result.dismiss === Swal.DismissReason.timer) {
-        //         console.log('I was closed by the timer')
-        //     }
-        // })
-
-        // var form_data       = new FormData($("#form-product")[0]);
-        // var main_image      = $("#product_main_image")[0].files[0];
-        // var feature_images  = [];
-        // var materials       = product_materials;
-
-        // $('.product_images').each((index, file) => {
-        //     if (file.files.length > 0) {
-        //         feature_images[index] = file.files[0]
-        //     }
-        // })
-
-
-
-        // console.log(form_data)
-
-
-
-        // $.ajax({
-        //     url: "{{ route('bungadavi.products.store') }}",
-        //     type: "POST",
-        //     data: form_data,
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //         // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
-        //     },
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false,
-        //     success: function (response) {
-
-        //     },
-        //     error: function (xhr, message, status) {
-
-        //     }
-        // })
     })
 
     $("#button-add-product-materials").click(function (e) {

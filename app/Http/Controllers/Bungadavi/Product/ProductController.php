@@ -77,81 +77,84 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return response(json_decode($request->product_material, true)[0]['stocks_name']);
-        $request->request->add(['size_product' => count($request->products_material ?? [])]);
+        if ($request->ajax()){
 
-        if ($request->hasFile('product_main_image')){
-            $name = Str::random(4) . '_' . str_replace(' ', '', $request->file('product_main_image')->getClientOriginalName());
-            $request->request->add(['image_main_product' => $request->product_main_image->storeAs('products_main', $name, 'public')]);
+            $request->request->add(['size_product' => count($request->products_material ?? [])]);
+
+            if ($request->hasFile('product_main_image')){
+                $name = Str::random(4) . '_' . str_replace(' ', '', $request->file('product_main_image')->getClientOriginalName());
+                $request->request->add(['image_main_product' => $request->product_main_image->storeAs('products_main', $name, 'public')]);
+            }
+
+            $products = Product::create($request->post());
+
+            if (count($request->categories_uuid ?? []) > 0) {
+                foreach ($request->categories_uuid as $value) {
+                    ProductCategory::create(['category_id' => $value, 'products_uuid' => $products->uuid]);
+                }
+            }
+
+            if (count($request->subcategories_uuid ?? []) > 0) {
+                foreach ($request->subcategories_uuid as $value) {
+                    ProductSubCategory::create(['subcategory_id' => $value, 'products_uuid' => $products->uuid]);
+                }
+            }
+
+            if (count($request->color_id ?? []) > 0) {
+                foreach ($request->color_id as $value) {
+                    ProductColor::create(['color_id' => $value, 'products_uuid' => $products->uuid]);
+                }
+            }
+
+            if (count($request->cities_uuid ?? []) > 0) {
+                foreach ($request->cities_uuid as $value) {
+                    ProductCity::create(['city_id' => $value, 'products_uuid' => $products->uuid]);
+                }
+            }
+
+            // $productsMaterial = json_decode($request->product_material, true)[0]['stocks_name'];
+            $productsMaterial = json_decode($request->product_material, true);
+            if ($productsMaterial != null) {
+                foreach ($productsMaterial as $key => $value) {
+                    $material = [
+                        'stocks_uuid' => $value['stocks_uuid'],
+                        'products_uuid' => $products->uuid,
+                        'qty_used_products_material' => $value['qty'] ?? 0,
+                    ];
+                    $materials = Material::create($material);
+                }
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'success',
+                'data' => $products
+            ], 200);
         }
 
-        $products = Product::create($request->post());
+    }
 
-        if (count($request->categories_uuid ?? []) > 0) {
-            foreach ($request->categories_uuid as $value) {
-                ProductCategory::create(['category_id' => $value, 'products_uuid' => $products->uuid]);
+    function uploads(Request $request)
+    {
+        $image = array();
+        foreach ($request->file('product_images') as $key => $value) {
+            if ($request->hasFile('product_images')) {
+                $name = Str::random(4) . '_' . str_replace(' ', '', $value->getClientOriginalName());
+                array_push($image, $value->storeAs('products_feature', $name, 'public'));
             }
         }
 
-        if (count($request->subcategories_uuid ?? []) > 0) {
-            foreach ($request->subcategories_uuid as $value) {
-                ProductSubCategory::create(['subcategory_id' => $value, 'products_uuid' => $products->uuid]);
-            }
-        }
-
-        if (count($request->color_id ?? []) > 0) {
-            foreach ($request->color_id as $value) {
-                ProductColor::create(['color_id' => $value, 'products_uuid' => $products->uuid]);
-            }
-        }
-
-        if (count($request->cities_uuid ?? []) > 0) {
-            foreach ($request->cities_uuid as $value) {
-                ProductCity::create(['city_id' => $value, 'products_uuid' => $products->uuid]);
-            }
-        }
-
-        // $productsMaterial = json_decode($request->product_material, true)[0]['stocks_name'];
-        $productsMaterial = json_decode($request->product_material, true);
-        if ($productsMaterial != null) {
-            foreach ($productsMaterial as $key => $value) {
-                $material = [
-                    'stocks_uuid' => $value['stocks_uuid'],
-                    'products_uuid' => $products->uuid,
-                    'qty_used_products_material' => $value['qty'] ?? 0,
-                ];
-                $materials = Material::create($material);
-            }
-        }
+        $product = Product::findOrFail($request->id);
+        $product->images_product = json_encode($image);
+        $product->save();
 
         return response()->json([
             'status' => true,
             'message' => 'success',
-            'data' => $products
+            'data' => $product
         ], 200);
 
-
-
-        //     if ($request->hasFile('product_images')){
-        //         $image = array();
-        //         foreach ($request->file('product_images') as $key => $value) {
-        //             $name = Str::random(4) . '_' . str_replace(' ', '', $value->getClientOriginalName());
-        //             array_push($image, $value->storeAs('products', $name, 'public'));
-        //         }
-
-        //         $request->request->add(['images_product' => implode(";", $image)]);
-
-        //     }
-
-        // }
-
-        // return redirect()->route('products.create');
     }
-
-    // function uploads($id, Request $request)
-    // {
-
-    // }
 
     // function uploads($id, Request $request)
     // {
@@ -187,7 +190,6 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-
         $data = [
             'title'         => 'Product Management',
             'subtitle'      => 'Form Product',
@@ -200,7 +202,7 @@ class ProductController extends Controller
             'stocks' => Stock::pluck('name_stock', 'uuid')
         ];
 
-        return view('backend.products.form', $data);
+        return view('bungadavi.products.form', $data);
     }
 
     /**
@@ -212,8 +214,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
         // return redirect()->route('userdetail.index')->with('info', 'User Has Been Updated');
 
     }
