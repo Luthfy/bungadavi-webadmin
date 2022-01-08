@@ -3,6 +3,7 @@
 namespace App\Models\Transaction;
 
 use App\Models\Client\Personal;
+use App\Models\Location\Province;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -72,5 +73,15 @@ class SenderReceiver extends Model
     public function client_personal()
     {
         return $this->hasMany(Personal::class, 'client_uuid', 'uuid');
+    }
+
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class, 'sender_receiver_uuid', 'uuid');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'receiver_village', 'id');
     }
 }

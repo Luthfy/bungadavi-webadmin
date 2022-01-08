@@ -23,7 +23,7 @@ class CourierTaskDataTable extends DataTable
                 return $datatable->courierTask()->first()->delivery_number_assignment ?? '-';
             })
             ->addColumn('village_id', function ($datatable) {
-                return $datatable->senderRecipient()->first()->receiver_village ?? '-';
+                return $datatable->senderRecipient()->first()->province()->first()->name ?? '-';
             })
             // ->addColumn('delivery_date', function ($datatable) {
             //     return $datatable->delivery()->first()->delivery_date ?? '-';

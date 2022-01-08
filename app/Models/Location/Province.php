@@ -12,6 +12,7 @@ use App\Models\Location\City;
 use App\Models\Location\District;
 use App\Models\Location\Village;
 use App\Models\Location\ZipCode;
+use App\Models\Transaction\SenderReceiver;
 
 class Province extends Model
 {
@@ -67,5 +68,10 @@ class Province extends Model
     public function hasFlorist()
     {
         return $this->hasMany(Florist::class, 'province_id', 'id');
+    }
+
+    public function hasSender()
+    {
+        return $this->hasMany(SenderReceiver::class, 'receiver_village', 'id');
     }
 }

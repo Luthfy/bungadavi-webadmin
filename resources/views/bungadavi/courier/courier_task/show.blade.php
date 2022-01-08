@@ -152,7 +152,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Number</label>
-                                            <div>?????</div>
+                                            <div>-</div>
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -184,7 +184,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Coordinate</label>
-                                            <div>?????</div>
+                                            <div>{{$receiver->receiver_latitude}},{{$receiver->receiver_longitude}}</div>
                                         </div>
                                     </div>
                                     <div class="col-4">
