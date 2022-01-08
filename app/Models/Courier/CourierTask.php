@@ -5,6 +5,7 @@ namespace App\Models\Courier;
 use App\Models\Client\Personal;
 use App\Models\Transaction\Delivery;
 use App\Models\Transaction\Order;
+use App\Models\Transaction\Schedule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -61,6 +62,11 @@ class CourierTask extends Model
     public function delivery()
     {
         return $this->belongsTo(Delivery::class, 'delivery_schedule_uuid', 'uuid');
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class, 'delivery_schedule_uuid', 'uuid');
     }
 
     public function user()
