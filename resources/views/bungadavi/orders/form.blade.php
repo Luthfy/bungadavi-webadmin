@@ -739,7 +739,7 @@
                             html_product += "<h3 class='h3'>Custom Stock</h3>";
                             html_product += "<div class='form-group'>";
                             html_product += "<label>"+element.stock.name_stock+"</label>";
-                            html_product += "<input type='number' class='form-control custom_stock-"+x.code_product+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
+                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
                             html_product += "</div>";
                         });
 
