@@ -31,7 +31,7 @@
                         {{-- PRODUCT --}}
                         <div class="row pb-4 mb-4">
                             <div class="col-12">
-                                <center><img src="{{ asset('storage/'.$data_product->image_product) }}" height="200px" width="250" style="margin-bottom: 2rem"></center>
+                                <center><img src="{{ asset('storage/'.$data_product->image_main_product) }}" height="200px" width="250" style="margin-bottom: 2rem"></center>
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
@@ -178,7 +178,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Province</label>
-                                            <div>{{$province->name}}</div>
+                                            <div>{{$province->name ?? '-'}}</div>
                                         </div>
                                     </div>
                                     <div class="col-4">
