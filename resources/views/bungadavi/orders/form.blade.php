@@ -697,11 +697,15 @@
                     product_result = result;
                     result.forEach( (x, i) => {
                         let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
+
                         html_product += "<div class='row'>";
-                        html_product += "<div class='col-3'>";
+                        // image product
+                        html_product += "<div class='col-2'>";
                         html_product += "<img src='"+image_url+"' class='img-thumbnail' style='width=80px;' />";
                         html_product += "</div>";
-                        html_product += "<div class='col-6'>";
+                        // end image product
+                        // product
+                        html_product += "<div class='col-5'>";
                         html_product += "<h3 class='h4'>"+ x.code_product +"</h3>";
                         html_product += "<h3 class='h3'>"+ x.name_product +"</h3>";
                         html_product += "<div class='form-group'>";
@@ -720,26 +724,29 @@
                         html_product += "<label>Product Remarks</label>";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
                         html_product += "</div>";
-                        html_product += "<div class='col-6'>";
-                        html_product += "<div class='form-group'>";
-                        html_product += "<input type='radio' class='form-control' id='custom_product' name='custom_product' />";
-                        html_product += "<label>Custom Product</label>";
                         html_product += "</div>";
-                        html_product += "</div>";
-                        html_product += "</div>";
-                        html_product += "</div>";
+                        // end product
 
-                        // listProductOrder[i] = {
-                        //     product_uuid : x.uuid,
-                        //     code_product : x.code_product,
-                        //     name_product : x.name_product,
-                        //     qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
-                        //     price_product : x.cost_product,
-                        //     from_message_product : $("#fromMessageProduct").val(),
-                        //     to_message_product : $("#romMessageProduct").val(),
-                        //     remarks_product : $("#remarkProduct").val(),
-                        //     custom_product: null
-                        // };
+                        // custom product
+                        x.materials.forEach(element => {
+
+                            /**
+                            /* UUID STOCK AKAN GET STOCK DI STOCK TABLE DAN MENGURANGI BERDASARKAN INPUT VALUE YANG DIISI
+                            */
+
+                            html_product += "<div class='col-5'>";
+                            html_product += "<br>";
+                            html_product += "<h3 class='h3'>Custom Stock</h3>";
+                            html_product += "<div class='form-group'>";
+                            html_product += "<label>"+element.stock.name_stock+"</label>";
+                            html_product += "<input type='number' class='form-control custom_stock-"+x.code_product+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
+                            html_product += "</div>";
+                        });
+
+                        // end custom product
+                        html_product += "</div>";
+                        html_product += "</div>";
+                        html_product += "<hr />";
 
                     })
 
@@ -747,20 +754,6 @@
 
                     result.forEach( (x, i) => {
                         list_product += "<tr><td>"+ x.name_product +"</td><td>"+ x.cost_product +"</td></tr>";
-
-
-                        // listProductOrder[i] = {
-                        //     product_uuid : x.uuid,
-                        //     code_product : x.code_product,
-                        //     name_product : x.name_product,
-                        //     qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
-                        //     price_product : x.cost_product,
-                        //     from_message_product : $("#fromMessageProduct").val(),
-                        //     to_message_product : $("#romMessageProduct").val(),
-                        //     remarks_product : $("#remarkProduct").val(),
-                        //     custom_product: null
-                        // };
-
                     })
 
                     list_product += "</table>";

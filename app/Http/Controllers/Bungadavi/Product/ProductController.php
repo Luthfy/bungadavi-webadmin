@@ -234,7 +234,7 @@ class ProductController extends Controller
         $ids = explode(",", $_GET['data']);
 
         return response()->json(
-            Product::findMany($ids)
+            Product::whereIn('uuid', $ids)->with('materials.stock')->get()->toArray()
         );
     }
 }
