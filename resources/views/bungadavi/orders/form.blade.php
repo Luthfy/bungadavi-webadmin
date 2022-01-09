@@ -283,6 +283,7 @@
         var orderTransaction        = {};
         var senderRecipientOrder    = {};
         var listProductOrder        = [];
+        var customProductStock      = [];
         var deliverySchedule        = null;
         var paymentOrder            = null;
 
@@ -728,20 +729,21 @@
                         // end product
 
                         // custom product
+                        html_product += "<div class='col-5'>";
+                        html_product += "<br>";
+                        html_product += "<h3 class='h3'>Custom Stock</h3>";
                         x.materials.forEach(element => {
 
                             /**
                             /* UUID STOCK AKAN GET STOCK DI STOCK TABLE DAN MENGURANGI BERDASARKAN INPUT VALUE YANG DIISI
                             */
 
-                            html_product += "<div class='col-5'>";
-                            html_product += "<br>";
-                            html_product += "<h3 class='h3'>Custom Stock</h3>";
                             html_product += "<div class='form-group'>";
                             html_product += "<label>"+element.stock.name_stock+"</label>";
-                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
+                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-key='"+i+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
                             html_product += "</div>";
                         });
+                        html_product += "</div>";
 
                         // end custom product
                         html_product += "</div>";
@@ -762,6 +764,23 @@
                     $("#productList").append(list_product);
                 },
             });
+        }
+
+        function setCustomProduct()
+        {
+            // check code product dari product
+            product_result.forEach((x) => {
+                let code_product = x.code_product
+
+                $(".custom_stock_" + code_product).each((i, d) => {
+                    // product_result[d.data('key')].custom_product = {
+                    //     uuidStock : d.data('uuidstock'),
+                    //     qtyUpdate : d.val(),
+                    // }
+                })
+
+            })
+
         }
 
         function getCardMessageCategoryAjax(url)
