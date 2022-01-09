@@ -354,8 +354,15 @@ class OrderController extends Controller
 
     public function realTimeOrder()
     {
-        $today = Carbon::now()->format('Y-m-d');
+        // get product order today process
+        $today         = Carbon::now()->format('Y-m-d');
+        $scheduleToday = Schedule::whereDate('delivery_date', $today)->with('order.products');
+        $productToday  = Product::whereIn('order_transactions_uuid', $scheduleToday->pluck('order_transactions_uuid'))->where('status_progress_product', '!=', 'done');
+
+        // get product order tomorrow process
         $tomorrow = Carbon::now()->add(1, 'day')->format('Y-m-d');
+        $scheduleTomorrow = Schedule::whereDate('delivery_date', ">", $tomorrow)->with('order.products');
+        $productTomorrow  = Product::whereIn('order_transactions_uuid', $scheduleTomorrow->pluck('order_transactions_uuid'))->where('status_progress_product', '!=', 'done');
 
         $data = [
             'title'         => 'Real Time Order',
@@ -364,12 +371,30 @@ class OrderController extends Controller
             'breadcrumb'    => ['Real Time Order Management', 'Order List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
             'data'          => [
-                'orderToday'    => Schedule::whereDate('delivery_date', $today)->get(),
-                'orderTomorrow' => Schedule::whereDate('delivery_date', ">", $tomorrow)->get(),
+                'link'          => route('bungadavi.orders.status_product'),
+                'orderToday'    => $productToday->with('product')->orderBy('name_product', 'asc')->get()->toArray(),
+                'orderTomorrow' => $productTomorrow->with('product')->orderBy('name_product', 'asc')->get()->toArray()
             ]
         ];
 
         return view('bungadavi.orders.realtime_order', $data);
 
+    }
+
+    public function productStatusOrder(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->status_progress_product = $request->status_product;
+        $product->save();
+
+        $productCount = Product::where('order_transactions_uuid', $product->order_transactions_uuid)->where('status_progress_product', '!=', 'done')->count();
+
+        if ($productCount == 0) {
+            $order = Order::findOrFail($product->order_transactions_uuid);
+            $order->status_order_transaction = "Ready To Pickup";
+            $order->save();
+        }
+
+        return response()->json(['message' => 'ok']);
     }
 }

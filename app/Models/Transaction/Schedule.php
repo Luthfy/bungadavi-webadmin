@@ -3,7 +3,7 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Courier\Courier;
+use App\Models\Transaction\Order;
 use App\Models\Courier\CourierTask;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

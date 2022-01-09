@@ -135,4 +135,20 @@ class Stock extends Model
     {
         return $this->hasMany(Opname::class, 'stocks_uuid', 'uuid');
     }
+
+    /**
+     * Mengurangi stock saat transaksi belanja terjadi
+     *
+     * data = ['id' => 'sebagai id stock', 'qty' => 'stock dari form custom order']
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function penguranganStock($data = [])
+    {
+        foreach ($data as $key => $value) {
+            $stock = self::find($value->id);
+            $stock->qty = $stock->qty - $value->qty;
+            $stock->save();
+        }
+    }
 }

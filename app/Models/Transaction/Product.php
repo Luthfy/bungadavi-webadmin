@@ -3,9 +3,10 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Product\Product as ProductStock;
+use App\Models\Transaction\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Product\Product as ProductStock;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -46,5 +47,15 @@ class Product extends Model
     public function product()
     {
         return $this->belongsTo(ProductStock::class, 'product_uuid', 'uuid');
+    }
+
+    /**
+     * Get the order that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid');
     }
 }

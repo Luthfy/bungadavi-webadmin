@@ -140,6 +140,7 @@ Route::group([
 
     Route::resource('transaction', OrderController::class)->names('orders');
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
+    Route::post('realtime_order', [OrderController::class, 'productStatusOrder'])->name('orders.status_product');
 
     // Courier
     Route::resource('courier', CourierController::class)->names('courier');
