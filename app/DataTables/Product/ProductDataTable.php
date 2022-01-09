@@ -44,8 +44,8 @@ class ProductDataTable extends DataTable
             })
             ->addColumn('action', function ($datatable) {
                 $html  = "";
-                $html .= "<a href='".route('bungadavi.products.edit', ['product' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
-                // $html .= "<a href='".route('bungadavi.products.show', ['product' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                // $html .= "<a href='".route('bungadavi.products.edit', ['product' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                $html .= "<a href='".route('bungadavi.products.show', ['product' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                 $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
                 return $html;
             });
