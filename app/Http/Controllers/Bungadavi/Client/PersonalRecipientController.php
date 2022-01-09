@@ -199,7 +199,7 @@ class PersonalRecipientController extends Controller
     {
         // if ($request->ajax()) {
             return response()->json(
-                PersonalRecipient::where('client_personal_uuid', $user)->get()
+                PersonalRecipient::where('client_personal_uuid', $user)->with('country', 'province', 'city', 'district', 'village', 'zipcode')->get()
             );
         // }
     }

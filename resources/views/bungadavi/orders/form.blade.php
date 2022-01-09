@@ -365,7 +365,7 @@
                 Object.assign(senderRecipientOrder, {
                     is_create_new: false,
                     is_secret: false,
-                    receiver_name : ( $('input[type=radio][name=radioButtonClientType]:checked').val() == "personal" ? recipient_selected.firstname + " " + recipient_selected.lastname : recipient_selected.fullname),
+                    receiver_name : ( $('input[type=radio][name=radioButtonClientType]:checked').val() == "personal" ? recipient_selected.firstname + " " + (recipient_selected.lastname == (null || undefined || "") ? recipient_selected.lastname : "") : recipient_selected.fullname),
                     receiver_phone_number   : recipient_selected.phone,
                     receiver_email          : recipient_selected.email,
                     receiver_address        : recipient_selected.address,
