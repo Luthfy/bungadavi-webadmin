@@ -41,6 +41,7 @@ class OrderController extends Controller
             'description'   => 'For Management Order Transaction',
             'breadcrumb'    => ['Order Transaction Management', 'Product List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
+            'linkUpdateStatus' => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction'))
         ];
 
         return $datatables->render('bungadavi.orders.index', $data);

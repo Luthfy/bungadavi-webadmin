@@ -208,38 +208,65 @@
                                 </div>
                                 <div class="form-group">
                                     <strong>Delivery Charge</strong>
+                                    <div id="deliveryChargeSummary">
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Timeslot Charge</strong>
+                                    <div id="deliveryTimeslotSummary">
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Total Price</strong>
+                                    <div id="totalPriceSummary">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <h4 class="mb-0">Select Payment</h4>
-                                @foreach ($ourBank as $item)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="bankOption" id="exampleRadios1" value="{{ $item->bank_name ."<br/>". $item->bank_account_number ."<br/>". $item->bank_code ."<br/>". $item->bank_beneficiary_name }}" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        <p>{{ $item->bank_name }} <br>
-                                        {{ $item->bank_account_number }} ({{ $item->bank_code }}) <br>
-                                        {{ $item->bank_beneficiary_name }} </p>
-                                    </label>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ route('bungadavi.orders.index') }}" class="btn btn-secondary">Back</a>
-                        {!! Form::reset('Reset', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::submit('Create Order', ['class' => 'btn btn-primary', 'id' => 'createNewOrder']) !!}
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Payment Type</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="mb-0">Manual Payment</h4>
+                                <div col="row">
+                                @foreach ($ourBank as $item)
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="bankOption" id="exampleRadios1" value="{{ $item->bank_name ."<br/>". $item->bank_account_number ."<br/>". $item->bank_code ."<br/>". $item->bank_beneficiary_name }}" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                <p>{{ $item->bank_name }} <br>
+                                                {{ $item->bank_account_number }} ({{ $item->bank_code }}) <br>
+                                                {{ $item->bank_beneficiary_name }} </p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <a href="{{ route('bungadavi.orders.index') }}" class="btn btn-secondary">Back</a>
+            {!! Form::reset('Reset', ['class' => 'btn btn-danger']) !!}
+            {!! Form::submit('Create Order', ['class' => 'btn btn-primary', 'id' => 'createNewOrder']) !!}
+
         </div>
 
         @include('bungadavi.orders.modal')
@@ -280,21 +307,20 @@
         // click set client sender data
         $("#btnClientType").click(function (e) {
             let client_selected = client_result.find(x => x.uuid === $("#client_id").val());
-            console.log(client_selected)
             senderRecipientOrder = {
-                client_type : ($('input[type=radio][name=radioButtonClientType]:checked').val() == (null || undefined || "") ? "undefined" :  $('input[type=radio][name=radioButtonClientType]:checked').val()),
-                client_uuid : client_selected.uuid,
-                pic_name : ($("#PicName").val() == (null || undefined || "")) ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
-                sender_name : ($("#senderName").val() == (null || undefined || "") ? client_selected.fullname : $("#senderName").val()),
-                po_referrence : ($("#poReference").val() == (null || undefined || "") ? "" :  $("#poReference").val()),
+                client_type     : ($('input[type=radio][name=radioButtonClientType]:checked').val() == (null || undefined || "") ? "undefined" :  $('input[type=radio][name=radioButtonClientType]:checked').val()),
+                client_uuid     : client_selected.uuid,
+                pic_name        : ($("#PicName option:selected").val() == (null || undefined || "")) ? "{{ auth()->user()->name }}" :  $("#PicName option:selected").text(),
+                sender_name     : ($("#senderName").val() == (null || undefined || "") ? client_selected.fullname : $("#senderName").val()),
+                po_referrence   : ($("#poReference").val() == (null || undefined || "") ? "" :  $("#poReference").val()),
                 sender_phone_number : client_selected.phone,
-                sender_address : client_selected.address,
-                sender_country : client_selected.country_id,
-                sender_province : client_selected.province_id,
-                sender_city : client_selected.city_id,
-                sender_district : client_selected.district_id,
-                sender_village : client_selected.village_id,
-                sender_zipcode : client_selected.zipcode_id,
+                sender_address  : client_selected.address,
+                sender_country  : client_selected.country.name,
+                sender_province : client_selected.province.name,
+                sender_city     : client_selected.city.name,
+                sender_district : client_selected.district.name,
+                sender_village  : client_selected.village.name,
+                sender_zipcode  : client_selected.zipcode.postal_code,
             }
 
             setSenderData(senderRecipientOrder)
@@ -340,15 +366,15 @@
                     is_create_new: false,
                     is_secret: false,
                     receiver_name : ( $('input[type=radio][name=radioButtonClientType]:checked').val() == "personal" ? recipient_selected.firstname + " " + recipient_selected.lastname : recipient_selected.fullname),
-                    receiver_phone_number : recipient_selected.phone,
-                    receiver_email      : recipient_selected.email,
-                    receiver_address : recipient_selected.address,
-                    receiver_country : recipient_selected.country_id,
-                    receiver_province : recipient_selected.province_id,
-                    receiver_city : recipient_selected.city_id,
-                    receiver_district : recipient_selected.district_id,
-                    receiver_village : recipient_selected.village_id,
-                    receiver_zipcode : recipient_selected.zipcode_id,
+                    receiver_phone_number   : recipient_selected.phone,
+                    receiver_email          : recipient_selected.email,
+                    receiver_address        : recipient_selected.address,
+                    receiver_country        : recipient_selected.country.name,
+                    receiver_province       : recipient_selected.province.name,
+                    receiver_city           : recipient_selected.city.name,
+                    receiver_district       : recipient_selected.district.name,
+                    receiver_village        : recipient_selected.village.name,
+                    receiver_zipcode        : recipient_selected.zipcode.postal_code,
                 });
 
                 setRecipientData(senderRecipientOrder)
@@ -380,16 +406,49 @@
                 html_sender += "<td>Sender Name</td>";
                 html_sender += "<td>:</td>";
                 html_sender += "<td>"+senderData.sender_name+"</td>";
+                html_sender += "<td>Sender Country</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_country+"</td>";
                 html_sender += "</tr>";
                 html_sender += "<tr>";
                 html_sender += "<td>Sender Address</td>";
                 html_sender += "<td>:</td>";
                 html_sender += "<td>"+senderData.sender_address+"</td>";
+                html_sender += "<td>Sender Province</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_province+"</td>";
                 html_sender += "</tr>";
                 html_sender += "<tr>";
                 html_sender += "<td>Sender Phone</td>";
                 html_sender += "<td>:</td>";
                 html_sender += "<td>"+senderData.sender_phone_number+"</td>";
+                html_sender += "<td>Sender City</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_city+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender PIC</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.pic_name+"</td>";
+                html_sender += "<td>Sender District</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_district+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>PO Reference</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.po_referrence+"</td>";
+                html_sender += "<td>Sender Village</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_village+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td></td>";
+                html_sender += "<td></td>";
+                html_sender += "<td></td>";
+                html_sender += "<td>Sender Zipcode</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_zipcode+"</td>";
                 html_sender += "</tr>";
                 html_sender += "</table>";
             $("#senderData").html(html_sender);
@@ -400,22 +459,75 @@
         {
             let html_recipient = "<table class='table'>";
                 html_recipient += "<tr>";
-                html_recipient += "<td>Sender Name</td>";
+                html_recipient += "<td>Recipient Name</td>";
                 html_recipient += "<td>:</td>";
                 html_recipient += "<td>"+receiverData.receiver_name+"</td>";
+                html_recipient += "<td>Recipient Country</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_country+"</td>";
                 html_recipient += "</tr>";
                 html_recipient += "<tr>";
-                html_recipient += "<td>Sender Address</td>";
+                html_recipient += "<td>Recipient Address</td>";
                 html_recipient += "<td>:</td>";
                 html_recipient += "<td>"+receiverData.receiver_address+"</td>";
+                html_recipient += "<td>Recipient Province</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_province+"</td>";
                 html_recipient += "</tr>";
                 html_recipient += "<tr>";
-                html_recipient += "<td>Sender Phone</td>";
+                html_recipient += "<td>Recipient Phone</td>";
                 html_recipient += "<td>:</td>";
                 html_recipient += "<td>"+receiverData.receiver_phone_number+"</td>";
+                html_recipient += "<td>Recipient City</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_city+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "<tr>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td>Recipient Village</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_village+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "<tr>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td>Recipient Village</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_village+"</td>";
+                html_recipient += "</tr>";
+                html_recipient += "<tr>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td></td>";
+                html_recipient += "<td>Recipient Zipcode</td>";
+                html_recipient += "<td>:</td>";
+                html_recipient += "<td>"+receiverData.receiver_zipcode+"</td>";
                 html_recipient += "</tr>";
                 html_recipient += "</table>";
             $("#recipientData").html(html_recipient);
+
+            let text = "Delivery Charge From " + receiverData.sender_village + " To " + receiverData.receiver_village;
+            setDeliveryChargeSummaru(text, 0);
+
+        }
+
+        function setTimeSlotSummary(message, price)
+        {
+            let html  = "<table class='table'>";
+                html += "<tr><td>"+message+"</td><td>"+price+"</td></tr>"
+                html += "</table>";
+            $("#deliveryTimeslotSummary").append(html);
+        }
+
+        function setDeliveryChargeSummaru(message, price)
+        {
+            let html  = "<table class='table'>";
+                html += "<tr><td>"+message+"</td><td>"+price+"</td></tr>"
+                html += "</table>";
+            $("#deliveryChargeSummary").append(html);
         }
 
         // set html data product
@@ -479,6 +591,8 @@
         $("#selectTimeSlot").change(function (e) {
             var timeslot_selected = timeslot_result.find(x => x.id === Number($("#selectTimeSlot option:selected").val()));
             $("#deliveryChargeTimeslot").val(timeslot_selected.price);
+
+            setTimeSlotSummary(timeslot_selected.time_slot_name, timeslot_selected.price)
         });
 
         function getPICAjax(url)
@@ -513,7 +627,6 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
-                    console.log(result)
                     client_result = result;
                     let html = "";
                     html += "<option value='' disabled readonly selected>- Select Client -</option>";
@@ -585,8 +698,8 @@
                     result.forEach( (x, i) => {
                         let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
                         html_product += "<div class='row'>";
-                        html_product += "<div class='col-6'>";
-                        html_product += "<img src='"+image_url+"' class='img-thumbnail' style='max-width=120px !important;' />";
+                        html_product += "<div class='col-3'>";
+                        html_product += "<img src='"+image_url+"' class='img-thumbnail' style='width=80px;' />";
                         html_product += "</div>";
                         html_product += "<div class='col-6'>";
                         html_product += "<h3 class='h4'>"+ x.code_product +"</h3>";
@@ -606,6 +719,8 @@
                         html_product += "<div class='form-group'>";
                         html_product += "<label>Product Remarks</label>";
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
+                        html_product += "</div>";
+                        html_product += "<div class='col-6'>";
                         html_product += "</div>";
                         html_product += "</div>";
                         html_product += "</div>";

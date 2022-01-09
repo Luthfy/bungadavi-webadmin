@@ -54,7 +54,11 @@ class Schedule extends Model
      */
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid');
+        if (auth()->user()->hasRole('bungadavi')) {
+            return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid');
+        }
+
+        return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid')->where('florist_uuid', auth()->user()->uuid);
     }
 
     /**

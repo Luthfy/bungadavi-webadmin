@@ -111,21 +111,23 @@
                     {!! Form::text('code_product', null, ['class' => 'form-control', 'id' => 'code_product', 'disabled' => true]) !!}
                     {!! Form::hidden('uuid_product', null, ['id' => 'uuid']) !!}
                 </div>
-                @if (auth()->user()->hasRole('affiliate'))
+                @if (auth()->user()->hasRole('bungadavi'))
+                <div class="form-group">
+                    <label for="">Florist Name</label>
+                    {!! Form::select('florist_uuid', [], null, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
+                </div>
+                @elseif (auth()->user()->hasRole('affiliate'))
                 <div class="form-group">
                     {{-- <label for="">Florist Name</label> --}}
                     {!! Form::hidden('florist_uuid', auth()->user()->uuid, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
                 </div>
                 @else
-                <div class="form-group">
-                    <label for="">Florist Name</label>
-                    {!! Form::select('florist_uuid', [], null, ['class' => 'form-control', 'id' => 'florist_uuid']) !!}
-                </div>
+
                 @endif
 
                 <div class="form-group">
                     <label for="">Status</label>
-                    {!! Form::select('status_order', ["Accept Florist" => "Accept", "Reject Florist" => "Reject", "Read To Pickup" => "Ready To Pickup"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}
+                    {!! Form::select('status_order', ["Accept Florist" => "Accept", "Reject Florist" => "Reject"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}
                 </div>
             </div>
             <div class="modal-footer">
@@ -178,12 +180,12 @@
 
         $("#btnUpdateStatus").click(function (e) {
             let id = $("#updateStatusOrder #uuid").val();
-            updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id + "/status");
+            updateOrderAssignToFlorist("{{ $linkUpdateStatus }}" + "/" + id + "/status");
         });
 
         $("#btnSelectFloristAssign").click(function (e) {
             let id = $("#uuid").val();
-            updateOrderAssignToFlorist("{{ url('bungadavi/transaction') }}" + "/" + id);
+            updateOrderAssignToFlorist("{{ $linkUpdateStatus }}" + "/" + id);
         })
 
         function updateOrderAssignToFlorist(url)

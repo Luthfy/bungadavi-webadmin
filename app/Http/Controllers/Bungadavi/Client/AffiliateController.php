@@ -88,14 +88,14 @@ class AffiliateController extends Controller
     public function list()
     {
         return response()->json(
-            Affiliate::all()
+            Affiliate::select()->with('country', 'province', 'city', 'district', 'village', 'zipcode')->get()
         );
     }
 
     public function listRecipient($user)
     {
         return response()->json(
-            FloristRecipient::where('client_affiliate_uuid', $user)->get()
+            FloristRecipient::where('client_affiliate_uuid', $user)->with('country', 'province', 'city', 'district', 'village', 'zipcode')->get()
         );
     }
 }
