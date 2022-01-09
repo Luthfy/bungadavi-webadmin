@@ -84,7 +84,7 @@
                                 <h4 class="h5">PRODUCT LIST</h4>
                                 <hr>
                                 <table class='table'>
-                                    <center><img src="{{ asset('storage/'.$data_product->image_product) }}" height="200px" width="250" style="margin-bottom: 2rem"></center>
+                                    <center><img src="{{ asset('storage/'.$data_product->image_main_product) }}" height="200px" width="250" style="margin-bottom: 2rem"></center>
                                     <tr>
                                         <td>Code Product</td>
                                         <td>:</td>
