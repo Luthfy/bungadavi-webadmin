@@ -194,7 +194,7 @@ class PersonalController extends Controller
     {
         // if ($request->ajax()) {
             return response()->json(
-                Personal::all()
+                Personal::select()->with('country', 'province', 'city', 'district', 'village', 'zipcode')->get()
             );
         // }
     }

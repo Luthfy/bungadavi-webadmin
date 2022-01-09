@@ -721,6 +721,10 @@
                         html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
                         html_product += "</div>";
                         html_product += "<div class='col-6'>";
+                        html_product += "<div class='form-group'>";
+                        html_product += "<input type='radio' class='form-control' id='custom_product' name='custom_product' />";
+                        html_product += "<label>Custom Product</label>";
+                        html_product += "</div>";
                         html_product += "</div>";
                         html_product += "</div>";
                         html_product += "</div>";
