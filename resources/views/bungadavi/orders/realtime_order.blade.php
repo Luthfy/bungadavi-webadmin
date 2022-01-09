@@ -43,7 +43,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-3">
-                                            <img src="{{ asset('storage' . '/' . $today['product']['image_main_product']) }}" alt="{{ $today['code_product'] }}" class="img-thumbnail" style="width: 80px">
+                                            <img src="{{ asset('storage' . '/' . ($today['product'] == null ? "" : $today['product']['image_main_product']) ) }}" alt="{{ $today['code_product'] }}" class="img-thumbnail" style="width: 80px">
                                         </div>
                                         <div class="col-9">
                                             <h4 class="h4">{{ $today['name_product'] }}</h4>
