@@ -737,10 +737,10 @@
                             /**
                             /* UUID STOCK AKAN GET STOCK DI STOCK TABLE DAN MENGURANGI BERDASARKAN INPUT VALUE YANG DIISI
                             */
-
+                            // console.log(element.)
                             html_product += "<div class='form-group'>";
                             html_product += "<label>"+element.stock.name_stock+"</label>";
-                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-key='"+i+"' data-uuidStock='"+element.uuid+"' value='"+ element.stock.qty_stock +"' />";
+                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-key='"+i+"' data-uuidmaterial='"+element.uuid+"' value='"+ element.stock.qty_used_products_material  +"' />";
                             html_product += "</div>";
                         });
                         html_product += "</div>";
@@ -770,14 +770,17 @@
         {
             // check code product dari product
             product_result.forEach((x) => {
-                let code_product = x.code_product
 
-                $(".custom_stock_" + code_product).each((i, d) => {
-                    // product_result[d.data('key')].custom_product = {
-                    //     uuidStock : d.data('uuidstock'),
-                    //     qtyUpdate : d.val(),
-                    // }
-                })
+                let prd = document.getElementsByClassName('custom_stock_' + x.code_product);
+
+                for (let x = 0; x < prd.length; x++) {
+                    console.log(prd[x].value)
+
+                    customProductStock[x] = {
+                        uuid_material : prd[x].getAttribute('data-uuidmaterial'),
+                        qty_stock     : prd[x].value,
+                    }
+                }
 
             })
 

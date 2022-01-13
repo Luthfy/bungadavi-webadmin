@@ -75,7 +75,7 @@
                 <div class="card-body">
                     <h5 class="card-title m-b-20">Image Product</h5>
                     <div class="row">
-                        @forelse (json_decode($data->images_product) as $key => $item)
+                        @forelse ((json_decode($data->images_product) ?? []) as $key => $item)
                         <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
                             <div class="uploaded-box">
                                 <div class="uploaded-img">

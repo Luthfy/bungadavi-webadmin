@@ -80,19 +80,19 @@ status
 -> Delivery Remark auto fill dari radio button (done)
 -> Message From Message To Order (testing)
 
--> User Team Group Membatasi Menu
+-> User Team Group Membatasi Menu (done)
 -> User Team List Permission 
 -> User Log (done)
 
--> Order List
+-> Order List (done)
 -> Ajax ZIPCODE
 
 -> QTY Stock pada Modal Product
 -> Description Product pada Modal Product
 
--> restrict [button accept]
--> Real time order Done [Ready To Pickup]
--> ON PROGRESS KURIR BISA DI ASSIGNED KURIR
+-> restrict [button accept] (done)
+-> Real time order Done [Ready To Pickup] (done)
+-> ON PROCESS KURIR BISA DI ASSIGNED KURIR
 
 -> ACCEPT -> ON PROGRESS DATA TAMPIL COURIER ASSIGN
 
@@ -104,3 +104,21 @@ status
 
 -> SENDER PHONE MASUK DIBAWAH SENDER NAME DAN HEADER GANTI JADI SENDER INFO
 -> RECIPIENT INFO NAME DAN MOBILE
+
+
+09-01-2022
+-> DISKON PER PRODUCT -> TIDAK TERKAIT VOUCHER / KHUSUS
+
+-> REALTIME ORDER TOMORROW berdasarkan delivery date -> timeslot -> alphabet name product
+-> Today 1 timeslot 1 card group dan accordion berdasarkan group timeslot 
+-> product description hanya text paragraph
+-> Jika stock kosong warna Merah dan ada tanda (-)
+-> QTY pada Realtime Order penulisannya 2 x 2
+
+-> Case Studi : 
+    - Accordion ada tombol button DONE untuk menyelesaikan semua product order jika semuanya sudah selesai
+    - Jika belum selesai dan sudah masuk delivery time TODAY maka akan group pada accordion TODAY
+
+-> group sales -> cost price, selling price, custom stock di hidden
+
+-> Custom Product bisa ditambah dari bahan baku diluar dari Product Bahan Baku dan Selling Price bisa diinput (group sales)
