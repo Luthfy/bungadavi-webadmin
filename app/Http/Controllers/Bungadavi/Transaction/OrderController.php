@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Bungadavi\Transaction;
 
-use App\DataTables\Order\AcceptOrderDataTable;
-use App\DataTables\Order\NewOrderDataTable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
@@ -23,9 +21,16 @@ use App\Models\Transaction\Schedule;
 use App\Models\Client\FloristRecipient;
 use App\DataTables\Order\OrderDataTable;
 use App\Models\Client\PersonalRecipient;
+use App\DataTables\Order\ReturnDataTable;
 use App\Models\Transaction\ProductCustom;
 use App\Models\Transaction\SenderReceiver;
+use App\DataTables\Order\NewOrderDataTable;
 use App\Models\BasicSetting\DeliveryRemark;
+use App\DataTables\Order\AcceptOrderDataTable;
+use App\DataTables\Order\CancelOrderDataTable;
+use App\DataTables\Order\DeliveredOrderDataTable;
+use App\DataTables\Order\OnDeliveryDataTable;
+use App\DataTables\Order\OnDeliveryOrderDataTable;
 use App\Models\Product\Product as ProductStock;
 
 class OrderController extends Controller
@@ -40,12 +45,22 @@ class OrderController extends Controller
         return $datatables->render('bungadavi.orders.index');
     }
 
+    public function getTabOnDeliveryDataTable(OnDeliveryDataTable $datatables)
+    {
+        return $datatables->render('bungadavi.orders.index');
+    }
+
+    public function getTabReturnOrderDataTable(ReturnDataTable $datatables)
+    {
+        return $datatables->render('bungadavi.orders.index');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(OrderDataTable $datatables)
+    public function index()
     {
         $data = [
             'title'         => 'Order Transaction Management',
@@ -55,8 +70,10 @@ class OrderController extends Controller
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
             'linkUpdateStatus'  => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction')),
             'datatables'        => [
-                'new_order' => (new NewOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.neworder')),
-                'accept_order' => (new AcceptOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder'))
+                'new_order'     => (new NewOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.neworder')),
+                'accept_order'  => (new AcceptOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder')),
+                'on_delivery'   => (new OnDeliveryDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder')),
+                'return' => (new ReturnDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder'))
             ]
         ];
 
@@ -419,5 +436,33 @@ class OrderController extends Controller
         // update table stock
 
         return response()->json(['message' => 'ok']);
+    }
+
+    public function deliveredList(DeliveredOrderDataTable $datatables)
+    {
+        $data = [
+            'title'         => 'Order Transaction Management',
+            'subtitle'      => 'Order List',
+            'description'   => 'For Management Order Transaction',
+            'breadcrumb'    => ['Order Transaction Management', 'Product List'],
+            'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
+            'linkUpdateStatus'  => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction')),
+        ];
+
+        return $datatables->render('commons.datatable', $data);
+    }
+
+    public function cancelList(CancelOrderDataTable $datatables)
+    {
+        $data = [
+            'title'         => 'Order Transaction Management',
+            'subtitle'      => 'Order List',
+            'description'   => 'For Management Order Transaction',
+            'breadcrumb'    => ['Order Transaction Management', 'Product List'],
+            'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
+            'linkUpdateStatus'  => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction')),
+        ];
+
+        return $datatables->render('commons.datatable', $data);
     }
 }

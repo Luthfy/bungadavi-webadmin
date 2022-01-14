@@ -44,10 +44,10 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#processOrder" role="tab" aria-controls="progressOrder" aria-selected="false">On Process</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">On Delivery</a>
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#onDelivery" role="tab" aria-controls="onDelivery" aria-selected="false">On Delivery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">Returned</a>
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#returnOrder" role="tab" aria-controls="returnOrder" aria-selected="false">Returned</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -64,7 +64,17 @@
                             </div>
                         </div>
 
+                        <div class="tab-pane fade" id="onDelivery" role="tabpanel" aria-labelledby="onDelivery-tab">
+                            <div class="table-responsive">
+                                {!! $datatables['on_delivery']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_ondelivery'], true) !!}
+                            </div>
+                        </div>
 
+                        <div class="tab-pane fade" id="returnOrder" role="tabpanel" aria-labelledby="returnOrder-tab">
+                            <div class="table-responsive">
+                                {!! $datatables['return']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_ondelivery'], true) !!}
+                            </div>
+                        </div>
 
                         {{-- <div class="tab-pane fade" id="cancelOrder" role="tabpanel" aria-labelledby="cancelOrder-tab">
 
