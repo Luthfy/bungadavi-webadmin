@@ -137,10 +137,15 @@ Route::group([
     // TRANSACTION DATATABLE
     Route::get('ajax/transaction/newOrder', [OrderController::class, 'getTabNewOrderDataTable'])->name('orders.ajax.neworder');
     Route::get('ajax/transaction/accpetOrder', [OrderController::class, 'getTabAcceptOrderDataTable'])->name('orders.ajax.acceptorder');
+    Route::get('ajax/transaction/ondelivery', [OrderController::class, 'getTabOnDeliveryOrderDataTable'])->name('orders.ajax.ondelivery');
+    Route::get('ajax/transaction/returned', [OrderController::class, 'getTabReturnedOrderDataTable'])->name('orders.ajax.returned');
+    Route::get('ajax/transaction/cancel', [OrderController::class, 'getTabCancelOrderDataTable'])->name('orders.ajax.cancel');
 
     // TRANSACTION ORDER
     Route::post('transaction/{id}', [OrderController::class, 'assignFlorist'])->name('orders.florist');
     Route::post('transaction/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update_status');
+    Route::get('transaction/delivered', [OrderController::class, 'deliveredList'])->name('orders.delivered');
+    Route::get('transaction/canceled', [OrderController::class, 'cancelList'])->name('orders.canceled');
 
     Route::resource('transaction', OrderController::class)->names('orders');
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');

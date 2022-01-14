@@ -138,6 +138,8 @@
             <ul style="display: none;">
                 <li><a href="{{ route('bungadavi.orders.create') }}">Create Order</a></li>
                 <li><a href="{{ route('bungadavi.orders.index') }}">Order List</a></li>
+                <li><a href="{{ route('bungadavi.orders.delivered') }}">Delivered Order</a></li>
+                <li><a href="{{ route('bungadavi.orders.canceled') }}">Cancel Order</a></li>
             </ul>
         </li>
 
