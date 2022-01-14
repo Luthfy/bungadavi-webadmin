@@ -151,8 +151,8 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label>Number</label>
-                                            <div>-</div>
+                                            <label>Address Info</label>
+                                            <div>{{$receiver->receiver_address_info ?? '-'}}</div>
                                         </div>
                                     </div>
                                     <div class="col-4">
