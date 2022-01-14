@@ -134,6 +134,10 @@ Route::group([
     Route::resource('shops', ShopController::class)->names('shops');
     Route::resource('splits', SplitController::class)->names('splits');
 
+    // TRANSACTION DATATABLE
+    Route::get('ajax/transaction/newOrder', [OrderController::class, 'getTabNewOrderDataTable'])->name('orders.ajax.neworder');
+    Route::get('ajax/transaction/accpetOrder', [OrderController::class, 'getTabAcceptOrderDataTable'])->name('orders.ajax.acceptorder');
+
     // TRANSACTION ORDER
     Route::post('transaction/{id}', [OrderController::class, 'assignFlorist'])->name('orders.florist');
     Route::post('transaction/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update_status');
@@ -152,4 +156,5 @@ Route::group([
 
     Route::resource('users', UserController::class)->names('users');
     Route::resource('groups', GroupController::class)->names('groups');
+
 });

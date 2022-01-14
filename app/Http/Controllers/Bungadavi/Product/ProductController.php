@@ -79,6 +79,19 @@ class ProductController extends Controller
     {
         if ($request->ajax()){
 
+            $request->validate([
+                'name_product'                  => ['required'],
+                'short_description_product'     => ['required'],
+                'short_description_en_product'  => ['required'],
+                'description_product'           => ['required'],
+                'description_en_product'        => ['required'],
+                'cost_product'                  => ['required'],
+                'florist_cost_product'          => ['required'],
+                'selling_price_product'         => ['required'],
+                'selling_florist_price_product' => ['required'],
+                'categories_uuid'               => ['required']
+            ]);
+
             $request->request->add(['size_product' => count($request->products_material ?? [])]);
 
             if ($request->hasFile('product_main_image')){
@@ -112,7 +125,6 @@ class ProductController extends Controller
                 }
             }
 
-            // $productsMaterial = json_decode($request->product_material, true)[0]['stocks_name'];
             $productsMaterial = json_decode($request->product_material, true);
             if ($productsMaterial != null) {
                 foreach ($productsMaterial as $key => $value) {
@@ -155,12 +167,6 @@ class ProductController extends Controller
         ], 200);
 
     }
-
-    // function uploads($id, Request $request)
-    // {
-    //     //
-    // }
-
 
     /**
      * Display the specified resource.

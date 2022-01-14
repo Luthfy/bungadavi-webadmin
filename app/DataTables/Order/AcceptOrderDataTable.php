@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OrderDataTable extends DataTable
+class AcceptOrderDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,6 +24,7 @@ class OrderDataTable extends DataTable
             ->rawColumns(['florist_uuid', 'action', 'status_order_transaction', 'pic_name', 'sender_info', 'recipient_info', 'delivery_info', 'code_order_transaction'])
             ->addColumn('action', function ($datatable) {
                 $html  = "";
+
                 if (auth()->user()->hasRole('bungadavi')) {
                     $html .= "<a href='".route('bungadavi.orders.edit', ['transaction' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
                     $html .= "<a href='".route('bungadavi.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
@@ -32,6 +33,8 @@ class OrderDataTable extends DataTable
                 } else {
                     $html .= "<a href='".route('affiliate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                 }
+
+
                 return $html;
             })
             ->editColumn('code_order_transaction', function ($datatable) {
@@ -106,9 +109,9 @@ class OrderDataTable extends DataTable
     {
         $model = new Order();
         if (auth()->user()->hasRole('bungadavi')) {
-            return $model->orderBy('created_at', 'desc')->newQuery();
+            return $model->orderBy('created_at', 'desc')->where('status_order_transaction', "Accept Order")->newQuery();
         } else {
-            return $model->where('florist_uuid', auth()->user()->customer_uuid)->newQuery();
+            return $model->where('florist_uuid', auth()->user()->customer_uuid)->where('status_order_transaction', "Accept Order")->newQuery();
         }
     }
 
@@ -204,7 +207,19 @@ class OrderDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
-                    ->orderBy(1);
+                    ->orderBy(1)
+                    ->parameters([
+                        "initComplete" => "function () {
+                            this.api().columns().every(function () {
+                                var column = this;
+                                var input = document.createElement(\"input\");
+                                $(input).appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                            });
+                        }",
+                    ]);
     }
 
     /**

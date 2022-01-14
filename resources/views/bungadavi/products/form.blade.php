@@ -553,7 +553,6 @@
             processData: false,
             cache: false,
             success: function (res) {
-                console.log(res);
                 if (res.status) {
 
                     uploadImages(res.data.uuid)
@@ -565,7 +564,7 @@
                         timerProgressBar: true,
                     })
 
-                    // window.location.href = "{{ route('bungadavi.products.index') }}"
+                    window.location.href = "{{ route('bungadavi.products.index') }}"
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -574,6 +573,23 @@
                     })
                 }
             },
+            error: function (err) {
+                if (err.status == 422) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: err.responseJSON.message,
+                    })
+
+                    console.warn(err.responseJSON.errors);
+
+                    $.each(err.responseJSON.errors, function (i, error) {
+                        var el = $(document).find('[name="'+i+'"]');
+                        el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                    });
+                }
+            }
         });
     }
 

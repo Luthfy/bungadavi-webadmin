@@ -37,28 +37,38 @@
                 <div class="card-body">
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#newOrder" role="tab" aria-controls="newOrder" aria-selected="true">New Order</a>
+                        <li class="nav-item active">
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#newOrder" role="tab" aria-controls="newOrder" aria-selected="true">New Order</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#progressOrder" role="tab" aria-controls="progressOrder" aria-selected="false">Progress Order</a>
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#processOrder" role="tab" aria-controls="progressOrder" aria-selected="false">On Process</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">Cancel Order</a>
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">On Delivery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cancelOrder" role="tab" aria-controls="cancelOrder" aria-selected="false">Returned</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
+
                         <div class="tab-pane fade show active" id="newOrder" role="tabpanel" aria-labelledby="newOrder-tab">
                             <div class="table-responsive">
-                                {!! $dataTable->table(['class' => 'datatable table table-stripped mb-0'], true) !!}
+                                {!! $datatables['new_order']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_neworder'], true) !!}
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="progressOrder" role="tabpanel" aria-labelledby="progressOrder-tab">
 
+                        <div class="tab-pane fade" id="processOrder" role="tabpanel" aria-labelledby="progressOrder-tab">
+                            <div class="table-responsive">
+                                {!! $datatables['accept_order']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_acceptorder'], true) !!}
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="cancelOrder" role="tabpanel" aria-labelledby="cancelOrder-tab">
 
-                        </div>
+
+
+                        {{-- <div class="tab-pane fade" id="cancelOrder" role="tabpanel" aria-labelledby="cancelOrder-tab">
+
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -149,7 +159,8 @@
     <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
 
-    {!! $dataTable->scripts() !!}
+    {!! $datatables['new_order']->scripts() !!}
+    {!! $datatables['accept_order']->scripts() !!}
 
     <script>
         $(document).ready(function (e) {
@@ -211,7 +222,6 @@
                     });
 
                     $('#updateStatusOrder').modal('hide');
-
                     if ($('#datatablesserverside').length > 0) {
                         $('#datatablesserverside').DataTable().ajax.reload();
                     } else {

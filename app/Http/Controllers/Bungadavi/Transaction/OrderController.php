@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Bungadavi\Transaction;
 
+use App\DataTables\Order\AcceptOrderDataTable;
+use App\DataTables\Order\NewOrderDataTable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
@@ -28,6 +30,16 @@ use App\Models\Product\Product as ProductStock;
 
 class OrderController extends Controller
 {
+    public function getTabAcceptOrderDataTable(AcceptOrderDataTable $datatables)
+    {
+        return $datatables->render('bungadavi.orders.index');
+    }
+
+    public function getTabNewOrderDataTable(NewOrderDataTable $datatables)
+    {
+        return $datatables->render('bungadavi.orders.index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,10 +53,16 @@ class OrderController extends Controller
             'description'   => 'For Management Order Transaction',
             'breadcrumb'    => ['Order Transaction Management', 'Product List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
-            'linkUpdateStatus' => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction'))
+            'linkUpdateStatus'  => (auth()->user()->hasRole('bungadavi') ? url('bungadavi/transaction') : url('affiliate/transaction')),
+            'datatables'        => [
+                'new_order' => (new NewOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.neworder')),
+                'accept_order' => (new AcceptOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder'))
+            ]
         ];
 
-        return $datatables->render('bungadavi.orders.index', $data);
+        return view('bungadavi.orders.index', $data);
+
+        // return $datatables->addScope(new NewOrder)->render('bungadavi.orders.index', $data);
     }
 
     /**
@@ -243,16 +261,16 @@ class OrderController extends Controller
 
                 // if ($product['custom_product']) {
 
-                //     foreach ($product['custom_product'] as $key => $custom) {
-                //         $productCustom = [
-                //             'list_product_uuid'         => $orderProduct->uuid,
-                //             'products_material_uuid'    => $custom['products_material_uuid'],
-                //             'name_stock'                => $custom['name_stock'],
-                //             'qty_stock'                 => $custom['qty_stock'],
-                //         ];
+                    // foreach ($product['custom_product'] as $key => $custom) {
+                    //     $productCustom = [
+                    //         'list_product_uuid'         => $orderProduct->uuid,
+                    //         'products_material_uuid'    => $custom['products_material_uuid'],
+                    //         'name_stock'                => $custom['name_stock'],
+                    //         'qty_stock'                 => $custom['qty_stock'],
+                    //     ];
 
-                //         ProductCustom::create($productCustom);
-                //     }
+                    //     ProductCustom::create($productCustom);
+                    // }
 
                 // }
             }
@@ -395,6 +413,10 @@ class OrderController extends Controller
             $order->status_order_transaction = "Ready To Pickup";
             $order->save();
         }
+
+        // get stock pada custom product
+
+        // update table stock
 
         return response()->json(['message' => 'ok']);
     }
