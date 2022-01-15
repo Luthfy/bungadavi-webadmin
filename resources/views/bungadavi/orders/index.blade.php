@@ -147,7 +147,7 @@
 
                 <div class="form-group">
                     <label for="">Status</label>
-                    {!! Form::select('status_order', ["Accept Florist" => "Accept", "Reject Florist" => "Reject"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}
+                    {!! Form::select('status_order', ["Accept Order" => "Accept", "Reject Florist" => "Reject Order"], null, ['class' => 'form-control', 'id' => 'status_order']) !!}
                 </div>
             </div>
             <div class="modal-footer">
