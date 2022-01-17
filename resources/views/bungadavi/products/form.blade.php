@@ -564,7 +564,7 @@
                         timerProgressBar: true,
                     })
 
-                    window.location.href = "{{ route('bungadavi.products.index') }}"
+                    // window.location.href = "{{ route('bungadavi.products.index') }}"
                 } else {
                     Swal.fire({
                         icon: 'error',

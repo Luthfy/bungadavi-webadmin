@@ -45,7 +45,7 @@ class OrderController extends Controller
         return $datatables->render('bungadavi.orders.index');
     }
 
-    public function getTabOnDeliveryDataTable(OnDeliveryDataTable $datatables)
+    public function getTabOnDeliveryOrderDataTable(OnDeliveryDataTable $datatables)
     {
         return $datatables->render('bungadavi.orders.index');
     }
@@ -72,8 +72,8 @@ class OrderController extends Controller
             'datatables'        => [
                 'new_order'     => (new NewOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.neworder')),
                 'accept_order'  => (new AcceptOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder')),
-                'on_delivery'   => (new OnDeliveryDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder')),
-                'return' => (new ReturnDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder'))
+                'on_delivery'   => (new OnDeliveryDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.ondelivery')),
+                'return' => (new ReturnDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.returned'))
             ]
         ];
 

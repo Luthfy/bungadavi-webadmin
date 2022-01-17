@@ -89,7 +89,7 @@ class ProductController extends Controller
                 'florist_cost_product'          => ['required'],
                 'selling_price_product'         => ['required'],
                 'selling_florist_price_product' => ['required'],
-                'categories_uuid'               => ['required']
+                // 'categories_uuid'               => ['required'] tidak membaca data array
             ]);
 
             $request->request->add(['size_product' => count($request->products_material ?? [])]);

@@ -122,3 +122,11 @@ status
 -> group sales -> cost price, selling price, custom stock di hidden
 
 -> Custom Product bisa ditambah dari bahan baku diluar dari Product Bahan Baku dan Selling Price bisa diinput (group sales)
+
+
+// 15 Januari 2022
+-> Button Delivered untuk Flaging Finish All Process Order 
+
+-> Cancel Order langsung Tampil Button Reassign Order
+-> TIMESLOT RESTRICT BASE TIME DAN EDIT TIMESLOT DATA MISSING
+-> CITY AVALABLE BASED ON PROVINCE
