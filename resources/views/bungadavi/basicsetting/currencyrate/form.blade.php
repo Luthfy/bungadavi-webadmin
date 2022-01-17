@@ -49,7 +49,7 @@
                     <div class="form-group row pb-4">
                         <label class="col-form-label col-sm-12 col-md-2">Value <span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-10">
-                            {!! Form::number('value', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('value', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>

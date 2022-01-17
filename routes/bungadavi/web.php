@@ -104,6 +104,9 @@ Route::group([
         Route::get('subcategory/ajax', [SubCategoryController::class, 'getSubCategories'])->name('subcategories.ajax.list');
         Route::get('deliveryremark/ajax', [DeliveryRemarkController::class, 'list'])->name('deliveryremark.ajax.list');
         Route::get('stocks/ajax', [StockController::class, 'getStocks'])->name('stocks.ajax.list');
+        Route::get('currencyrate/today', [CurrencyRateController::class, 'getCurrencyToday'])->name('currency.today');
+
+        Route::post('currencyrate/status/{id}', [CurrencyRateController::class, 'updateCurrencyStatus'])->name('currency.status');
 
         // web
         Route::resource('unit', UnitController::class)->names('unit');

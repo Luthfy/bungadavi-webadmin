@@ -21,17 +21,11 @@ class CurrencyRateDataTable extends DataTable
     {
         return datatables()
         ->eloquent($query)
-        ->editColumn('currency_code_from_id', function ($data){
-            return $data->currencyCodeFrom()->first()->name;
-            })
-        ->editColumn('currency_code_to_id', function ($data){
-            return $data->currencyCodeTo()->first()->name;
-            })
         ->addColumn('action', function ($datatable) {
-            $html  = "";
-            $html .= "<a href='".route('bungadavi.currencyrate.edit', ['currencyrate' => $datatable->id])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
-            $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->id."\")'><span class='fa fa-trash'></span></a>";
-            return $html;
+            $active     = "<a href='#' onclick='updateCurrencyStatus(".$datatable->id." ,1)'><span class='badge badge-warning'>Not Active</span></a>";
+            $inactive   = "<a href='#' onclick='updateCurrencyStatus(".$datatable->id." ,0)'><span class='badge badge-success'>Activated</span></a>";
+
+            return ($datatable->is_active == 1 ? $inactive : $active);
         });
     }
 
@@ -43,7 +37,10 @@ class CurrencyRateDataTable extends DataTable
      */
     public function query(CurrencyRate $model)
     {
-        return $model->newQuery();
+        return $model
+                    ->orderBy('currency_code_from_id', 'asc')
+                    ->orderBy('is_active', 'desc')
+                    ->newQuery();
     }
 
     /**
@@ -58,7 +55,7 @@ class CurrencyRateDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('lfrtip')
-                    ->orderBy(1);
+                    ->orderBy(3);
     }
 
     /**
@@ -77,6 +74,7 @@ class CurrencyRateDataTable extends DataTable
             Column::make('currency_code_from_id')->title('Currency From'),
             Column::make('currency_code_to_id')->title('Currency To'),
             Column::make('value'),
+            Column::make('updated_at'),
         ];
     }
 

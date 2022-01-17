@@ -18,6 +18,7 @@ class CreateCurrencyRateTable extends Migration
             $table->string('currency_code_from_id');
             $table->string('currency_code_to_id');
             $table->integer('value')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
