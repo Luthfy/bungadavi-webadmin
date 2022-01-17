@@ -125,10 +125,13 @@ class CurrencyRateController extends Controller
                 ]);
             }
 
-            return response(['status' => true, 'message' => 'already update']);
+            // return response(['status' => true, 'message' => 'already update']);
+            return redirect()->back()->with('success', 'Already update');
         }
 
-        return response(['status' => false, 'message' => 'something is wrong', 'error' => json_decode($data, true)]);
+        return redirect()->back()->with('warning', 'Something is wrong or limits');
+
+        // return response(['status' => false, 'message' => 'something is wrong', 'error' => json_decode($data, true)]);
     }
 
     public function updateCurrencyStatus(Request $request, $id)
