@@ -24,13 +24,26 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <h4 class="mb-0">Detail Transaction</h4>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4 class="mb-0">Detail Transaction</h4>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <h4 class="mb-2">
+                                        Currency Mode
+                                        <select name="code_currency" id="currencyCode">
+                                            <option value="">IDR - IDR</option>
+                                        </select>
+                                    </h4>
+                                    <span id="currencyRates">Rp. 1</span>
+                                </div>
+                            </div>
                             <hr>
                         </div>
 
                         {{-- SENDER RECIPIENT SECTION --}}
                         <div class="row pb-4 mb-4">
-                            <div class="col-6">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <h4 class="h5">SENDER</h4>
                                 <hr>
                                 <div id="senderData">
@@ -42,7 +55,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                        </div>
+                        <div class="row pb-4 mb-4">
+                            <div class="col-lg-12 col-md-12 co-sm-12">
                                 <h4 class="h5">RECIPIENT</h4>
                                 <hr>
                                 <div id="recipientData">
@@ -56,6 +71,92 @@
                             </div>
                         </div>
                         {{-- END SENDER RECIPIENT SECTION --}}
+
+                        {{-- PRODUCT LIST NEW --}}
+                        <div class="row pb-4 mb-4">
+                            <div class="col-lg-12 col-md-12">
+                                <h4 class="h5">PRODUCT LIST</h4>
+                                <hr>
+                            </div>
+                            <div class="col-lg-12 col-md-12" id="productData">
+                                {{-- Header --}}
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3 class='h4'>Produk Kode</h3>
+                                        <h3 class='h3'>Produk Name</h3>
+                                    </div>
+                                </div>
+                                {{-- Product --}}
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <img src='' class='img-thumbnail' style='width=80px;' />
+                                        <div class="custom-file mb-3">
+                                            <input type="file" class="custom-file-input" id="validatedCustomFile">
+                                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="mb-3">
+                                            <label for="validationTextarea">Cost Selling</label>
+                                            <div class="input-group is-invalid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text currency-symbol" id="costSellingSymbol">Rp</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="costSellingPrice" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="validationTextarea">Cost Selling Florist</label>
+                                            <div class="input-group is-invalid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text currency-symbol" id="costSellingFloristSymbol">Rp</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="costSellingFloristPrice" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="mb-3">
+                                            <label for="validationTextarea">Product Remarks</label>
+                                            <textarea class="form-control" id="validationTextarea" rows="5"></textarea>
+                                          </div>
+                                    </div>
+                                </div>
+                                {{-- Stock --}}
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <table class="table" id="row-product-materials">
+                                            <tr colspan="3"><td class="text-center">- Stock Belum Ada</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
+                                    <div class="row form-group" id="product-material">
+                                        <div class="col-12 mb-2">
+                                            <h4 class="h4">Product Materials</h4>
+                                        </div>
+                                        <div class="col-12" id="field-product-materials">
+
+                                            <div class="row pb-4" id="form-product-materials">
+                                                <div class="col-lg-9">
+                                                    <label>Stock Name *</label>
+                                                    {!! Form::select('stocks_uuid', [], null, ["class" => "form-control", "required" => true, "id" => "stocks-uuid"]) !!}
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label>Qty *</label>
+                                                    {!! Form::number('qty_material_uuid', null, ["class" => "form-control", "placeholder" => "e.g 1", "id" => "qty-material", 'min' => 0]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <a class="btn btn-outline-success btn-block" id="button-add-product-materials">Simpan Material</a>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+
+
 
                         {{-- PRODUCT ORDER --}}
                         <div class="row pb-4 mb-4">
@@ -142,13 +243,23 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Charge</label>
-                                            {!! Form::number('delivery_charge', null, [ "class" => "form-control", "id" => "deliveryCharge", "aria-describedby" => "deliveryChargeHelp"]) !!}
+                                            <div class="input-group is-invalid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text currency-symbol" id="deliveryChargeSymbol">Rp</span>
+                                                </div>
+                                                <input name="delivery_charge" type="text" class="form-control" aria-describedby="validatedInputGroupPrepend" id="deliveryCharge" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="inputDeliveryDate">Delivery Charge Timeslot</label>
-                                            {!! Form::number('delivery_charge_timeslot', null, [ "class" => "form-control", "id" => "deliveryChargeTimeslot", "aria-describedby" => "deliveryChargeTimeslotHelp"]) !!}
+                                            <div class="input-group is-invalid">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text currency-symbol" id="deliveryChargeTimeslotSymbol">Rp</span>
+                                                </div>
+                                                <input name="delivery_charge_timeslot" type="text" class="form-control" id="deliveryChargeTimeslot" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -277,8 +388,6 @@
 @endpush
 @push('js')
 
-    {{-- @include('bungadavi.orders.form_js') --}}
-
     <script>
         var orderTransaction        = {};
         var senderRecipientOrder    = {};
@@ -292,10 +401,12 @@
         var product_result;
         var timeslot_result;
         var card_message_sub_result;
+        var currency_result;
         var deliveryRemark = "";
 
         $(document).ready(function (e) {
             getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}")
+            getCurrencyActive("{{route('bungadavi.currency.ajax')}}")
         })
 
         // click process order
@@ -337,8 +448,7 @@
         });
 
         $("#client_id").change(function (e) {
-            getPICAjax("{{ url('bungadavi/florist/pic') }}" + "/" + $("#client_id option:selected").val()
-);
+            getPICAjax("{{ url('bungadavi/florist/pic') }}" + "/" + $("#client_id option:selected").val())
         })
 
         // cliek set Click Recipient Data
@@ -596,6 +706,37 @@
             setTimeSlotSummary(timeslot_selected.time_slot_name, timeslot_selected.price)
         });
 
+        $("#currencyCode").change(function (e) {
+            let currencyFrom = $("#currencyCode option:selected").data("from");
+            let currencyTo   = $("#currencyCode option:selected").data("to");
+
+            let currency_selected = currency_result.find(x => (x.currency_code_to_id == currencyTo) && (x.currency_code_from_id == currencyFrom));
+
+            console.log(currency_selected);
+
+            $("#currencyRates").text("1 "+currency_selected.currency_code_from_id+" -> " + currency_selected.value + " " + currency_selected.currency_code_to_id);
+
+            $(".currency-symbol").text(currency_selected.currency_code_to_id)
+            $(".currency-symbol").text(currency_selected.currency_code_to_id)
+            $("#deliveryChargeSymbol").text(currency_selected.currency_code_to_id)
+            $("#deliveryChargeTimeslotSymbol").text(currency_selected.currency_code_to_id)
+
+            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected))
+            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected))
+            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected))
+            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected))
+        });
+
+        function konversiMataUang(nilaiAwal, currency)
+        {
+            return (currency.value * nilaiAwal / 1).toFixed(2)
+        }
+
+        function numberDefaultZero(value)
+        {
+            return (value == (null || undefined || "")) ? 0 : value
+        }
+
         function getPICAjax(url)
         {
             $.ajax({
@@ -635,6 +776,28 @@
                         html += "<option value='"+res.uuid+"'>"+res.fullname+"</option>";
                     })
                     $("#client_id").html(html);
+                },
+            });
+        }
+
+        function getCurrencyActive(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    currency_result = result;
+                    let html = "";
+                    html += "<option value='' disabled readonly selected>- Currency -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.currency_code_to_id+"' data-from='"+res.currency_code_from_id+"' data-to='"+res.currency_code_to_id+"'>"+res.currency_code_from_id+" - "+res.currency_code_to_id+"</option>";
+                    })
+                    $("#currencyCode").html(html);
                 },
             });
         }

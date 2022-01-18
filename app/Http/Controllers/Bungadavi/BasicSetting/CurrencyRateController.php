@@ -142,4 +142,9 @@ class CurrencyRateController extends Controller
 
         return response()->json(['message' => 'success']);
     }
+
+    public function getAjaxActiveCurrency()
+    {
+        return CurrencyRate::where('is_active', 1)->get();
+    }
 }
