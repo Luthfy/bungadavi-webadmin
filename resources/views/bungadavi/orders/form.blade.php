@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" class="btn btn-primary" data-toggle="modal" data-target="#addClientSender" id="btnOpenModalAddSender">Add Sender</button>
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientSender" id="btnOpenModalAddSender">Add Sender</button>
                                     </div>
                                 </div>
                             </div>
@@ -73,20 +73,18 @@
                         {{-- END SENDER RECIPIENT SECTION --}}
 
                         {{-- PRODUCT LIST NEW --}}
-                        <div class="row pb-4 mb-4">
+                        {{-- <div class="row pb-4 mb-4">
                             <div class="col-lg-12 col-md-12">
                                 <h4 class="h5">PRODUCT LIST</h4>
                                 <hr>
                             </div>
                             <div class="col-lg-12 col-md-12" id="productData">
-                                {{-- Header --}}
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12">
                                         <h3 class='h4'>Produk Kode</h3>
                                         <h3 class='h3'>Produk Name</h3>
                                     </div>
                                 </div>
-                                {{-- Product --}}
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <img src='' class='img-thumbnail' style='width=80px;' />
@@ -122,7 +120,6 @@
                                           </div>
                                     </div>
                                 </div>
-                                {{-- Stock --}}
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <table class="table" id="row-product-materials">
@@ -130,31 +127,8 @@
                                         </table>
                                     </div>
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="row form-group" id="product-material">
-                                        <div class="col-12 mb-2">
-                                            <h4 class="h4">Product Materials</h4>
-                                        </div>
-                                        <div class="col-12" id="field-product-materials">
-
-                                            <div class="row pb-4" id="form-product-materials">
-                                                <div class="col-lg-9">
-                                                    <label>Stock Name *</label>
-                                                    {!! Form::select('stocks_uuid', [], null, ["class" => "form-control", "required" => true, "id" => "stocks-uuid"]) !!}
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Qty *</label>
-                                                    {!! Form::number('qty_material_uuid', null, ["class" => "form-control", "placeholder" => "e.g 1", "id" => "qty-material", 'min' => 0]) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <a class="btn btn-outline-success btn-block" id="button-add-product-materials">Simpan Material</a>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -403,10 +377,14 @@
         var card_message_sub_result;
         var currency_result;
         var deliveryRemark = "";
+        var stock_result;
 
         $(document).ready(function (e) {
             getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}")
             getCurrencyActive("{{route('bungadavi.currency.ajax')}}")
+
+            let urlStocks = "{{route('bungadavi.stocks.ajax.list')}}";
+            getStockProduct(urlStocks)
         })
 
         // click process order
@@ -727,6 +705,16 @@
             $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected))
         });
 
+        $('#addStock').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+
+            var uuid = button.data('key')
+
+            var modal = $(this)
+
+            modal.find('.modal-body #product-uuid').val(uuid)
+        })
+
         function konversiMataUang(nilaiAwal, currency)
         {
             return (currency.value * nilaiAwal / 1).toFixed(2)
@@ -802,6 +790,23 @@
             });
         }
 
+        function getStockProduct(urlAbsolute)
+        {
+            $.ajax({
+                url : urlAbsolute,
+                type : 'get',
+                success: (result) => {
+                    stock_result = result;
+                    let html = "";
+                        html += "<option value='' disabled readonly selected>- Select Stocks -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.name_stock+"</option>";
+                    })
+                    $("#socks-uuid").append(html);
+                }
+            })
+        }
+
         function getRecipientAjax(url)
         {
             $.ajax({
@@ -857,76 +862,133 @@
                 },
                 contentType: 'application/json',
                 success: function (result) {
-                    let html_product = "";
                     product_result = result;
-                    result.forEach( (x, i) => {
-                        let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
-
-                        html_product += "<div class='row'>";
-                        // image product
-                        html_product += "<div class='col-2'>";
-                        html_product += "<img src='"+image_url+"' class='img-thumbnail' style='width=80px;' />";
-                        html_product += "</div>";
-                        // end image product
-                        // product
-                        html_product += "<div class='col-5'>";
-                        html_product += "<h3 class='h4'>"+ x.code_product +"</h3>";
-                        html_product += "<h3 class='h3'>"+ x.name_product +"</h3>";
-                        html_product += "<div class='form-group'>";
-                        html_product += "<label>Qty</label>";
-                        html_product += "<input type='number' class='form-control' id='qtyProduct' value='1' />";
-                        html_product += "</div>";
-                        html_product += "<div class='form-group'>";
-                        html_product += "<label>Cost Price</label>";
-                        html_product += "<input type='number' class='form-control' id='costPrice' value='"+ x.cost_product +"' />";
-                        html_product += "</div>";
-                        html_product += "<div class='form-group'>";
-                        html_product += "<label>Cost Selling Price</label>";
-                        html_product += "<input type='number' class='form-control' id='costSellingPrice' value='"+ x.selling_price_product +"' />";
-                        html_product += "</div>";
-                        html_product += "<div class='form-group'>";
-                        html_product += "<label>Product Remarks</label>";
-                        html_product += "<textarea id='remarkProduct' class='form-control' rows='4'></textarea>";
-                        html_product += "</div>";
-                        html_product += "</div>";
-                        // end product
-
-                        // custom product
-                        html_product += "<div class='col-5'>";
-                        html_product += "<br>";
-                        html_product += "<h3 class='h3'>Custom Stock</h3>";
-                        x.materials.forEach(element => {
-
-                            /**
-                            /* UUID STOCK AKAN GET STOCK DI STOCK TABLE DAN MENGURANGI BERDASARKAN INPUT VALUE YANG DIISI
-                            */
-                            // console.log(element.)
-                            html_product += "<div class='form-group'>";
-                            html_product += "<label>"+element.stock.name_stock+"</label>";
-                            html_product += "<input type='number' class='form-control custom_stock_"+x.code_product+"' data-key='"+i+"' data-uuidmaterial='"+element.uuid+"' value='"+ element.stock.qty_used_products_material  +"' />";
-                            html_product += "</div>";
-                        });
-                        html_product += "</div>";
-
-                        // end custom product
-                        html_product += "</div>";
-                        html_product += "</div>";
-                        html_product += "<hr />";
-
-                    })
-
-                    var list_product = "<table class='table'>";
-
-                    result.forEach( (x, i) => {
-                        list_product += "<tr><td>"+ x.name_product +"</td><td>"+ x.cost_product +"</td></tr>";
-                    })
-
-                    list_product += "</table>";
-
-                    $("#productData").html(html_product);
-                    $("#productList").append(list_product);
+                    writeProductHTML(result);
                 },
             });
+        }
+
+        $("#btnAddCustomStock").click(function (e) {
+            let product_uuid = $('.modal-body #product-uuid').val(); // as key
+            let stock_uuid   = $('.modal-body #socks-uuid option:selected').val(); // as value
+            let qty_stocks   = $('.modal-body #qty').val(); // as value
+
+            let stock_selected = stock_result.find(x => x.uuid === stock_uuid);
+
+            let stock_material = {
+                'stocks_uuid' : stock_uuid,
+                'products_uuid' : product_uuid,
+                'qty_used_products_material' : qty_stocks,
+                'stock' : stock_selected
+            }
+
+
+            product_result.find(x => x.uuid === product_uuid).materials.push(stock_material);
+            writeProductHTML(product_result)
+
+            $("#addStock").modal('hide')
+        });
+
+        function writeProductHTML(result)
+        {
+            let html = "";
+            result.forEach( (x, i) => {
+                console.log(x)
+                let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
+
+                html += '<div class="col-lg-12 col-md-12" id="productData">';
+                html += '<div class="row">';
+                html += '<div class="col-lg-12 col-md-12">';
+                html += '<h3 class="h4">'+x.code_product+'</h3>';
+                html += '<h3 class="h3">'+x.name_product+'</h3>';
+                html += '</div>';
+                html += '</div>';
+
+                html += '<div class="row">';
+                html += '<div class="col-lg-4 col-md-4 col-sm-12">';
+                html += '<img src="'+image_url+'" class="img-thumbnail" style="width=80px;" />';
+                html += '<div class="custom-file mb-3 mt-2">';
+                html += '<input type="file" class="custom-file-input" id="validatedCustomFile">';
+                html += '<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-lg-4 col-md-4 col-sm-12">';
+                html += '<div class="mb-3">';
+                html += '<label for="validationTextarea">Cost Selling</label>';
+                html += '<div class="input-group is-invalid">';
+                html += '<div class="input-group-prepend">';
+                html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">Rp</span>';
+                html += '</div>';
+                html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="mb-3">';
+                html += '<label for="validationTextarea">Cost Selling Florist</label>';
+                html += '<div class="input-group is-invalid">';
+                html += '<div class="input-group-prepend">';
+                html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">Rp</span>';
+                html += '</div>';
+                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" required>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-lg-4 col-md-4 col-sm-12">';
+                html += '<div class="mb-3">';
+                html += '<label for="validationTextarea">Product Remarks</label>';
+                html += '<textarea class="form-control" id="validationTextarea" rows="5"></textarea>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+
+                if (x.materials.length == 0) {
+                    html += '<div class="row">';
+                    html += '<div class="col-lg-12 col-md-12 col-sm-12">';
+                    html += '<table class="table" id="row-product-materials">';
+                    html += '<tr colspan="3"><td class="text-center">- Stock Belum Ada</td></tr>';
+                    html += '</table>';
+                    html += '</div>';
+                    html += '</div>';
+                } else {
+                    html += '<div class="row">';
+                    html += '<div class="col-lg-12 col-md-12 col-sm-12">';
+                    html += '<table class="table" id="row-product-materials">';
+                    html += '<tr>';
+                    html += '<th>Name Stock</th>';
+                    html += '<th class="text-center">Qty</th>';
+                    html += '<th class="text-center">Action</th>';
+                    html += '</tr>';
+                    x.materials.forEach((material, index) => {
+                        html += '<tr>';
+                        html += '<td>'+material.stock.name_stock+'</td>';
+                        html += '<td class="text-center">'+material.qty_used_products_material+'</td>';
+                        html += '<td class="text-center"><a href="#">x</a></td>';
+                        html += '</tr>';
+                    });
+                    html += '</table>';
+                    html += '</div>';
+                    html += '</div>';
+
+                    html += '<div class="row mb-4">';
+                    html += '<div class="col-lg-12 col-md-12 col-sm-12">';
+                    html += '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addStock" id="btnOpenModalStock" data-key="'+x.uuid+'">Add Material</button>';
+                    html += '</div>';
+                    html += '</div>';
+                }
+
+                html += '</div>';
+
+            })
+
+            var list_product = "<table class='table'>";
+
+            result.forEach( (x, i) => {
+                list_product += "<tr><td>"+ x.name_product +"</td><td>"+ x.cost_product +"</td></tr>";
+            })
+
+            list_product += "</table>";
+
+            $("#productData").html(html);
+            $("#productList").append(list_product);
         }
 
         function setCustomProduct()
@@ -1083,68 +1145,6 @@
                 }
             })
         }
-
-        // function setOrderTransaction()
-        // {
-        //     return {
-        //         type_order_transaction : "backoffice_bungadavi",
-        //         total_order_transaction : "1000000",
-        //         shipping_price_order_transaction : "50000",
-        //         status_order_transaction : "New Order",
-        //         currency_id : "Rp",
-        //         card_message_category : $('#cardMessageCategory option:selected').text(),
-        //         card_message_subcategory : $('#cardMessageSubCategory option:selected').text(),
-        //         card_message_message : $("#cardMessage").val(),
-        //         is_guest : false,
-        //     };
-        // }
-
-        // // done
-        // function setSenderRecipientOrder()
-        // {
-        //     return {
-        //         is_secret : false,
-        //         client_type : "personal",
-        //         client_uuid : "testing-uuid",
-        //         pic_name : ($("#PicName").val() == "") ? "{{ auth()->user()->name }}" :  $("#PicName").val(),
-        //         sender_name : "testing sender name",
-        //         po_referrence : "testing po reference",
-        //         sender_phone_number : "1234",
-        //         sender_address : "Jl. Pasar Kamis",
-        //         sender_country : "Indonesia",
-        //         sender_province : "Kalimantan Selatan",
-        //         sender_city : "Banjarmasin",
-        //         sender_district : "Banjarmasin Utara",
-        //         sender_village : "Kuin Selatan",
-        //         sender_zipcode : "70122",
-        //         receiver_name : "Luthfy Testing",
-        //         receiver_phone_number : "1234",
-        //         receiver_address : "Jl. Putri Jaleha",
-        //         receiver_country : "Indonesia",
-        //         receiver_province : "Kalimantan Selatan",
-        //         receiver_city : "Banjarmasin",
-        //         receiver_district : "Banjarmasin Utara",
-        //         receiver_village : "Banua Anyar",
-        //         receiver_zipcode : "70111",
-        //     };
-        // }
-
-        // function setListProductOrder()
-        // {
-        //     return [
-        //         {
-        //             product_uuid : "testing-product-uuid",
-        //             code_product : "SBDO1234",
-        //             name_product : "Testing Product",
-        //             qty_product : "1",
-        //             price_product : "1000000",
-        //             from_message_product : "Luthfy",
-        //             to_message_product : "Luthfy To",
-        //             remarks_product : "product remark",
-        //             custom_product: null
-        //         }
-        //     ];
-        // }
 
         function setDeliverySchedule()
         {
