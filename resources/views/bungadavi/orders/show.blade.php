@@ -124,7 +124,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label style="font-weight: bold">Total Price</label>
-                                            <div>{{$data->total_order_transaction ?? '-'}}</div>
+                                            <div>{{$data->total_order_transaction+$data->shipping_price_order_transaction ?? '-'}}</div>
                                         </div>
                                     </div>
                                 </div>
