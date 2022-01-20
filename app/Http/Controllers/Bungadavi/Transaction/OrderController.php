@@ -53,7 +53,7 @@ class OrderController extends Controller
         return $datatables->render('bungadavi.orders.index');
     }
 
-    public function getTabReturnOrderDataTable(ReturnDataTable $datatables)
+    public function getTabReturnedOrderDataTable(ReturnDataTable $datatables)
     {
         return $datatables->render('bungadavi.orders.index');
     }
@@ -280,20 +280,20 @@ class OrderController extends Controller
 
                 $orderProduct = Product::create($productData);
 
-                // if ($product['custom_product']) {
+                if ($product['custom_product']) {
 
-                    // foreach ($product['custom_product'] as $key => $custom) {
-                    //     $productCustom = [
-                    //         'list_product_uuid'         => $orderProduct->uuid,
-                    //         'products_material_uuid'    => $custom['products_material_uuid'],
-                    //         'name_stock'                => $custom['name_stock'],
-                    //         'qty_stock'                 => $custom['qty_stock'],
-                    //     ];
+                    foreach ($product['custom_product'] as $key => $custom) {
+                        $productCustom = [
+                            'list_product_uuid'         => $orderProduct->uuid,
+                            'products_material_uuid'    => $custom['products_material_uuid'],
+                            'name_stock'                => $custom['name_stock'],
+                            'qty_stock'                 => $custom['qty_stock'],
+                        ];
 
-                    //     ProductCustom::create($productCustom);
-                    // }
+                        ProductCustom::create($productCustom);
+                    }
 
-                // }
+                }
             }
 
             return response(['message' => 'ok']);

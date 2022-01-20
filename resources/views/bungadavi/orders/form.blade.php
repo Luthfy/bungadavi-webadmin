@@ -1086,6 +1086,19 @@
             product_result.forEach((x, i) => {
                 total_order += (x.cost_product * ($("#qtyProduct").val() == (null || undefined || "")? 1 : x.qty_product));
 
+                var materials = [];
+
+                if (x.materials.length > 0) {
+                    x.materials.forEach((material, index) => {
+                        materials[index] = {
+                            list_product_uuid       : x.uuid,
+                            name_stock              : material.stock.name_stock,
+                            products_material_uuid  : material.stocks_uuid,
+                            qty_stock               : material.qty_used_products_material
+                        }
+                    })
+                }
+
                 listProductOrder[i] = {
                     product_uuid    : x.uuid,
                     code_product    : x.code_product,
@@ -1095,7 +1108,7 @@
                     from_message_product    : $("#fromMessageProduct").val(),
                     to_message_product      : $("#romMessageProduct").val(),
                     remarks_product         : $("#remarkProduct").val(),
-                    custom_product: null
+                    custom_product : materials
                 };
             });
 

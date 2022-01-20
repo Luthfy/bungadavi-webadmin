@@ -72,7 +72,7 @@
 
                         <div class="tab-pane fade" id="returnOrder" role="tabpanel" aria-labelledby="returnOrder-tab">
                             <div class="table-responsive">
-                                {!! $datatables['return']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_ondelivery'], true) !!}
+                                {!! $datatables['return']->table(['class' => 'datatable table table-stripped mb-0', 'id' => 'datatableserverside_return'], true) !!}
                             </div>
                         </div>
 
@@ -172,6 +172,7 @@
     {!! $datatables['new_order']->scripts() !!}
     {!! $datatables['accept_order']->scripts() !!}
     {!! $datatables['on_delivery']->scripts() !!}
+    {!! $datatables['return']->scripts() !!}
 
 
     <script>
