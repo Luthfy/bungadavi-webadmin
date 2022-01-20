@@ -27,13 +27,14 @@ class Order extends Model
         "total_order_transaction",
         "shipping_price_order_transaction",
         "status_order_transaction",
-        "currency_id",
         "is_guest",
         "from_message_order",
         "to_message_order",
         'card_message_category',
         'card_message_subcategory',
-        'card_message_message'
+        'card_message_message',
+        "code_currency",
+        "rates_currency"
     ];
 
     protected $casts = [

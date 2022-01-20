@@ -41,235 +41,214 @@
                             <hr>
                         </div>
 
-                        {{-- SENDER RECIPIENT SECTION --}}
-                        <div class="row pb-4 mb-4">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <h4 class="h5">SENDER</h4>
-                                <hr>
-                                <div id="senderData">
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientSender" id="btnOpenModalAddSender">Add Sender</button>
-                                    </div>
-                                </div>
-                            </div>
+                        {{-- NAVIGATION --}}
+                        <div class="">
+                            <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="pills-sender-tab" data-toggle="pill" href="#pills-sender" role="tab" aria-controls="pills-sender" aria-selected="true">Sender</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-recipient-tab" data-toggle="pill" href="#pills-recipient" role="tab" aria-controls="pills-recipient" aria-selected="false">Recipient</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-delivery-tab" data-toggle="pill" href="#pills-delivery" role="tab" aria-controls="pills-delivery" aria-selected="false">Delivery Schedule</a>
+                                  </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-products-tab" data-toggle="pill" href="#pills-products" role="tab" aria-controls="pills-products" aria-selected="false">Products</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="row pb-4 mb-4">
-                            <div class="col-lg-12 col-md-12 co-sm-12">
-                                <h4 class="h5">RECIPIENT</h4>
-                                <hr>
-                                <div id="recipientData">
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientRecipient" id="btnOpenModalAddRecipient">Add Receiver</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END SENDER RECIPIENT SECTION --}}
+                        <div class="tab-content" id="pills-tabContent">
 
-                        {{-- PRODUCT LIST NEW --}}
-                        {{-- <div class="row pb-4 mb-4">
-                            <div class="col-lg-12 col-md-12">
-                                <h4 class="h5">PRODUCT LIST</h4>
-                                <hr>
-                            </div>
-                            <div class="col-lg-12 col-md-12" id="productData">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12">
-                                        <h3 class='h4'>Produk Kode</h3>
-                                        <h3 class='h3'>Produk Name</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <img src='' class='img-thumbnail' style='width=80px;' />
-                                        <div class="custom-file mb-3">
-                                            <input type="file" class="custom-file-input" id="validatedCustomFile">
-                                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="mb-3">
-                                            <label for="validationTextarea">Cost Selling</label>
-                                            <div class="input-group is-invalid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text currency-symbol" id="costSellingSymbol">Rp</span>
-                                                </div>
-                                                <input type="text" class="form-control" id="costSellingPrice" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="validationTextarea">Cost Selling Florist</label>
-                                            <div class="input-group is-invalid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text currency-symbol" id="costSellingFloristSymbol">Rp</span>
-                                                </div>
-                                                <input type="text" class="form-control" id="costSellingFloristPrice" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="mb-3">
-                                            <label for="validationTextarea">Product Remarks</label>
-                                            <textarea class="form-control" id="validationTextarea" rows="5"></textarea>
-                                          </div>
-                                    </div>
-                                </div>
-                                <div class="row">
+                            <div class="tab-pane fade show active" id="pills-sender" role="tabpanel" aria-labelledby="pills-sender-tab">
+                                {{-- SENDER RECIPIENT SECTION --}}
+                                <div class="row my-2">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <table class="table" id="row-product-materials">
-                                            <tr colspan="3"><td class="text-center">- Stock Belum Ada</td></tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+                                        <h4 class="h5">
+                                            SENDER
+                                        </h4>
+                                        <hr>
+                                        <div id="senderTable">
+                                            <div id="senderData">
 
-
-
-                        {{-- PRODUCT ORDER --}}
-                        <div class="row pb-4 mb-4">
-                            <div class="col-12">
-                                <h4 class="h5">PRODUCT LIST</h4>
-                                <hr>
-                                <div id="productData">
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductDetail">Add Product Order</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END PRODUCT ORDER --}}
-
-                        {{-- CARD MESSAGE --}}
-                        <div class="row pb-4">
-                            <div class="col-12">
-                                <h4 class="h5">CARD MESSAGE</h4>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>From</label>
-                                            <input type='text' class='form-control' id='fromMessageOrder' value='' name="from_message_order" />
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>To</label>
-                                            <input type='text' class='form-control' id='toMessageOrder' value='' name="to_message_order" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputCardMessageCategory">Card Message Category</label>
-                                            {!! Form::select('card_message_category', [], null, [ "class" => "form-control", "id" => "cardMessageCategory", "aria-describedby" => "cardMessageCategoryHelp"]) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputCardMessageSubCategory">Card Message Sub Category</label>
-                                            {!! Form::select('card_message_subcategory', [], null, [ "class" => "form-control", "id" => "cardMessageSubCategory", "aria-describedby" => "cardMessageSubCategoryHelp"]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Card Message</label>
-                                            {!! Form::textarea('card_message', null, [ "class" => "form-control", "id" => "cardMessage", "aria-describedby" => "cardMessageHelp", 'rows' => '4']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END CARD MESSAGE--}}
-
-                        {{-- DELIVERY DETAIL--}}
-                        <div class="row pb-4">
-                            <div class="col-12">
-                                <h4 class="h5">DELIVERY DETAILS</h4>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Delivery Date</label>
-                                            {!! Form::date('delivery_date', null, [ "class" => "form-control", "id" => "deliveryDate", "aria-describedby" => "deliveryDateHelp"]) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Delivery Timeslot</label>
-                                            {!! Form::select('timeslot_id', [], null, [ "class" => "form-control", "id" => "selectTimeSlot", "aria-describedby" => "timeslotHelp"]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Delivery Charge</label>
-                                            <div class="input-group is-invalid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text currency-symbol" id="deliveryChargeSymbol">Rp</span>
-                                                </div>
-                                                <input name="delivery_charge" type="text" class="form-control" aria-describedby="validatedInputGroupPrepend" id="deliveryCharge" required>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Delivery Charge Timeslot</label>
-                                            <div class="input-group is-invalid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text currency-symbol" id="deliveryChargeTimeslotSymbol">Rp</span>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientSender" id="btnOpenModalAddSender">Add Sender</button>
                                                 </div>
-                                                <input name="delivery_charge_timeslot" type="text" class="form-control" id="deliveryChargeTimeslot" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <label>Delivery Remarks</label>
-                                        @foreach ($deliveryRemarks as $item)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="{{ $item->description }}" checked>
-                                            <label class="form-check-label" for="exampleRadios1">
-                                              {{ $item->description }}
-                                            </label>
-                                        </div>
-                                        @endforeach
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="Custom Remarks" checked>
-                                            <label class="form-check-label" for="exampleRadios1">
-                                              Custom Remarks
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::textarea('custom_delivery_remaks', null, ['class' => 'form-control' ,'rows' => '4', 'id' => 'custom_delivery_remark']) !!}
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="pills-recipient" role="tabpanel" aria-labelledby="pills-recipient-tab">
+                                {{-- RECIPIENT --}}
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="inputDeliveryDate">Internal Notes</label>
-                                            {!! Form::textarea('internal_notes', null, [ "class" => "form-control", "id" => "internalNotes", "aria-describedby" => "internalNotesHelp", 'rows' => '4']) !!}
+                                    <div class="col-lg-12 col-md-12 co-sm-12">
+                                        <h4 class="h5">RECIPIENT</h4>
+                                        <hr>
+                                        <div id="recipientData">
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientRecipient" id="btnOpenModalAddRecipient">Add Receiver</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="tab-pane fade" id="pills-delivery" role="tabpanel" aria-labelledby="pills-delivery-tab">
+                                {{-- CARD MESSAGE --}}
+                                <div class="row pb-4">
+                                    <div class="col-12">
+                                        <h4 class="h5">CARD MESSAGE</h4>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>From</label>
+                                                    <input type='text' class='form-control' id='fromMessageOrder' value='' name="from_message_order" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label>To</label>
+                                                    <input type='text' class='form-control' id='toMessageOrder' value='' name="to_message_order" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputCardMessageCategory">Card Message Category</label>
+                                                    {!! Form::select('card_message_category', [], null, [ "class" => "form-control", "id" => "cardMessageCategory", "aria-describedby" => "cardMessageCategoryHelp"]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputCardMessageSubCategory">Card Message Sub Category</label>
+                                                    {!! Form::select('card_message_subcategory', [], null, [ "class" => "form-control", "id" => "cardMessageSubCategory", "aria-describedby" => "cardMessageSubCategoryHelp"]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Card Message</label>
+                                                    {!! Form::textarea('card_message', null, [ "class" => "form-control", "id" => "cardMessage", "aria-describedby" => "cardMessageHelp", 'rows' => '4']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- END CARD MESSAGE--}}
+
+                                {{-- DELIVERY DETAIL--}}
+                                <div class="row pb-4">
+                                    <div class="col-12">
+                                        <h4 class="h5">DELIVERY DETAILS</h4>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Delivery Date</label>
+                                                    {!! Form::date('delivery_date', null, [ "class" => "form-control", "id" => "deliveryDate", "aria-describedby" => "deliveryDateHelp"]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Delivery Timeslot</label>
+                                                    {!! Form::select('timeslot_id', [], null, [ "class" => "form-control", "id" => "selectTimeSlot", "aria-describedby" => "timeslotHelp"]) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Delivery Charge</label>
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text currency-symbol" id="deliveryChargeSymbol">IDR</span>
+                                                        </div>
+                                                        <input name="delivery_charge" type="text" class="form-control" aria-describedby="validatedInputGroupPrepend" id="deliveryCharge" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Delivery Charge Timeslot</label>
+                                                    <div class="input-group is-invalid">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text currency-symbol" id="deliveryChargeTimeslotSymbol">IDR</span>
+                                                        </div>
+                                                        <input name="delivery_charge_timeslot" type="text" class="form-control" id="deliveryChargeTimeslot" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+                                                <label>Delivery Remarks</label>
+                                                @foreach ($deliveryRemarks as $item)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="{{ $item->description }}" checked>
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                    {{ $item->description }}
+                                                    </label>
+                                                </div>
+                                                @endforeach
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="radioButtonsDeliveryRemarks" id="radioButtonsDeliveryRemarks" value="Custom Remarks" checked>
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                    Custom Remarks
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    {!! Form::textarea('custom_delivery_remaks', null, ['class' => 'form-control' ,'rows' => '4', 'id' => 'custom_delivery_remark']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="inputDeliveryDate">Internal Notes</label>
+                                                    {!! Form::textarea('internal_notes', null, [ "class" => "form-control", "id" => "internalNotes", "aria-describedby" => "internalNotesHelp", 'rows' => '4']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- END DELIVERY DETAIL--}}
+                            </div>
+
+                            <div class="tab-pane fade" id="pills-products" role="tabpanel" aria-labelledby="pills-products-tab">
+                                {{-- PRODUCT ORDER --}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="h5">PRODUCT LIST</h4>
+                                        <hr>
+                                        <div id="productData">
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductDetail">Add Product Order</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- END PRODUCT ORDER --}}
+                            </div>
                         </div>
-                        {{-- END DELIVERY DETAIL--}}
+
+
+
+
+
 
                     </div>
                 </div>
@@ -363,6 +342,10 @@
 @push('js')
 
     <script>
+        var currencyFromActive      = "IDR";
+        var currencyToActive        = "IDR";
+        var ratesCurrency           = "1";
+
         var orderTransaction        = {};
         var senderRecipientOrder    = {};
         var listProductOrder        = [];
@@ -380,12 +363,139 @@
         var stock_result;
 
         $(document).ready(function (e) {
-            getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}")
-            getCurrencyActive("{{route('bungadavi.currency.ajax')}}")
+            getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}");
+            getCurrencyActive("{{route('bungadavi.currency.ajax')}}");
+            getStockProduct("{{route('bungadavi.stocks.ajax.list')}}");
 
-            let urlStocks = "{{route('bungadavi.stocks.ajax.list')}}";
-            getStockProduct(urlStocks)
+            $("#currencyRates").text("1 "+currencyFromActive+" -> " + ratesCurrency + " " + currencyToActive);
+
         })
+
+        function getCardMessageCategoryAjax(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    recipient_result = result;
+                    let html = "";
+                    html += "<option value='' disabled readonly selected>- Select Card Message Category -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                    })
+                    $("#cardMessageCategory").html(html);
+                },
+            });
+        }
+
+        function getCurrencyActive(url)
+        {
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    currency_result = result;
+                    let html = "";
+                    html += "<option value='' disabled readonly selected>- Currency -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.currency_code_to_id+"' data-from='"+res.currency_code_from_id+"' data-to='"+res.currency_code_to_id+"'>"+res.currency_code_from_id+" - "+res.currency_code_to_id+"</option>";
+                    })
+                    $("#currencyCode").html(html);
+                },
+            });
+        }
+
+        function getStockProduct(urlAbsolute)
+        {
+            $.ajax({
+                url : urlAbsolute,
+                type : 'get',
+                success: (result) => {
+                    stock_result = result;
+                    let html = "";
+                        html += "<option value='' disabled readonly selected>- Select Stocks -</option>";
+                    result.forEach((res) => {
+                        html += "<option value='"+res.uuid+"'>"+res.name_stock+"</option>";
+                    })
+                    $("#socks-uuid").html(html);
+                }
+            })
+        }
+
+        // set html data sender
+        function setSenderData(senderData)
+        {
+            let html_sender = "<table class='table' class='collapse' id='senderTable'>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Name</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_name+"</td>";
+                html_sender += "<td>Sender Country</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_country+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Address</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_address+"</td>";
+                html_sender += "<td>Sender Province</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_province+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender Phone</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_phone_number+"</td>";
+                html_sender += "<td>Sender City</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_city+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>Sender PIC</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.pic_name+"</td>";
+                html_sender += "<td>Sender District</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_district+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td>PO Reference</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.po_referrence+"</td>";
+                html_sender += "<td>Sender Village</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_village+"</td>";
+                html_sender += "</tr>";
+                html_sender += "<tr>";
+                html_sender += "<td></td>";
+                html_sender += "<td></td>";
+                html_sender += "<td></td>";
+                html_sender += "<td>Sender Zipcode</td>";
+                html_sender += "<td>:</td>";
+                html_sender += "<td>"+senderData.sender_zipcode+"</td>";
+                html_sender += "</tr>";
+                html_sender += "</table>";
+            $("#senderData").html(html_sender);
+        }
+
+        // set qth stock
+        function qtyStockChange(value, code_product)
+        {
+            $('.qty-stock-'+code_product).text(value + ' x ');
+        }
+
+
+        // EVENT HANDLE
 
         // click process order
         $("#createNewOrder").click(function (e) {
@@ -482,66 +592,12 @@
                 product_selected[i] = $(this).val();
             });
 
-            setProductData(product_selected)
+            getProductAjax("{{ url('bungadavi/products/ajax-list?data=') }}" + product_selected);
 
             $("#addProductDetail").modal('hide');
-        })
+        });
 
-        // set html data sender
-        function setSenderData(senderData)
-        {
-            let html_sender = "<table class='table'>";
-                html_sender += "<tr>";
-                html_sender += "<td>Sender Name</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_name+"</td>";
-                html_sender += "<td>Sender Country</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_country+"</td>";
-                html_sender += "</tr>";
-                html_sender += "<tr>";
-                html_sender += "<td>Sender Address</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_address+"</td>";
-                html_sender += "<td>Sender Province</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_province+"</td>";
-                html_sender += "</tr>";
-                html_sender += "<tr>";
-                html_sender += "<td>Sender Phone</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_phone_number+"</td>";
-                html_sender += "<td>Sender City</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_city+"</td>";
-                html_sender += "</tr>";
-                html_sender += "<tr>";
-                html_sender += "<td>Sender PIC</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.pic_name+"</td>";
-                html_sender += "<td>Sender District</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_district+"</td>";
-                html_sender += "</tr>";
-                html_sender += "<tr>";
-                html_sender += "<td>PO Reference</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.po_referrence+"</td>";
-                html_sender += "<td>Sender Village</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_village+"</td>";
-                html_sender += "</tr>";
-                html_sender += "<tr>";
-                html_sender += "<td></td>";
-                html_sender += "<td></td>";
-                html_sender += "<td></td>";
-                html_sender += "<td>Sender Zipcode</td>";
-                html_sender += "<td>:</td>";
-                html_sender += "<td>"+senderData.sender_zipcode+"</td>";
-                html_sender += "</tr>";
-                html_sender += "</table>";
-            $("#senderData").html(html_sender);
-        }
+
 
         // set html data recipient
         function setRecipientData(receiverData)
@@ -599,30 +655,9 @@
             $("#recipientData").html(html_recipient);
 
             let text = "Delivery Charge From " + receiverData.sender_village + " To " + receiverData.receiver_village;
-            setDeliveryChargeSummaru(text, 0);
 
-        }
+            writeSummaryHTML({message: text, price: 0}, 'deliverycharge');
 
-        function setTimeSlotSummary(message, price)
-        {
-            let html  = "<table class='table'>";
-                html += "<tr><td>"+message+"</td><td>"+price+"</td></tr>"
-                html += "</table>";
-            $("#deliveryTimeslotSummary").append(html);
-        }
-
-        function setDeliveryChargeSummaru(message, price)
-        {
-            let html  = "<table class='table'>";
-                html += "<tr><td>"+message+"</td><td>"+price+"</td></tr>"
-                html += "</table>";
-            $("#deliveryChargeSummary").append(html);
-        }
-
-        // set html data product
-        function setProductData(productData)
-        {
-            getProductAjax("{{ url('bungadavi/products/ajax-list?data=') }}" + productData);
         }
 
         $("#create_new_recipient").change(function() {
@@ -635,7 +670,6 @@
         });
 
         $('input[type=radio][name=radioButtonsDeliveryRemarks]').change(function (e) {
-            console.log(this.value)
             if (this.value != "Custom Remarks") {
                 $("#custom_delivery_remark").val(this.value);
             }
@@ -681,7 +715,7 @@
             var timeslot_selected = timeslot_result.find(x => x.id === Number($("#selectTimeSlot option:selected").val()));
             $("#deliveryChargeTimeslot").val(timeslot_selected.price);
 
-            setTimeSlotSummary(timeslot_selected.time_slot_name, timeslot_selected.price)
+            writeSummaryHTML({message:timeslot_selected.time_slot_name, price:timeslot_selected.price}, 'timeslotcharge')
         });
 
         $("#currencyCode").change(function (e) {
@@ -690,19 +724,25 @@
 
             let currency_selected = currency_result.find(x => (x.currency_code_to_id == currencyTo) && (x.currency_code_from_id == currencyFrom));
 
-            console.log(currency_selected);
+            currencyFromActive = currency_selected.currency_code_from_id;
+            currencyToActive   = currency_selected.currency_code_to_id;
+            ratesCurrency      = currency_selected.value;
 
             $("#currencyRates").text("1 "+currency_selected.currency_code_from_id+" -> " + currency_selected.value + " " + currency_selected.currency_code_to_id);
 
-            $(".currency-symbol").text(currency_selected.currency_code_to_id)
-            $(".currency-symbol").text(currency_selected.currency_code_to_id)
-            $("#deliveryChargeSymbol").text(currency_selected.currency_code_to_id)
-            $("#deliveryChargeTimeslotSymbol").text(currency_selected.currency_code_to_id)
+            $(".currency-symbol").text(currency_selected.currency_code_to_id);
+            $(".currency-symbol").text(currency_selected.currency_code_to_id);
+            $("#deliveryChargeSymbol").text(currency_selected.currency_code_to_id);
+            $("#deliveryChargeTimeslotSymbol").text(currency_selected.currency_code_to_id);
 
-            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected))
-            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected))
-            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected))
-            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected))
+            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected));
+            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected));
+            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected));
+            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected));
+
+
+
+            writeSummaryHTML(product_result, 'product')
         });
 
         $('#addStock').on('show.bs.modal', function (event) {
@@ -714,6 +754,32 @@
 
             modal.find('.modal-body #product-uuid').val(uuid)
         })
+
+
+        $("#btnAddCustomStock").click(function (e) {
+            let product_uuid = $('.modal-body #product-uuid').val(); // as key
+            let stock_uuid   = $('.modal-body #socks-uuid option:selected').val(); // as value
+            let qty_stocks   = $('.modal-body #qty').val(); // as value
+
+            let stock_selected = stock_result.find(x => x.uuid === stock_uuid);
+
+            let stock_material = {
+                'stocks_uuid' : stock_uuid,
+                'products_uuid' : product_uuid,
+                'qty_used_products_material' : qty_stocks,
+                'stock' : stock_selected
+            }
+
+            product_result.find(x => x.uuid === product_uuid).materials.push(stock_material);
+            writeProductHTML(product_result)
+
+            $("#addStock").modal('hide')
+
+            $('.modal-body #product-uuid').val(""); // as key
+            $('.modal-body #socks-uuid option:selected').val(""); // as value
+            $('.modal-body #qty').val(""); // as value
+            getStockProduct("{{route('bungadavi.stocks.ajax.list')}}");
+        });
 
         function konversiMataUang(nilaiAwal, currency)
         {
@@ -766,45 +832,6 @@
                     $("#client_id").html(html);
                 },
             });
-        }
-
-        function getCurrencyActive(url)
-        {
-            $.ajax({
-                url: url,
-                type: 'get',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                contentType: 'application/json',
-                success: function (result) {
-                    currency_result = result;
-                    let html = "";
-                    html += "<option value='' disabled readonly selected>- Currency -</option>";
-                    result.forEach((res) => {
-                        html += "<option value='"+res.currency_code_to_id+"' data-from='"+res.currency_code_from_id+"' data-to='"+res.currency_code_to_id+"'>"+res.currency_code_from_id+" - "+res.currency_code_to_id+"</option>";
-                    })
-                    $("#currencyCode").html(html);
-                },
-            });
-        }
-
-        function getStockProduct(urlAbsolute)
-        {
-            $.ajax({
-                url : urlAbsolute,
-                type : 'get',
-                success: (result) => {
-                    stock_result = result;
-                    let html = "";
-                        html += "<option value='' disabled readonly selected>- Select Stocks -</option>";
-                    result.forEach((res) => {
-                        html += "<option value='"+res.uuid+"'>"+res.name_stock+"</option>";
-                    })
-                    $("#socks-uuid").append(html);
-                }
-            })
         }
 
         function getRecipientAjax(url)
@@ -863,31 +890,11 @@
                 contentType: 'application/json',
                 success: function (result) {
                     product_result = result;
-                    writeProductHTML(result);
+                    product_result.forEach(x => {x.qty_product = 1})
+                    writeProductHTML(product_result);
                 },
             });
         }
-
-        $("#btnAddCustomStock").click(function (e) {
-            let product_uuid = $('.modal-body #product-uuid').val(); // as key
-            let stock_uuid   = $('.modal-body #socks-uuid option:selected').val(); // as value
-            let qty_stocks   = $('.modal-body #qty').val(); // as value
-
-            let stock_selected = stock_result.find(x => x.uuid === stock_uuid);
-
-            let stock_material = {
-                'stocks_uuid' : stock_uuid,
-                'products_uuid' : product_uuid,
-                'qty_used_products_material' : qty_stocks,
-                'stock' : stock_selected
-            }
-
-
-            product_result.find(x => x.uuid === product_uuid).materials.push(stock_material);
-            writeProductHTML(product_result)
-
-            $("#addStock").modal('hide')
-        });
 
         function writeProductHTML(result)
         {
@@ -896,7 +903,7 @@
                 console.log(x)
                 let image_url = "{{ url('storage') }}" + "/" + x.image_main_product;
 
-                html += '<div class="col-lg-12 col-md-12" id="productData">';
+                // html += '<div class="col-lg-12 col-md-12" id="productData">';
                 html += '<div class="row">';
                 html += '<div class="col-lg-12 col-md-12">';
                 html += '<h3 class="h4">'+x.code_product+'</h3>';
@@ -914,10 +921,16 @@
                 html += '</div>';
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
                 html += '<div class="mb-3">';
+                html += '<label for="validationTextarea">QTY</label>';
+                html += '<div class="form-group">';
+                html += '<input type="number" class="form-control" onchange="qtyStockChange(this.value, \''+x.code_product+'\')" value="1" min="1" data-code-product="'+x.code_product+'" required>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Cost Selling</label>';
                 html += '<div class="input-group is-invalid">';
                 html += '<div class="input-group-prepend">';
-                html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">Rp</span>';
+                html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">IDR</span>';
                 html += '</div>';
                 html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required>';
                 html += '</div>';
@@ -926,7 +939,7 @@
                 html += '<label for="validationTextarea">Cost Selling Florist</label>';
                 html += '<div class="input-group is-invalid">';
                 html += '<div class="input-group-prepend">';
-                html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">Rp</span>';
+                html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">IDR</span>';
                 html += '</div>';
                 html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" required>';
                 html += '</div>';
@@ -960,77 +973,67 @@
                     x.materials.forEach((material, index) => {
                         html += '<tr>';
                         html += '<td>'+material.stock.name_stock+'</td>';
-                        html += '<td class="text-center">'+material.qty_used_products_material+'</td>';
-                        html += '<td class="text-center"><a href="#">x</a></td>';
+                        html += '<td class="text-center"><span class="qty-stock-'+x.code_product+'">1 x </span><span>'+material.qty_used_products_material+'</span></td>';
+                        html += '<td class="text-center"><a href="javascript:;" onclick="removeMaterial(this)" data-stocksUUID="'+material.stocks_uuid+'" data-productUUID="'+material.products_uuid+'">x</a></td>';
                         html += '</tr>';
                     });
                     html += '</table>';
                     html += '</div>';
                     html += '</div>';
-
-                    html += '<div class="row mb-4">';
-                    html += '<div class="col-lg-12 col-md-12 col-sm-12">';
-                    html += '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addStock" id="btnOpenModalStock" data-key="'+x.uuid+'">Add Material</button>';
-                    html += '</div>';
-                    html += '</div>';
                 }
-
+                html += '<div class="row mb-4">';
+                html += '<div class="col-lg-12 col-md-12 col-sm-12">';
+                html += '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addStock" id="btnOpenModalStock" data-key="'+x.uuid+'">Add Material</button>';
+                html += '</div>';
+                html += '</div>';
                 html += '</div>';
 
             })
 
-            var list_product = "<table class='table'>";
-
-            result.forEach( (x, i) => {
-                list_product += "<tr><td>"+ x.name_product +"</td><td>"+ x.cost_product +"</td></tr>";
-            })
-
-            list_product += "</table>";
-
             $("#productData").html(html);
-            $("#productList").append(list_product);
+            writeSummaryHTML(result, 'product');
         }
 
-        function setCustomProduct()
+        function writeSummaryHTML(res, type)
         {
-            // check code product dari product
-            product_result.forEach((x) => {
+            console.log(res.message)
+            // let html  = "<table class='table'>";
 
-                let prd = document.getElementsByClassName('custom_stock_' + x.code_product);
+            // switch (type) {
+            //     case 'product':
+            //         let htmlForProduct = "<div class='row mt-2'>";
 
-                for (let x = 0; x < prd.length; x++) {
-                    console.log(prd[x].value)
+            //         res.forEach( (x, i) => {
+            //             // html += "<tr><td>"+ x.name_product +"</td></tr><tr><td>"+ x.cost_product +"</td></tr>";
+            //             htmlForProduct += "<div class='col-lg-12 col-md-12 col-sm-12'>";
+            //             htmlForProduct += x.qty_product + " x " + x.name_product + " @ " + x.cost_product;
+            //             htmlForProduct += "</div>";
+            //             htmlForProduct += "<div class='col-lg-12 col-md-12 col-sm-12 text-right'>";
+            //             htmlForProduct += "("+currencyToActive+") " + (x.qty_product * x.cost_product);
+            //             htmlForProduct += "</div>";
+            //         })
 
-                    customProductStock[x] = {
-                        uuid_material : prd[x].getAttribute('data-uuidmaterial'),
-                        qty_stock     : prd[x].value,
-                    }
-                }
+            //         htmlForProduct += "</div>";
 
-            })
+            //         $("#productList").html(htmlForProduct);
+            //         break;
 
-        }
+            //     case 'deliverycharge':
+            //         html += "<tr><td>"+res.message+"</td></tr><tr><td>"+res.price+"</td></tr>"
+            //         html += "</table>";
+            //         $("#deliveryChargeSummary").append(html);
+            //         break;
 
-        function getCardMessageCategoryAjax(url)
-        {
-            $.ajax({
-                url: url,
-                type: 'get',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                contentType: 'application/json',
-                success: function (result) {
-                    recipient_result = result;
-                    let html = "";
-                    html += "<option value='' disabled readonly selected>- Select Card Message Category -</option>";
-                    result.forEach((res) => {
-                        html += "<option value='"+res.id+"'>"+res.name+"</option>";
-                    })
-                    $("#cardMessageCategory").html(html);
-                },
-            });
+            //     case 'timeslotcharge':
+            //         html += "<tr><td>"+res.message+"</td></tr><tr><td>"+res.price+"</td></tr>"
+            //         html += "</table>";
+            //         $("#deliveryTimeslotSummary").append(html);
+            //         break;
+
+            //     default:
+            //         break;
+            // }
+
         }
 
         function getCardMessageSubCategoryAjax(url)
@@ -1079,19 +1082,19 @@
 
         function postOrder()
         {
-            let total_order = 0;
+            var total_order = 0;
             product_result.forEach((x, i) => {
-                total_order += x.cost_product * ($("#qtyProduct").val() == (null || undefined || "")? 1 : $("#qtyProduct").val());
+                total_order += (x.cost_product * ($("#qtyProduct").val() == (null || undefined || "")? 1 : x.qty_product));
 
                 listProductOrder[i] = {
-                    product_uuid : x.uuid,
-                    code_product : x.code_product,
-                    name_product : x.name_product,
-                    qty_product : ($("#qtyProduct").val() == (null || undefined || "")? "1" : $("#qtyProduct").val()) ,
-                    price_product : x.cost_product,
-                    from_message_product : $("#fromMessageProduct").val(),
-                    to_message_product : $("#romMessageProduct").val(),
-                    remarks_product : $("#remarkProduct").val(),
+                    product_uuid    : x.uuid,
+                    code_product    : x.code_product,
+                    name_product    : x.name_product,
+                    qty_product     : x.qty_product,
+                    price_product   : x.cost_product,
+                    from_message_product    : $("#fromMessageProduct").val(),
+                    to_message_product      : $("#romMessageProduct").val(),
+                    remarks_product         : $("#remarkProduct").val(),
                     custom_product: null
                 };
             });
@@ -1099,14 +1102,15 @@
             let data = {
                 "_token"                : "{{ csrf_token() }}",
                 "order_transaction"     : {
-                                            type_order_transaction : "backoffice_bungadavi",
-                                            total_order_transaction : total_order,
-                                            shipping_price_order_transaction : $("#deliveryCharge").val() + $("#deliveryChargeTimeslot").val(),
-                                            status_order_transaction : "New Order",
-                                            currency_id : "Rp",
-                                            card_message_category : $('#cardMessageCategory option:selected').text(),
-                                            card_message_subcategory : $('#cardMessageSubCategory option:selected').text(),
-                                            card_message_message : $("#cardMessage").val(),
+                                            type_order_transaction      : "backoffice_bungadavi",
+                                            total_order_transaction     : total_order,
+                                            shipping_price_order_transaction : ( parseInt($("#deliveryCharge").val()) + parseInt($("#deliveryChargeTimeslot").val())),
+                                            status_order_transaction    : "New Order",
+                                            currency_id                 : currencyToActive,
+                                            rates_currency              : ratesCurrency,
+                                            card_message_category       : $('#cardMessageCategory option:selected').text(),
+                                            card_message_subcategory    : $('#cardMessageSubCategory option:selected').text(),
+                                            card_message_message        : $("#cardMessage").val(),
                                             is_guest : false,
                                         },
                 "sender_recipient"      : senderRecipientOrder,
@@ -1149,13 +1153,13 @@
         function setDeliverySchedule()
         {
             return {
-                time_slot_name : $("#selectTimeSlot option:selected").text(),
-                time_slot_id : $("#selectTimeSlot option:selected").val(),
-                delivery_remarks : $("#custom_delivery_remark").val(),
-                internal_notes: $("#internalNotes").val(),
-                time_slot_charge : $("#deliveryChargeTimeslot").val(),
-                delivery_charge : $("#deliveryCharge").val(),
-                delivery_date : ($("#deliveryDate").val() == (null || undefined || "") ? null : $("#deliveryDate").val()),
+                time_slot_name      : $("#selectTimeSlot option:selected").text(),
+                time_slot_id        : $("#selectTimeSlot option:selected").val(),
+                delivery_remarks    : $("#custom_delivery_remark").val(),
+                internal_notes      : $("#internalNotes").val(),
+                time_slot_charge    : $("#deliveryChargeTimeslot").val(),
+                delivery_charge     : $("#deliveryCharge").val(),
+                delivery_date       : ($("#deliveryDate").val() == (null || undefined || "") ? null : $("#deliveryDate").val()),
             };
         }
 
@@ -1163,14 +1167,29 @@
         {
             return {
                 data_payment_order : $('input[type=radio][name=bankOption]:checked').val(),
-                payment_type_uuid : "Manual-UUID",
+                payment_type_uuid : "Manual",
             };
         }
 
-        $("#village-id").change(function (e) {
+    $("#village-id").change(function (e) {
         let url = "{{url('bungadavi/location/ajax/zipcode')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val() + "&village-id=" + $("#village-id").val();
         getZipCodesAjax(url)
     });
+
+    function removeMaterial(event)
+    {
+        let stocksUUID  = event.getAttribute('data-stocksUUID');
+        let productUUID = event.getAttribute('data-productUUID');
+
+        let productIndex = product_result.findIndex(x => x.uuid == productUUID);
+        let stockIndex   = product_result[productIndex].materials.findIndex(x => (x.stocks_uuid == stocksUUID) && (x.products_uuid == productUUID));
+
+        if (stockIndex !== -1) {
+            product_result[productIndex].materials.splice(stockIndex, 1);
+        }
+
+        writeProductHTML(product_result);
+    }
 
     $("#district-id").change(function (e) {
         let url = "{{url('bungadavi/location/ajax/village')}}" + "?country-id=" + $("#country-id").val() + "&province-id=" + $("#province-id").val() + "&city-id=" + $("#city-id").val() + "&district-id=" + $("#district-id").val();
