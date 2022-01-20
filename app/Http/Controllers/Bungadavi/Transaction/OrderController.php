@@ -31,7 +31,10 @@ use App\DataTables\Order\CancelOrderDataTable;
 use App\DataTables\Order\DeliveredOrderDataTable;
 use App\DataTables\Order\OnDeliveryDataTable;
 use App\DataTables\Order\OnDeliveryOrderDataTable;
+use App\Models\BasicSetting\TimeSlot;
+use App\Models\Courier\CourierTask;
 use App\Models\Product\Product as ProductStock;
+use App\Models\Transaction\Receipt;
 
 class OrderController extends Controller
 {
@@ -314,6 +317,10 @@ class OrderController extends Controller
         $data_product = ProductStock::findOrFail($get_list_product->product_uuid);
         $get_delivery = Delivery::where('order_transactions_uuid', $data->uuid)->first();
         $get_payment = Payment::where('order_transactions_uuid', $data->uuid)->first();
+        $get_province = Province::where('id',$get_sender->receiver_province)->first();
+        $get_assign = CourierTask::where('order_transactions_uuid', $data->uuid)->first();
+        $get_time_slot = TimeSlot::where('id',$get_delivery->time_slot_id)->first();
+        $get_receipt = Receipt::where('order_transactions_uuid', $data->uuid)->first();
 
         $data = [
             'title'         => 'Customer Florist Management',
@@ -327,6 +334,10 @@ class OrderController extends Controller
             'list_product'  => $get_list_product,
             'delivery'      => $get_delivery,
             'payment'       => $get_payment,
+            'province'      => $get_province,
+            'assign'        => $get_assign,
+            'time_slot'     => $get_time_slot,
+            'receipt'        => $get_receipt,
         ];
 
         return view('bungadavi.orders.show', $data);

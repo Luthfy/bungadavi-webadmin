@@ -183,5 +183,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit courier']);
         Permission::create(['name' => 'delete courier']);
 
+        Permission::create(['name' => 'change price']);
+
     }
 }
