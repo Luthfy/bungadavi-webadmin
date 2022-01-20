@@ -17,6 +17,12 @@ class CurrencyRate extends Model
         'value'
     ];
 
+
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y h:i:s',
+        'updated_at' => 'datetime:d-m-Y h:i:s',
+    ];
+
     public function currencyCodeFrom()
     {
         return $this->belongsTo(Currency::class, 'currency_code_from_id', 'id');

@@ -8,13 +8,10 @@ use App\Http\Requests\BasicSetting\CurrencyRateRequest;
 use App\Models\BasicSetting\Currency;
 use App\Models\BasicSetting\CurrencyRate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CurrencyRateController extends Controller
 {
-    public function __construct()
-    {
-
-    }
 
     public function index(CurrencyRateDataTable $datatables)
     {
@@ -23,11 +20,12 @@ class CurrencyRateController extends Controller
             'subtitle'      => 'Currency Rate',
             'description'   => 'For Management currency rate',
             'breadcrumb'    => ['Basic Setting', 'Currency Rate'],
-            'button'        => ['name' => 'Add New', 'link' => 'bungadavi.currencyrate.create'],
+            'button'        => ['name' => 'Get Currency Rate Today', 'link' => 'bungadavi.currency.today'],
             'guard' => auth()->user()->group
         ];
 
-        return $datatables->render('commons.datatable', $data);
+        // return $datatables->render('commons.datatable', $data);
+        return $datatables->render('bungadavi.basicsetting.currencyrate.index', $data);
     }
 
     /**
@@ -57,7 +55,7 @@ class CurrencyRateController extends Controller
 
         ];
 
-        return view('bungadavi.basicsetting.currencyrate', $data);
+        return view('bungadavi.basicsetting.currencyrate.form', $data);
     }
 
     public function store(CurrencyRateRequest $request)
@@ -110,5 +108,43 @@ class CurrencyRateController extends Controller
     public function destroy($id)
     {
         return CurrencyRate::find($id)->delete();
+    }
+
+    public function getCurrencyToday()
+    {
+        $currencyFrom = 'IDR';
+
+        $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007';
+
+        $data = Http::get($url . '?&base_currency=IDR');
+
+        if ($data->status() == 200) {
+            foreach ($data->json("data") as $key => $value) {
+                CurrencyRate::updateOrCreate(['currency_code_from_id' => $currencyFrom, 'currency_code_to_id' => $key],[
+                    'value' => $value
+                ]);
+            }
+
+            // return response(['status' => true, 'message' => 'already update']);
+            return redirect()->back()->with('success', 'Already update');
+        }
+
+        return redirect()->back()->with('warning', 'Something is wrong or limits');
+
+        // return response(['status' => false, 'message' => 'something is wrong', 'error' => json_decode($data, true)]);
+    }
+
+    public function updateCurrencyStatus(Request $request, $id)
+    {
+        $currency = CurrencyRate::findOrFail($id);
+        $currency->is_active = $request->status;
+        $currency->save();
+
+        return response()->json(['message' => 'success']);
+    }
+
+    public function getAjaxActiveCurrency()
+    {
+        return CurrencyRate::where('is_active', 1)->get();
     }
 }

@@ -171,6 +171,8 @@
 
     {!! $datatables['new_order']->scripts() !!}
     {!! $datatables['accept_order']->scripts() !!}
+    {!! $datatables['on_delivery']->scripts() !!}
+
 
     <script>
         $(document).ready(function (e) {
