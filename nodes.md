@@ -130,3 +130,9 @@ status
 -> Cancel Order langsung Tampil Button Reassign Order
 -> TIMESLOT RESTRICT BASE TIME DAN EDIT TIMESLOT DATA MISSING
 -> CITY AVALABLE BASED ON PROVINCE
+
+// 21 Januari 2022
+ERP
+- Pelaporan dalam bentuk Rupiah akan tetapi tetap ditulis mata uang aslinya dan harga dari mata uang tersebut
+
+- Deskripsi tambah field pada product
