@@ -477,4 +477,20 @@ class OrderController extends Controller
 
         return $datatables->render('commons.datatable', $data);
     }
+
+    public function statusDelivered(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $order->status_order_transaction = $request->status;
+        $order->save();
+
+        // return response()->json($order->save());
+
+        return redirect()->back()->with('info', 'Order has been delivered');
+    }
+
+    public function printOrder()
+    {
+
+    }
 }
