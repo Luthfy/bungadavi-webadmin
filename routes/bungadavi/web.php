@@ -130,6 +130,7 @@ Route::group([
     });
 
     // PRODUCT CONTROL
+    Route::get('products/ajax', [ProductController::class, 'getAjaxProducts'])->name('products.ajax');
     Route::post('products/uploads', [ProductController::class, 'uploads'])->name('products.uploads');
     Route::resource('products', ProductController::class)->names('products');
 

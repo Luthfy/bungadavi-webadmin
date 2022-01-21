@@ -135,4 +135,6 @@ status
 ERP
 - Pelaporan dalam bentuk Rupiah akan tetapi tetap ditulis mata uang aslinya dan harga dari mata uang tersebut
 
-- Deskripsi tambah field pada product
+- Deskripsi tambah field pada product (done)
+- Return tidak DO baru
+- Stock gudang ditampilkan di realtime order

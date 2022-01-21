@@ -340,6 +340,13 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 @push('js')
+    <!-- Datatable JS -->
+    <script src="{{ asset('theme_be/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('theme_be/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
+    {!! $products->scripts() !!}
 
     <script>
         var currencyFromActive      = "IDR";
@@ -740,8 +747,6 @@
             $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected));
             $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected));
 
-
-
             writeSummaryHTML(product_result, 'product')
         });
 
@@ -943,12 +948,17 @@
                 html += '</div>';
                 html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" required>';
                 html += '</div>';
+                html += '<input type="checkbox" class="form-control" id="createNewCustomerProduct" > Custom Product'';
                 html += '</div>';
                 html += '</div>';
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
                 html += '<div class="mb-3">';
+                html += '<label for="validationTextarea">Product Description</label>';
+                html += '<textarea class="form-control" id="productDescription" rows="3">'+x.description_product+'</textarea>';
+                html += '</div>';
+                html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Remarks</label>';
-                html += '<textarea class="form-control" id="validationTextarea" rows="5"></textarea>';
+                html += '<textarea class="form-control" id="productRemark" rows="3"></textarea>';
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';

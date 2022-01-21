@@ -243,4 +243,9 @@ class ProductController extends Controller
             Product::whereIn('uuid', $ids)->with('materials.stock')->get()->toArray()
         );
     }
+
+    public function getAjaxProducts(ProductDataTable $datatables)
+    {
+        return $datatables->render('bungadavi.products.index');
+    }
 }

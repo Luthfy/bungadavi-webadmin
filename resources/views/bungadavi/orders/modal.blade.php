@@ -214,7 +214,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <table class="table">
+            {!! $products->table(['style' => 'width:100%']) !!}
+          {{-- <table class="table">
             <tr>
                 <td></td>
                 <td>Image</td>
@@ -233,7 +234,7 @@
             @empty
 
             @endforelse
-          </table>
+          </table> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

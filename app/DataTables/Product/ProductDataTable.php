@@ -5,6 +5,7 @@ namespace App\DataTables\Product;
 use App\Models\Product\Product;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use Collective\Html\FormFacade as Form;
 
 class ProductDataTable extends DataTable
 {
@@ -62,6 +63,46 @@ class ProductDataTable extends DataTable
         return $model->newQuery();
     }
 
+    public function ajax()
+    {
+        return datatables()
+            ->eloquent($this->query(new Product()))
+            ->rawColumns(['image_main_product', 'action', 'code_product', 'selling_price_product'])
+            ->editColumn('image_main_product', function ($datatable) {
+                return "<img src='".asset('storage').'/'.$datatable->image_main_product."' alt='".$datatable->code_product."' style='max-height:100px;'/>";
+            })
+            ->editColumn('code_product', function ($datatable) {
+                switch ($datatable->status_product) {
+                    case '0':
+                        $type = "Reguler";
+                        break;
+                    case '1':
+                        $type = "New";
+                        break;
+                    case '2':
+                        $type = "Most Wanted";
+                        break;
+                    default:
+                        $type = "-";
+                        break;
+                }
+                return $datatable->code_product . "<br>" . $datatable->name_product . '<br>' . $type;
+            })
+            ->editColumn('selling_price_product', function ($datatable) {
+                return $datatable->selling_price_product . "<br>" . $datatable->cost_product;
+            })
+            ->addColumn('action', function ($datatable) {
+                $html = Form::checkbox('product_checkbox[]', $datatable->uuid, null, ['id' => 'product_uuid']);
+
+                // $html  = "";
+                // // $html .= "<a href='".route('bungadavi.products.edit', ['product' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
+                // $html .= "<a href='".route('bungadavi.products.show', ['product' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
+                // $html .= "<a class='text-danger m-1' onclick='delete_ajax(\"".$datatable->uuid."\")'><span class='fa fa-trash'></span></a>";
+                return $html;
+            })
+        ->make(true);
+    }
+
     /**
      * Optional method if you want to use html builder.
      *
@@ -88,7 +129,6 @@ class ProductDataTable extends DataTable
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
                   ->addClass('text-center'),
             Column::make('image_main_product')
                 ->title('Image'),

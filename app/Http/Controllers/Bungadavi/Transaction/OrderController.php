@@ -31,6 +31,7 @@ use App\DataTables\Order\CancelOrderDataTable;
 use App\DataTables\Order\DeliveredOrderDataTable;
 use App\DataTables\Order\OnDeliveryDataTable;
 use App\DataTables\Order\OnDeliveryOrderDataTable;
+use App\DataTables\Product\ProductDataTable;
 use App\Models\BasicSetting\TimeSlot;
 use App\Models\Courier\CourierTask;
 use App\Models\Product\Product as ProductStock;
@@ -76,7 +77,7 @@ class OrderController extends Controller
                 'new_order'     => (new NewOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.neworder')),
                 'accept_order'  => (new AcceptOrderDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.acceptorder')),
                 'on_delivery'   => (new OnDeliveryDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.ondelivery')),
-                'return' => (new ReturnDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.returned'))
+                'return'        => (new ReturnDataTable())->html()->minifiedAjax(route('bungadavi.orders.ajax.returned'))
             ]
         ];
 
@@ -98,7 +99,7 @@ class OrderController extends Controller
             'description'   => 'For Management Order Transaction',
             'breadcrumb'    => ['Order Transaction Management', 'Product List'],
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
-            'products'          => ProductStock::all(),
+            'products'          => (new ProductDataTable())->html()->minifiedAjax(route('bungadavi.products.ajax')),
             'deliveryRemarks'   => DeliveryRemark::all(),
             'ourBank'           => OurBank::all()
         ];
@@ -484,7 +485,9 @@ class OrderController extends Controller
         $order->status_order_transaction = $request->status;
         $order->save();
 
-        // return response()->json($order->save());
+        if ($request->ajax()) {
+            return response()->json(['status' => true]);
+        }
 
         return redirect()->back()->with('info', 'Order has been delivered');
     }
