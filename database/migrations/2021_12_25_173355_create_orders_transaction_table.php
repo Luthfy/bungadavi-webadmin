@@ -85,7 +85,7 @@ class CreateOrdersTransactionTable extends Migration
             $table->text('remarks_product')->nullable();
             $table->string('image_product')->nullable();
             $table->string('description_product')->nullable();
-            $table->string('status_product')->nullable();
+            $table->string('status_product')->nullable()->comment('custom_order');
             $table->string('status_progress_product')->default('on process')->comment('done, undone, on process');
             $table->timestamps();
             $table->softDeletes();

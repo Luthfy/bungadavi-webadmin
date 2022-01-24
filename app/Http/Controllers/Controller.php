@@ -18,6 +18,5 @@ class Controller extends BaseController
         if (!$userActive->can($name_permission)) {
             return abort('403');
         }
-
     }
 }
