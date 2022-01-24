@@ -116,7 +116,7 @@ class CurrencyRateController extends Controller
 
         $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007';
 
-        $data = Http::get($url . '?&base_currency=IDR');
+        $data = Http::get($url);
 
         if ($data->status() == 200) {
             foreach ($data->json("data") as $key => $value) {

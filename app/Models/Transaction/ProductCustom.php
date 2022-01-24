@@ -22,6 +22,8 @@ class ProductCustom extends Model
         'products_material_uuid',
         'name_stock',
         'qty_stock',
+        'image_product',
+        'status_product',
     ];
 
     protected $casts = [

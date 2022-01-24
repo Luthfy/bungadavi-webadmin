@@ -58,6 +58,7 @@ class CreateOrdersTransactionTable extends Migration
             $table->string('receiver_name');
             $table->string('receiver_phone_number');
             $table->text('receiver_address');
+            $table->text('receiver_address_info')->nullable();
             $table->string('receiver_country');
             $table->string('receiver_province');
             $table->string('receiver_city');
@@ -82,6 +83,10 @@ class CreateOrdersTransactionTable extends Migration
             $table->bigInteger('price_product');
             $table->string('city_product')->nullable();
             $table->text('remarks_product')->nullable();
+            $table->string('image_product')->nullable();
+            $table->string('description_product')->nullable();
+            $table->string('status_product')->nullable();
+            $table->string('status_progress_product')->default('on process')->comment('done, undone, on process');
             $table->timestamps();
             $table->softDeletes();
             $table->engine = "MyIsam";

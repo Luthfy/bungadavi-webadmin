@@ -148,6 +148,14 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
+                            <label for="inputDeliveryDate">Address Info</label>
+                            {!! Form::textarea('recipient_address_info', null, [ "class" => "form-control", "id" => "recipientAddressInfo", "aria-describedby" => "recipientAddressInfoHelp", 'rows' => '4']) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
                             <label for="inputDeliveryDate">Recipient Address</label>
                             {!! Form::textarea('recipient_address', null, [ "class" => "form-control", "id" => "recipientAddress", "aria-describedby" => "recipientAddressHelp", 'rows' => '4']) !!}
                         </div>
@@ -215,26 +223,6 @@
         </div>
         <div class="modal-body">
             {!! $products->table(['style' => 'width:100%']) !!}
-          {{-- <table class="table">
-            <tr>
-                <td></td>
-                <td>Image</td>
-                <td>Name Product</td>
-                <td>Name Product</td>
-                <td>Price</td>
-            </tr>
-            @forelse ($products as $item)
-            <tr>
-                <td>{!! Form::checkbox('product_checkbox[]', $item->uuid, null, ['class' => 'form-check', 'id' => 'product_uuid']) !!}</td>
-                <td><img src="{{ url('storage/'.$item->image_main_product) }}" alt="" srcset="" class="img-thumbnail" style="max-width: 120px"></td>
-                <td>{{ $item->code_product }}</td>
-                <td>{{ $item->name_product }}</td>
-                <td>{{ $item->cost_product }}</td>
-            </tr>
-            @empty
-
-            @endforelse
-          </table> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

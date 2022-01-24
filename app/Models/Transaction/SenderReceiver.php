@@ -39,6 +39,7 @@ class SenderReceiver extends Model
             'sender_longitude',
             'receiver_name',
             'receiver_phone_number',
+            'receiver_address_info',
             'receiver_address',
             'receiver_country',
             'receiver_province',
