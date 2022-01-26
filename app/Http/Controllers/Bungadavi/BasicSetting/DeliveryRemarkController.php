@@ -17,6 +17,7 @@ class DeliveryRemarkController extends Controller
 
     public function index(DeliveryRemarkDataTable $datatables)
     {
+        $this->authorize("view delivery remark");
         $data = [
             'title'         => 'Delivery Remark',
             'subtitle'      => 'Delivery Remark',
@@ -36,6 +37,7 @@ class DeliveryRemarkController extends Controller
      */
     public function create()
     {
+        $this->authorize("create delivery remark");
         $data = [
             'title'         => 'Delivery Remark Management',
             'subtitle'      => 'Form Delivery Remark',
@@ -62,6 +64,7 @@ class DeliveryRemarkController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit delivery remark");
         $data = [
             'title'         => 'Delivery Remark Management',
             'subtitle'      => 'Form Delivery Remark',
@@ -87,6 +90,7 @@ class DeliveryRemarkController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete delivery remark");
         return DeliveryRemark::find($id)->delete();
     }
 

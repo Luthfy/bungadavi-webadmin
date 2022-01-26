@@ -16,6 +16,7 @@ class FloristAdminController extends Controller
      */
     public function index(FloristAdminDataTable $datatables)
     {
+        $this->authorize("view florist admin");
         $data = [
             'title'         => 'Customer Florist Admin Management',
             'subtitle'      => 'Customer Florist Admin List',
@@ -35,6 +36,7 @@ class FloristAdminController extends Controller
      */
     public function create()
     {
+        $this->authorize("create florist admin");
         $data = [
             'title'         => 'Customer Florist Admin Management',
             'subtitle'      => 'Form Customer Florist Admin',
@@ -83,6 +85,7 @@ class FloristAdminController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit florist admin");
         $data = [
             'title'         => 'Customer Florist Admin Management',
             'subtitle'      => 'Form Customer Florist Admin',
@@ -120,6 +123,7 @@ class FloristAdminController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete florist admin");
         return $florist = User::where('uuid',$id)->first()->delete();
 
     }

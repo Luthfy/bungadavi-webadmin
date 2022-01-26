@@ -23,6 +23,7 @@ class CourierTaskController extends Controller
      */
     public function index(CourierTaskDataTable $datatables)
     {
+        $this->authorize("view courier task");
         $data = [
             'title'         => 'Courier Task Management',
             'subtitle'      => 'Courier Task List',
@@ -63,6 +64,7 @@ class CourierTaskController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view courier task");
         $data = CourierTask::where('delivery_schedule_uuid',$id)->first();
         $get_product = Product::where('order_transactions_uuid', $data->order_transactions_uuid)->first();
         $data_product = ProductStock::findOrFail($get_product->product_uuid);

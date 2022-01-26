@@ -17,6 +17,7 @@ class ShopController extends Controller
      */
     public function index(ShopDataTable $datatables)
     {
+        $this->authorize("view stock shop");
         $data = [
             'title'         => 'Stock Shop Management',
             'subtitle'      => 'Stock Shop List',
@@ -36,6 +37,7 @@ class ShopController extends Controller
      */
     public function create()
     {
+        $this->authorize("create stock shop");
         $data = [
             'title'         => 'Stock Shop Management',
             'subtitle'      => 'Form Stock Shop',
@@ -86,6 +88,7 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit stock shop");
         $data = [
             'title'         => 'Stock Shop Management',
             'subtitle'      => 'Form Stock Shop',
@@ -150,6 +153,7 @@ class ShopController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete stock shop");
         $shop = Shop::findOrFail($id);
 
         $stock = Stock::findOrFail($shop->stocks_uuid);

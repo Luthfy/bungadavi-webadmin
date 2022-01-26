@@ -18,6 +18,7 @@ class DiscountController extends Controller
 
     public function index(DiscountDataTable $datatables)
     {
+        $this->authorize("view discount");
         $data = [
             'title'         => 'Discount',
             'subtitle'      => 'Discount',
@@ -37,6 +38,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
+        $this->authorize("create discount");
         foreach(Promotion::all() as $promotion){
             $promotion_selected[$promotion->uuid] = $promotion->promotion_code;
         }
@@ -94,6 +96,7 @@ class DiscountController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit discount");
         foreach(Promotion::all() as $promotion){
             $promotion_selected[$promotion->uuid] = $promotion->promotion_code;
         }
@@ -147,6 +150,7 @@ class DiscountController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete discount");
         return Discount::find($id)->delete();
     }
 }

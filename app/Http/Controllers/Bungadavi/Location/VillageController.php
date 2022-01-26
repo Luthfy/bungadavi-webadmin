@@ -21,6 +21,7 @@ class VillageController extends Controller
 
     public function index(VillageDataTable $datatables)
     {
+        $this->authorize("view village");
         $data = [
             'title'         => 'Village',
             'subtitle'      => 'Village',
@@ -35,6 +36,7 @@ class VillageController extends Controller
 
     public function create()
     {
+        $this->authorize("create village");
         foreach(Country::all() as $country){
             $country_selected[$country->id] = $country->name;
         }
@@ -77,6 +79,7 @@ class VillageController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit village");
         foreach(Country::all() as $country){
             $country_selected[$country->id] = $country->name;
         }
@@ -120,6 +123,7 @@ class VillageController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete village");
         return Village::find($id)->delete();
     }
 

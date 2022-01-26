@@ -19,6 +19,7 @@ class CityController extends Controller
 
     public function index(CityDataTable $datatables)
     {
+        $this->authorize("view city");
         $data = [
             'title'         => 'City',
             'subtitle'      => 'City',
@@ -33,7 +34,7 @@ class CityController extends Controller
 
     public function create()
     {
-
+        $this->authorize("create city");
         $data = [
             'title'         => 'City Management',
             'subtitle'      => 'Form City',
@@ -62,6 +63,7 @@ class CityController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit city");
         foreach(Country::all() as $country){
             $country_selected[$country->id] = $country->name;
         }
@@ -97,6 +99,7 @@ class CityController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete city");
         return City::find($id)->delete();
     }
 

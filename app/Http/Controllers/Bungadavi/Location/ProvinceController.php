@@ -18,6 +18,7 @@ class ProvinceController extends Controller
 
     public function index(ProvinceDataTable $datatables)
     {
+        $this->authorize("view province");
         $data = [
             'title'         => 'Province',
             'subtitle'      => 'Province',
@@ -32,7 +33,7 @@ class ProvinceController extends Controller
 
     public function create()
     {
-
+        $this->authorize("create province");
         $data = [
             'title'         => 'Province Management',
             'subtitle'      => 'Form Province',
@@ -60,6 +61,7 @@ class ProvinceController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit province");
         foreach(Country::all() as $country){
             $country_selected[$country->id] = $country->name;
         }
@@ -89,6 +91,7 @@ class ProvinceController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete province");
         return Province::find($id)->delete();
     }
 

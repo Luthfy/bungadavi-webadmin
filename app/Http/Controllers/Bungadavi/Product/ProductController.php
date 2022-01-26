@@ -28,6 +28,7 @@ class ProductController extends Controller
      */
     public function index(ProductDataTable $datatables)
     {
+        $this->authorize("view product");
         $data = [
             'title'         => 'Product Management',
             'subtitle'      => 'Product List',
@@ -47,6 +48,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize("create product");
         $data = [
             'title'         => 'Product Management',
             'subtitle'      => 'Form Product',
@@ -176,6 +178,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view product");
         $data = [
             'title'         => 'Product Management',
             'subtitle'      => 'Detail Product',
@@ -196,6 +199,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit product");
         $data = [
             'title'         => 'Product Management',
             'subtitle'      => 'Form Product',
@@ -232,6 +236,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete product");
         return Product::find($id)->delete();
     }
 

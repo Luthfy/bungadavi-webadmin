@@ -18,6 +18,7 @@ class SplitController extends Controller
      */
     public function index(SplitDataTable $datatables)
     {
+        $this->authorize("view stock split");
         $data = [
             'title'         => 'Stock Split Management',
             'subtitle'      => 'Stock Split List',
@@ -37,6 +38,7 @@ class SplitController extends Controller
      */
     public function create()
     {
+        $this->authorize("create stock split");
         $data = [
             'title'         => 'Stock Split Management',
             'subtitle'      => 'Form Stock Split',
@@ -98,6 +100,7 @@ class SplitController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view stock split");
         $data = [
             'title'         => 'Stock Split Management',
             'subtitle'      => 'Form Stock Split',
@@ -120,6 +123,7 @@ class SplitController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit stock split");
         $data = [
             'title'         => 'Stock Split Management',
             'subtitle'      => 'Form Stock Split',
@@ -154,6 +158,7 @@ class SplitController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete stock split");
         $split = Split::findOrFail($id);
 
         $stock = Stock::find($split->stock_fraction_uuid);

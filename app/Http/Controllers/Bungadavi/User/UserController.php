@@ -18,6 +18,7 @@ class UserController extends Controller
      */
     public function index(UserDataTable $datatables)
     {
+        $this->authorize("view user");
         $data = [
             'title'         => 'User Admin Management',
             'subtitle'      => 'User Admin List',
@@ -36,6 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize("create user");
         $data = [
             'title'         => 'Form User Admin Management',
             'subtitle'      => 'User Admin Form',
@@ -87,6 +89,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit user");
         $data = [
             'title'         => 'Form User Admin Management',
             'subtitle'      => 'User Admin Form',
@@ -127,6 +130,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete user");
         return $user = User::where('uuid', $id)->first()->delete();
     }
 

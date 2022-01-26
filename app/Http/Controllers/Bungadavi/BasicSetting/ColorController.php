@@ -17,6 +17,7 @@ class ColorController extends Controller
 
     public function index(ColorDataTable $datatables)
     {
+        $this->authorize("view color");
         $data = [
             'title'         => 'Color',
             'subtitle'      => 'Color',
@@ -36,6 +37,7 @@ class ColorController extends Controller
      */
     public function create()
     {
+        $this->authorize("create color");
         $data = [
             'title'         => 'Color Management',
             'subtitle'      => 'Form Color',
@@ -62,6 +64,7 @@ class ColorController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit color");
         $data = [
             'title'         => 'Color Management',
             'subtitle'      => 'Form Color',
@@ -86,6 +89,7 @@ class ColorController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete color");
         return Color::find($id)->delete();
     }
 }

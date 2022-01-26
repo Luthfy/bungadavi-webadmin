@@ -298,7 +298,18 @@
                                             @if ($receipt == null)
                                                 <div>-</div>
                                             @else
-                                                <div><img src="{{ asset('storage/'.$receipt->photo_delivery_receipt) }}" height="150px" width="150" style="margin-bottom: 2rem"></div>
+                                                <div>
+                                                    @php
+                                                        $arr = $receipt->photo_delivery_receipt;
+                                                        $arr_images = explode(",",$arr);
+                                                        $arr_images[0] = str_replace("[","",$arr_images[0]);
+                                                        $arr_images[count($arr_images)-1] = str_replace("]","",$arr_images[count($arr_images)-1]);
+
+                                                    @endphp
+                                                    @foreach ($arr_images as $item)
+                                                        <img src="{{ url('http://api.bungadavi.brits-team.com:8080/public/images/'.$item) }}" height="200px" width="250" style="margin-bottom: 2rem">
+                                                    @endforeach
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

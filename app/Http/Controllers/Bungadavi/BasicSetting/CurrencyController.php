@@ -17,6 +17,7 @@ class CurrencyController extends Controller
 
     public function index(CurrencyDataTable $datatables)
     {
+        $this->authorize("view currency");
         $data = [
             'title'         => 'Currency',
             'subtitle'      => 'Currency',
@@ -36,6 +37,7 @@ class CurrencyController extends Controller
      */
     public function create()
     {
+        $this->authorize("create currency");
         $data = [
             'title'         => 'Currency Management',
             'subtitle'      => 'Form Currency',
@@ -62,6 +64,7 @@ class CurrencyController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit currency");
         $data = [
             'title'         => 'Currency Management',
             'subtitle'      => 'Form Currency',
@@ -87,6 +90,7 @@ class CurrencyController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete currency");
         return Currency::find($id)->delete();
     }
 }

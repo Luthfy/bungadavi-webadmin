@@ -19,6 +19,7 @@ class SlidingBannerController extends Controller
 
     public function index(SlidingBannerDataTable $datatables)
     {
+        $this->authorize("view sliding banner");
         $data = [
             'title'         => 'Sliding Banner',
             'subtitle'      => 'Sliding Banner',
@@ -38,6 +39,7 @@ class SlidingBannerController extends Controller
      */
     public function create()
     {
+        $this->authorize("create sliding banner");
         $data = [
             'title'         => 'Sliding Banner Management',
             'subtitle'      => 'Form Sliding Banner',
@@ -86,6 +88,7 @@ class SlidingBannerController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit sliding banner");
         $data = [
             'title'         => 'Sliding Banner Management',
             'subtitle'      => 'Form Sliding Banner',
@@ -129,6 +132,7 @@ class SlidingBannerController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete sliding banner");
         return SlidingBanner::find($id)->delete();
     }
 }

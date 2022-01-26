@@ -21,6 +21,7 @@ class PersonalController extends Controller
 
     public function index(PersonalDataTable $datatables)
     {
+        $this->authorize("view personal");
         $data = [
             'title'         => 'Customer Personal Management',
             'subtitle'      => 'Customer Personal List',
@@ -40,6 +41,7 @@ class PersonalController extends Controller
      */
     public function create()
     {
+        $this->authorize("create personal");
         $data = [
             'title'         => 'Customer Personal Management',
             'subtitle'      => 'Form Customer Personal',
@@ -95,6 +97,7 @@ class PersonalController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view personal");
         $data = Personal::findOrFail($id);
         $get_country = Country::where('id', $data->country_id)->first();
         $get_province = Province::where('id',$data->province_id)->first();
@@ -129,6 +132,7 @@ class PersonalController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit personal");
         $data = [
             'title'         => 'Customer Personal Management',
             'subtitle'      => 'Form Customer Personal',
@@ -187,6 +191,7 @@ class PersonalController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete personal");
         return Personal::find($id)->delete();
     }
 

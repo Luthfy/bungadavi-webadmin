@@ -26,6 +26,7 @@ class CourierController extends Controller
      */
     public function index(CourierDataTable $datatables)
     {
+        $this->authorize("view courier");
         $data = [
             'title'         => 'Courier Management',
             'subtitle'      => 'Courier List',
@@ -45,6 +46,7 @@ class CourierController extends Controller
      */
     public function create()
     {
+        $this->authorize("create courier");
         foreach(Florist::all() as $florist){
             $florist_selected[$florist->uuid] = $florist->fullname;
         }
@@ -141,6 +143,7 @@ class CourierController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view courier");
         foreach(Florist::all() as $florist){
             $florist_selected[$florist->uuid] = $florist->fullname;
         }
@@ -179,6 +182,7 @@ class CourierController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit courier");
         foreach(Florist::all() as $florist){
             $florist_selected[$florist->uuid] = $florist->fullname;
         }
@@ -269,6 +273,7 @@ class CourierController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete courier");
         return Courier::find($id)->delete();
     }
 

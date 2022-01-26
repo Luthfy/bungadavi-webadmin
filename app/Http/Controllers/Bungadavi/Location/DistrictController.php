@@ -20,6 +20,7 @@ class DistrictController extends Controller
 
     public function index(DistrictDataTable $datatables)
     {
+        $this->authorize("view district");
         $data = [
             'title'         => 'District',
             'subtitle'      => 'District',
@@ -34,6 +35,7 @@ class DistrictController extends Controller
 
     public function create()
     {
+        $this->authorize("create district");
         $data = [
             'title'         => 'District Management',
             'subtitle'      => 'Form District',
@@ -60,6 +62,7 @@ class DistrictController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit district");
         foreach(Country::all() as $country){
             $country_selected[$country->id] = $country->name;
         }
@@ -100,6 +103,7 @@ class DistrictController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete district");
         return District::find($id)->delete();
     }
 

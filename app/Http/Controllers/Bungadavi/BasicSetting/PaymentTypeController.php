@@ -17,6 +17,7 @@ class PaymentTypeController extends Controller
 
     public function index(PaymentTypeDataTable $datatables)
     {
+        $this->authorize("view payment type");
         $data = [
             'title'         => 'Payment Type',
             'subtitle'      => 'Payment Type',
@@ -36,6 +37,7 @@ class PaymentTypeController extends Controller
      */
     public function create()
     {
+        $this->authorize("create payment type");
         $data = [
             'title'         => 'Payment Type Management',
             'subtitle'      => 'Form Payment Type',
@@ -62,6 +64,7 @@ class PaymentTypeController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit payment type");
         $data = [
             'title'         => 'Payment Type Management',
             'subtitle'      => 'Form Payment Type',
@@ -85,6 +88,7 @@ class PaymentTypeController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete payment type");
         return PaymentType::find($id)->delete();
     }
 }

@@ -18,6 +18,7 @@ class CategoryController extends Controller
 
     public function index(CategoryDataTable $datatables)
     {
+        $this->authorize("view category");
         $data = [
             'title'         => 'Category',
             'subtitle'      => 'Category',
@@ -37,6 +38,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize("create category");
         $data = [
             'title'         => 'Category Management',
             'subtitle'      => 'Form Category',
@@ -74,6 +76,7 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit category");
         $data = [
             'title'         => 'Category Management',
             'subtitle'      => 'Form Category',
@@ -105,6 +108,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete category");
         return Category::find($id)->delete();
     }
 

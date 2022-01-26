@@ -66,6 +66,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $this->authorize("view order");
         $data = [
             'title'         => 'Order Transaction Management',
             'subtitle'      => 'Order List',
@@ -93,6 +94,7 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $this->authorize("create order");
         $data = [
             'title'         => 'Order Transaction Management',
             'subtitle'      => 'Order List',
@@ -311,7 +313,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-
+        $this->authorize("view order");
         $data = Order::findOrFail($id);
         $get_sender = SenderReceiver::where('order_transactions_uuid', $data->uuid)->first();
         $get_list_product = Product::where('order_transactions_uuid', $data->uuid)->first();

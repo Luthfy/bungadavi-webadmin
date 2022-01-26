@@ -17,6 +17,7 @@ class UnitController extends Controller
 
     public function index(UnitDataTable $datatables)
     {
+        $this->authorize("view unit");
         $data = [
             'title'         => 'Unit',
             'subtitle'      => 'Unit',
@@ -36,6 +37,7 @@ class UnitController extends Controller
      */
     public function create()
     {
+        $this->authorize("create unit");
         $data = [
             'title'         => 'Unit Management',
             'subtitle'      => 'Form Unit',
@@ -62,6 +64,7 @@ class UnitController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit unit");
         $data = [
             'title'         => 'Unit Management',
             'subtitle'      => 'Form Unit',
@@ -85,6 +88,7 @@ class UnitController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete unit");
         return Unit::find($id)->delete();
     }
 }

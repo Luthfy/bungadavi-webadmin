@@ -15,6 +15,7 @@ class CurrencyRateController extends Controller
 
     public function index(CurrencyRateDataTable $datatables)
     {
+        $this->authorize("view currency rate");
         $data = [
             'title'         => 'Currency Rate',
             'subtitle'      => 'Currency Rate',
@@ -35,6 +36,7 @@ class CurrencyRateController extends Controller
      */
     public function create()
     {
+        $this->authorize("create currency rate");
         foreach(Currency::all() as $currencyFrom){
             $currencyFrom_selected[$currencyFrom->id] = $currencyFrom->name;
         }
@@ -72,6 +74,7 @@ class CurrencyRateController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit currency rate");
         foreach(Currency::all() as $currencyFrom){
             $currencyFrom_selected[$currencyFrom->id] = $currencyFrom->name;
         }
@@ -107,6 +110,7 @@ class CurrencyRateController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete currency rate");
         return CurrencyRate::find($id)->delete();
     }
 

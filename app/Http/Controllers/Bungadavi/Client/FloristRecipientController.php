@@ -19,6 +19,7 @@ class FloristRecipientController extends Controller
 {
     public function index(FloristRecipientDataTable $datatables)
     {
+        $this->authorize("view florist recipient");
         $data = [
             'title'         => 'Florist Recipient Management',
             'subtitle'      => 'Florist Recipient',
@@ -38,6 +39,7 @@ class FloristRecipientController extends Controller
      */
     public function create()
     {
+        $this->authorize("create florist recipient");
         foreach(Florist::all() as $florist){
             $florist_selected[$florist->uuid] = $florist->fullname;
         }
@@ -95,6 +97,7 @@ class FloristRecipientController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view florist recipient");
         $get_florist = FloristRecipient::with('florist')->get();
         $data = FloristRecipient::findOrFail($id);
         $get_country = Country::where('id', $data->country_id)->first();
@@ -131,6 +134,7 @@ class FloristRecipientController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit florist recipient");
         foreach(Florist::all() as $florist){
             $florist_selected[$florist->uuid] = $florist->fullname;
         }
@@ -189,6 +193,7 @@ class FloristRecipientController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete florist recipient");
         return FloristRecipient::find($id)->delete();
     }
 

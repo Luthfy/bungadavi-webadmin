@@ -19,6 +19,7 @@ class PromotionController extends Controller
 
     public function index(PromotionDataTable $datatables)
     {
+        $this->authorize("view promotion");
         $data = [
             'title'         => 'Promotion',
             'subtitle'      => 'Promotion',
@@ -38,6 +39,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
+        $this->authorize("create promotion");
         $data = [
             'title'         => 'Promotion Management',
             'subtitle'      => 'Form Promotion',
@@ -89,6 +91,7 @@ class PromotionController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit promotion");
         $data = [
             'title'         => 'Promotion Management',
             'subtitle'      => 'Form Promotion',
@@ -134,6 +137,7 @@ class PromotionController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete promotion");
         return Promotion::find($id)->delete();
     }
 }

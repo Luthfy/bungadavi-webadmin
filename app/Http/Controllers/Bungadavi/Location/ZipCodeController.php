@@ -16,6 +16,7 @@ class ZipCodeController extends Controller
 
     public function index(ZipCodeDataTable $datatables)
     {
+        $this->authorize("view zipcode");
         $data = [
             'title'         => 'Zip Code',
             'subtitle'      => 'Zip Code',
@@ -30,7 +31,7 @@ class ZipCodeController extends Controller
 
     public function create()
     {
-
+        $this->authorize("create zipcode");
         $data = [
             'title'         => 'Zip Code Management',
             'subtitle'      => 'Form Zip Code',
@@ -57,7 +58,7 @@ class ZipCodeController extends Controller
 
     public function edit($id)
     {
-
+        $this->authorize("edit zipcode");
         $data = [
             'title'         => 'Zip Code Management',
             'subtitle'      => 'Form Zip Code',
@@ -86,6 +87,7 @@ class ZipCodeController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete zipcode");
         return ZipCode::find($id)->delete();
     }
 

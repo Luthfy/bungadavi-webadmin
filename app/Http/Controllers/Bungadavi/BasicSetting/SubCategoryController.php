@@ -19,6 +19,7 @@ class SubCategoryController extends Controller
 
     public function index(SubCategoryDataTable $datatables)
     {
+        $this->authorize("view sub category");
         $data = [
             'title'         => 'Sub Category',
             'subtitle'      => 'Sub Category',
@@ -38,6 +39,7 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize("create sub category");
         foreach(Category::all() as $category){
             $category_selected[$category->id] = $category->name;
         }
@@ -80,6 +82,7 @@ class SubCategoryController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit sub category");
         foreach(Category::all() as $category){
             $category_selected[$category->id] = $category->name;
         }
@@ -116,6 +119,7 @@ class SubCategoryController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete sub category");
         return SubCategory::find($id)->delete();
     }
 

@@ -18,6 +18,7 @@ class OurBankController extends Controller
 
     public function index(OurBankDataTable $datatables)
     {
+        $this->authorize("view our bank");
         $data = [
             'title'         => 'Our Bank',
             'subtitle'      => 'Our Bank',
@@ -37,6 +38,7 @@ class OurBankController extends Controller
      */
     public function create()
     {
+        $this->authorize("create our bank");
         $data = [
             'title'         => 'Our Bank Management',
             'subtitle'      => 'Form Our Bank',
@@ -76,6 +78,7 @@ class OurBankController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit our bank");
         $data = [
             'title'         => 'Our Bank Management',
             'subtitle'      => 'Form Our Bank',
@@ -108,6 +111,7 @@ class OurBankController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete our bank");
         return OurBank::find($id)->delete();
     }
 }

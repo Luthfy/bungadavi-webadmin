@@ -15,6 +15,7 @@ class StockController extends Controller
 
     public function index(StockDataTable $datatables)
     {
+        $this->authorize("view stock");
         $data = [
             'title'         => 'Stock Management',
             'subtitle'      => 'Stock List',
@@ -34,6 +35,7 @@ class StockController extends Controller
      */
     public function create()
     {
+        $this->authorize("create stock");
         $data = [
             'title'         => 'Stock Management',
             'subtitle'      => 'Form Stock',
@@ -61,6 +63,7 @@ class StockController extends Controller
 
     public function show($id)
     {
+        $this->authorize("view stock");
         $data = [
             'title'         => 'Stock Management',
             'subtitle'      => 'Detail Stock',
@@ -76,6 +79,7 @@ class StockController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit stock");
         $data = [
             'title'         => 'Stock Management',
             'subtitle'      => 'Form Stock',
@@ -109,6 +113,7 @@ class StockController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete stock");
         $stock = Stock::findOrFail($id);
         if ($stock->type_stock == 2) {
             Split::where('stock_original_uuid', $stock->uuid)->delete();

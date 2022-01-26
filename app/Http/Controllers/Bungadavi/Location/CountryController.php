@@ -17,6 +17,7 @@ class CountryController extends Controller
 
     public function index(CountryDataTable $datatables)
     {
+        $this->authorize("view country");
         $data = [
             'title'         => 'Country',
             'subtitle'      => 'Country',
@@ -31,6 +32,7 @@ class CountryController extends Controller
 
     public function create()
     {
+        $this->authorize("create country");
         $data = [
             'title'         => 'Country Management',
             'subtitle'      => 'Form Country',
@@ -57,6 +59,7 @@ class CountryController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit country");
         $data = [
             'title'         => 'Country Management',
             'subtitle'      => 'Form Country',
@@ -84,6 +87,7 @@ class CountryController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete country");
         return Country::find($id)->delete();
     }
 

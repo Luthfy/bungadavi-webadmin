@@ -17,6 +17,7 @@ class OpnameController extends Controller
      */
     public function index(OpnameDataTable $datatables)
     {
+        $this->authorize("view stock opname");
         $data = [
             'title'         => 'Stock Opname Management',
             'subtitle'      => 'Stock Opname List',
@@ -36,6 +37,7 @@ class OpnameController extends Controller
      */
     public function create()
     {
+        $this->authorize("create stock opname");
         $data = [
             'title'         => 'Stock Opname Management',
             'subtitle'      => 'Form Stock Opname',
@@ -88,6 +90,7 @@ class OpnameController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit stock opname");
         $data = [
             'title'         => 'Stock Opname Management',
             'subtitle'      => 'Form Stock Opname',
@@ -153,6 +156,7 @@ class OpnameController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete stock opname");
         $opname = Opname::findOrFail($id);
 
         $stock = Stock::findOrFail($opname->stocks_uuid);

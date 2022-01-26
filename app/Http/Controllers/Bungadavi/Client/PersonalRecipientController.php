@@ -19,6 +19,7 @@ class PersonalRecipientController extends Controller
 {
     public function index(PersonalRecipientDataTable $datatables)
     {
+        $this->authorize("view personal recipient");
         $data = [
             'title'         => 'Customer Personal Recipient Management',
             'subtitle'      => 'Customer Personal Recipient List',
@@ -38,6 +39,7 @@ class PersonalRecipientController extends Controller
      */
     public function create()
     {
+        $this->authorize("create personal recipient");
         foreach(Personal::all() as $personal){
             $personal_selected[$personal->uuid] = $personal->fullname;
         }
@@ -97,6 +99,7 @@ class PersonalRecipientController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view personal recipient");
         $get_personal = PersonalRecipient::with('clientPersonal')->get();
         $data = PersonalRecipient::findOrFail($id);
         $get_country = Country::where('id', $data->country_id)->first();
@@ -133,6 +136,7 @@ class PersonalRecipientController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit personal recipient");
         foreach(Personal::all() as $personal){
             $personal_selected[$personal->uuid] = $personal->fullname;
         }
@@ -192,6 +196,7 @@ class PersonalRecipientController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete personal recipient");
         return PersonalRecipient::find($id)->delete();
     }
 

@@ -14,6 +14,7 @@ class CardMessageSubCategoryController extends Controller
 
     public function index(CardMessageSubCategoryDataTable $datatables)
     {
+        $this->authorize("view card message subcategory");
         $data = [
             'title'         => 'Card Message Sub Category',
             'subtitle'      => 'Card Message Sub Category',
@@ -33,6 +34,7 @@ class CardMessageSubCategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize("create card message subcategory");
         foreach(CardMessageCategory::all() as $cmcategory){
             $cmcategory_selected[$cmcategory->id] = $cmcategory->name;
         }
@@ -64,6 +66,7 @@ class CardMessageSubCategoryController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit card message subcategory");
         foreach(CardMessageCategory::all() as $cmcategory){
             $cmcategory_selected[$cmcategory->id] = $cmcategory->name;
         }
@@ -93,6 +96,7 @@ class CardMessageSubCategoryController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete card message subcategory");
         return CardMessageSubCategory::find($id)->delete();
     }
 

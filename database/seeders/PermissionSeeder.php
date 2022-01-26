@@ -16,8 +16,6 @@ class PermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'create order']);
         Permission::create(['name' => 'view order']);
-        Permission::create(['name' => 'edit order']);
-        Permission::create(['name' => 'delete order']);
 
         Permission::create(['name' => 'create country']);
         Permission::create(['name' => 'view country']);
@@ -182,6 +180,16 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'view courier']);
         Permission::create(['name' => 'edit courier']);
         Permission::create(['name' => 'delete courier']);
+
+        Permission::create(['name' => 'create user group']);
+        Permission::create(['name' => 'view user group']);
+        Permission::create(['name' => 'edit user group']);
+        Permission::create(['name' => 'delete user group']);
+
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'view user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
 
         Permission::create(['name' => 'change price']);
 

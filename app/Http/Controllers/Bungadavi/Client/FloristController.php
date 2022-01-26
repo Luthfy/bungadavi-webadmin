@@ -20,6 +20,7 @@ class FloristController extends Controller
 {
     public function index(FloristDataTable $datatables)
     {
+        $this->authorize("view florist");
         $data = [
             'title'         => 'Customer Florist Management',
             'subtitle'      => 'Customer Florist List',
@@ -39,6 +40,7 @@ class FloristController extends Controller
      */
     public function create()
     {
+        $this->authorize("create florist");
         $data = [
             'title'         => 'Customer Florist Management',
             'subtitle'      => 'Form Customer Florist',
@@ -104,6 +106,7 @@ class FloristController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view florist");
         $florist_bank = FloristBank::where('client_florist_uuid',$id)->first();
         $data = Florist::findOrFail($id);
         $get_country = Country::where('id', $data->country_id)->first();
@@ -140,6 +143,7 @@ class FloristController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("edit florist");
         $florist_bank = FloristBank::where('client_florist_uuid',$id)->first();
 
         $data = [
@@ -212,6 +216,7 @@ class FloristController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete florist");
         FloristBank::where('client_florist_uuid',$id)->delete();
         return Florist::find($id)->delete();
     }

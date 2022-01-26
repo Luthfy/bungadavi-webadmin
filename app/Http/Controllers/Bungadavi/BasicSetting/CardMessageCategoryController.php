@@ -13,6 +13,7 @@ class CardMessageCategoryController extends Controller
 
     public function index(CardMessageCategoryDataTable $datatables)
     {
+        $this->authorize("view card message category");
         $data = [
             'title'         => 'Card Message Category',
             'subtitle'      => 'Card Message Category',
@@ -32,6 +33,7 @@ class CardMessageCategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize("create card message category");
         $data = [
             'title'         => 'Card Message Category Management',
             'subtitle'      => 'Form Card Message Category',
@@ -58,6 +60,7 @@ class CardMessageCategoryController extends Controller
 
     public function edit($id)
     {
+        $this->authorize("edit card message category");
         $data = [
             'title'         => 'Card Message Category Management',
             'subtitle'      => 'Form Card Message Category',
@@ -81,6 +84,7 @@ class CardMessageCategoryController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize("delete card message category");
         return CardMessageCategory::find($id)->delete();
     }
 
