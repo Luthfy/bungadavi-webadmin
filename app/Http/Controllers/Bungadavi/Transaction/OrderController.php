@@ -504,11 +504,11 @@ class OrderController extends Controller
     public function printDeliveryOrder()
     {
         $order = Order::findOrFail("194f6216-9e56-4410-9a8b-c4127a2007f9");
-
-        $data = [ 'order' => $order];
+        $logo = "";
+        $data = ['logo' => $logo,'order' => $order];
 
         $pdf = App::make('dompdf.wrapper');
-        $pdf->setPaper(array(0,0, 100, 200));
+        $pdf->setPaper(array(0,0, 609, 382));
         $pdf->setWarnings(false);
         $pdf->loadView('bungadavi.orders.print_do', $data);
         return $pdf->stream();
