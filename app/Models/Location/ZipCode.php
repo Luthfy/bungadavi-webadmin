@@ -65,4 +65,9 @@ class ZipCode extends Model
     {
         return $this->hasMany(Florist::class, 'zipcode_id', 'id');
     }
+
+    public function hasCorporate()
+    {
+        return $this->hasMany(Corporate::class, 'zipcode_id', 'id');
+    }
 }

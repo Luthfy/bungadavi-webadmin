@@ -35,6 +35,8 @@ use App\Http\Controllers\Bungadavi\BasicSetting\SlidingBannerController;
 use App\Http\Controllers\Bungadavi\BasicSetting\DeliveryRemarkController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageCategoryController;
 use App\Http\Controllers\Bungadavi\BasicSetting\CardMessageSubCategoryController;
+use App\Http\Controllers\Bungadavi\Client\CorporateAdminController;
+use App\Http\Controllers\Bungadavi\Client\CorporateRecipientController;
 use App\Http\Controllers\Bungadavi\Client\FloristAdminController;
 use App\Http\Controllers\Bungadavi\Client\FloristRecipientController;
 use App\Http\Controllers\Bungadavi\Client\PersonalRecipientController;
@@ -78,6 +80,9 @@ Route::group([
     Route::resource('florist', FloristController::class)->names('florist');
     Route::resource('floristrecipient', FloristRecipientController::class)->names('floristrecipient');
     Route::resource('floristadmin', FloristAdminController::class)->names('floristadmin');
+    Route::resource('corporate', CorporateController::class)->names('corporate');
+    Route::resource('corporaterecipient', CorporateRecipientController::class)->names('corporaterecipient');
+    Route::resource('corporateadmin', CorporateAdminController::class)->names('corporateadmin');
 
     // LOCATION
     Route::prefix('location')->group(function () {

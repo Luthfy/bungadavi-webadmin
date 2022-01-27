@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Client;
 
-use App\Models\Client/CorporateRecipient;
+use App\Models\Client\CorporateRecipient;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -30,7 +30,7 @@ class CorporateRecipientDataTable extends DataTable
      * @param \App\Models\Client/CorporateRecipient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Client/CorporateRecipient $model)
+    public function query(CorporateRecipient $model)
     {
         return $model->newQuery();
     }

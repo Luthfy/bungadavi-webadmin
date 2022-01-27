@@ -3,9 +3,16 @@
 namespace App\Models\Client;
 
 use Ramsey\Uuid\Uuid;
+use App\Models\Location\City;
+use App\Models\Location\Country;
+use App\Models\Location\Village;
+use App\Models\Location\ZipCode;
+use App\Models\Location\District;
+use App\Models\Location\Province;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Corporate extends Model
 {
@@ -51,12 +58,7 @@ class Corporate extends Model
 
         self::creating(function ($model) {
             $model['uuid']              = Uuid::uuid4()->toString();
-            $model['user_uuid']         = auth()->user()->uuid ?? null;
-            return $model;
-        });
-
-        self::updating(function ($model) {
-            $model['user_uuid'] = auth()->user()->uuid ?? null;
+            $model['remember_token']    = Str::random(10);
             return $model;
         });
     }

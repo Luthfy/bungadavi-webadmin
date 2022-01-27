@@ -74,4 +74,9 @@ class Province extends Model
     {
         return $this->hasMany(SenderReceiver::class, 'receiver_village', 'id');
     }
+
+    public function hasCorporate()
+    {
+        return $this->hasMany(Corporate::class, 'province_id', 'id');
+    }
 }

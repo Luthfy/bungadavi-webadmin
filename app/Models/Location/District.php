@@ -72,4 +72,9 @@ class District extends Model
     {
         return $this->hasMany(Florist::class, 'district_id', 'id');
     }
+
+    public function hasCorporate()
+    {
+        return $this->hasMany(Corporate::class, 'district_id', 'id');
+    }
 }

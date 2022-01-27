@@ -66,4 +66,9 @@ class Village extends Model
     {
         return $this->hasMany(Florist::class, 'village_id', 'id');
     }
+
+    public function hasCorporate()
+    {
+        return $this->hasMany(Corporate::class, 'village_id', 'id');
+    }
 }

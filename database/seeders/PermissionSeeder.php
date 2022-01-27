@@ -193,5 +193,20 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'change price']);
 
+        Permission::create(['name' => 'create corporate']);
+        Permission::create(['name' => 'view corporate']);
+        Permission::create(['name' => 'edit corporate']);
+        Permission::create(['name' => 'delete corporate']);
+
+        Permission::create(['name' => 'create corporate recipient']);
+        Permission::create(['name' => 'view corporate recipient']);
+        Permission::create(['name' => 'edit corporate recipient']);
+        Permission::create(['name' => 'delete corporate recipient']);
+
+        Permission::create(['name' => 'create corporate admin']);
+        Permission::create(['name' => 'view corporate admin']);
+        Permission::create(['name' => 'edit corporate admin']);
+        Permission::create(['name' => 'delete corporate admin']);
+
     }
 }

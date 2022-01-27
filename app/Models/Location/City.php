@@ -78,4 +78,9 @@ class City extends Model
     {
         return $this->hasMany(Florist::class, 'city_id', 'id');
     }
+
+    public function hasCorporate()
+    {
+        return $this->hasMany(Corporate::class, 'city_id', 'id');
+    }
 }
