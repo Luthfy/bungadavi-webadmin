@@ -414,7 +414,7 @@ class OrderController extends Controller
 
         // get product order tomorrow process
         $tomorrow = Carbon::now()->add(1, 'day')->format('Y-m-d');
-        $scheduleTomorrow = Schedule::whereDate('delivery_date', ">", $tomorrow)->with('order.products');
+        $scheduleTomorrow = Schedule::whereDate('delivery_date', $tomorrow)->with('order.products');
         $productTomorrow  = Product::whereIn('order_transactions_uuid', $scheduleTomorrow->pluck('order_transactions_uuid'))->where('status_progress_product', '!=', 'done');
 
         $data = [
@@ -426,7 +426,7 @@ class OrderController extends Controller
             'data'          => [
                 'link'          => route('bungadavi.orders.status_product'),
                 'orderToday'    => $productToday->with('product')->orderBy('name_product', 'asc')->get()->toArray(),
-                'orderTomorrow' => $productTomorrow->with('product')->orderBy('name_product', 'asc')->get()->toArray()
+                'orderTomorrow' => $productTomorrow->with('product')->with('product.materials')->orderBy('name_product', 'asc')->get()->toArray()
             ]
         ];
 

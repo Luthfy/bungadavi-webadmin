@@ -69,6 +69,6 @@ class Product extends Model
      */
     public function materials()
     {
-        return $this->hasMany(ProductCustom::class, 'list_product_uuid', 'uuid');
+        return $this->hasMany(ProductCustom::class, 'uuid', 'list_product_uuid');
     }
 }

@@ -49,7 +49,6 @@
                                             <h4 class="h4">{{ $today['name_product'] }}</h4>
                                             <h4 class="h6">{{ $today['code_product'] }}</h4>
                                             <hr>
-                                            @dump($today['name_product']->materials()->get())
                                         </div>
                                     </div>
                                 </div>
@@ -80,6 +79,8 @@
                                             <h4 class="h4">{{ $tomorrow['name_product'] }}</h4>
                                             <h4 class="h6">{{ $tomorrow['code_product'] }}</h4>
                                             <hr>
+                                            @dump($tomorrow)
+
                                         </div>
                                     </div>
                                 </div>

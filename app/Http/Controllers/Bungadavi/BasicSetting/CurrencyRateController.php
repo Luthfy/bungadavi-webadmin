@@ -116,11 +116,11 @@ class CurrencyRateController extends Controller
 
     public function getCurrencyToday()
     {
-        $currencyFrom = ['IDR', 'USD', 'GBP', 'JPY'];
+        $currencyFrom = "IDR";
 
-        foreach ($currencyFrom as $currency) {
+        // foreach ($currencyFrom as $currency) {
 
-            $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007&base_currency=' . $currency;
+            $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007&base_currency=' . $currencyFrom;
 
 
             $data = Http::get($url);
@@ -135,12 +135,12 @@ class CurrencyRateController extends Controller
                 }
 
                 // return response(['status' => true, 'message' => 'already update']);
-                // return redirect()->back()->with('success', 'Already update');
+                return redirect()->back()->with('success', 'Already update');
             } else {
                 return redirect()->back()->with('warning', 'Something is wrong or limits');
             }
 
-        }
+        // }
 
         // return redirect()->back()->with('success', 'Already update');
 
