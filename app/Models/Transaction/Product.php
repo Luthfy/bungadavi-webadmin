@@ -63,12 +63,12 @@ class Product extends Model
     }
 
     /**
-     * Get the order that owns the Product
+     * Get all of the materials for the Product
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function materials()
     {
-        return $this->hasMany(ProductCustom::class, 'uuid', 'list_product_uuid');
+        return $this->hasMany(ProductCustom::class, 'list_product_uuid');
     }
 }

@@ -989,7 +989,7 @@
 
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Remarks</label>';
-                html += '<textarea class="form-control" id="productRemark" rows="3"></textarea>';
+                html += '<textarea class="form-control" id="remarkProduct" rows="3"></textarea>';
                 html += '</div>';
 
                 html += '</div>';
@@ -1115,8 +1115,7 @@
 
                 if (x.materials.length > 0) {
                     x.materials.forEach((material, index) => {
-                        materials[index] = {
-                            list_product_uuid       : x.uuid,
+                        product_result[i].materials[index] = {
                             name_stock              : material.stock.name_stock,
                             products_material_uuid  : material.stocks_uuid,
                             qty_stock               : material.qty_used_products_material
@@ -1132,13 +1131,12 @@
                     name_product            : x.name_product,
                     qty_product             : x.qty_product,
                     price_product           : x.selling_price_product,
-                    from_message_product    : $("#fromMessageProduct").val(),
-                    to_message_product      : $("#romMessageProduct").val(),
                     remarks_product         : $("#remarkProduct").val(),
-                    custom_product          : materials,
+                    custom_product          : product_result[i].materials,
                     image_product           : x.image_main_product,
                     description_product     : $("#productDescription").val(),
-                    status_product          : status_product
+                    status_product          : status_product,
+                    city_product            : senderRecipientOrder.receiver_city
                 };
             });
 
@@ -1154,6 +1152,8 @@
                                             card_message_category       : $('#cardMessageCategory option:selected').text(),
                                             card_message_subcategory    : $('#cardMessageSubCategory option:selected').text(),
                                             card_message_message        : $("#cardMessage").val(),
+                                            from_message_order          : $("#fromMessageProduct").val(),
+                                            to_message_order            : $("#romMessageProduct").val(),
                                             is_guest : false,
                                         },
                 "sender_recipient"      : senderRecipientOrder,
@@ -1161,6 +1161,8 @@
                 "delivery_schedule"     : setDeliverySchedule(),
                 "payment_order"         : setPaymentOrder(),
             };
+
+            console.log(listProductOrder)
 
             $.ajax({
                 url: "{{ route('bungadavi.orders.store') }}",

@@ -3,6 +3,7 @@
 namespace App\Models\Transaction;
 
 use Ramsey\Uuid\Uuid;
+use App\Models\Stock\Stock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,8 +23,6 @@ class ProductCustom extends Model
         'products_material_uuid',
         'name_stock',
         'qty_stock',
-        'image_product',
-        'status_product',
     ];
 
     protected $casts = [
@@ -39,5 +38,15 @@ class ProductCustom extends Model
             $model['uuid'] = Uuid::uuid4()->toString();
             return $model;
         });
+    }
+
+    /**
+     * Get the stock that owns the ProductCustom
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function stock()
+    {
+        return $this->belongsTo(Stock::class, 'products_material_uuid', 'uuid');
     }
 }

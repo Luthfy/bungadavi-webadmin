@@ -425,8 +425,8 @@ class OrderController extends Controller
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
             'data'          => [
                 'link'          => route('bungadavi.orders.status_product'),
-                'orderToday'    => $productToday->with('product')->orderBy('name_product', 'asc')->get()->toArray(),
-                'orderTomorrow' => $productTomorrow->with('product')->with('product.materials')->orderBy('name_product', 'asc')->get()->toArray()
+                'orderToday'    => $productToday->with('product')->with('materials')->orderBy('name_product', 'asc')->get()->toArray(),
+                'orderTomorrow' => $productTomorrow->with('product')->with('materials')->with('materials.stock')->orderBy('name_product', 'asc')->get()->toArray()
             ]
         ];
 
