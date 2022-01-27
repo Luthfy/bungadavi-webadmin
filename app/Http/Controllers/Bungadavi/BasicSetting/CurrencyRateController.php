@@ -116,24 +116,33 @@ class CurrencyRateController extends Controller
 
     public function getCurrencyToday()
     {
-        $currencyFrom = 'IDR';
+        $currencyFrom = ['IDR', 'USD', 'GBP', 'JPY'];
 
-        $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007';
+        foreach ($currencyFrom as $currency) {
 
-        $data = Http::get($url);
+            $url = 'https://freecurrencyapi.net/api/v2/latest?apikey=7e5aa390-7748-11ec-be71-9bf06bfb3007&base_currency=' . $currency;
 
-        if ($data->status() == 200) {
-            foreach ($data->json("data") as $key => $value) {
-                CurrencyRate::updateOrCreate(['currency_code_from_id' => $currencyFrom, 'currency_code_to_id' => $key],[
-                    'value' => $value
-                ]);
+
+            $data = Http::get($url);
+
+            if ($data->status() == 200) {
+                // var_dump($data->json("data"));
+                foreach ($data->json("data") as $key => $value) {
+                    // print_r($value);
+                    CurrencyRate::updateOrCreate(['currency_code_from_id' => $currencyFrom, 'currency_code_to_id' => $key],[
+                        'value' => $value
+                    ]);
+                }
+
+                // return response(['status' => true, 'message' => 'already update']);
+                // return redirect()->back()->with('success', 'Already update');
+            } else {
+                return redirect()->back()->with('warning', 'Something is wrong or limits');
             }
 
-            // return response(['status' => true, 'message' => 'already update']);
-            return redirect()->back()->with('success', 'Already update');
         }
 
-        return redirect()->back()->with('warning', 'Something is wrong or limits');
+        // return redirect()->back()->with('success', 'Already update');
 
         // return response(['status' => false, 'message' => 'something is wrong', 'error' => json_decode($data, true)]);
     }

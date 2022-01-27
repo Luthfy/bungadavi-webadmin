@@ -150,10 +150,15 @@ Route::group([
     // TRANSACTION ORDER
     Route::post('transaction/{id}', [OrderController::class, 'assignFlorist'])->name('orders.florist');
     Route::post('transaction/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update_status');
-    Route::get('transaction/{transaction}/delivered', [OrderController::class, 'statusDelivered'])->name('orders.update_delivered');
     Route::get('transaction/delivered', [OrderController::class, 'deliveredList'])->name('orders.delivered');
     Route::get('transaction/canceled', [OrderController::class, 'cancelList'])->name('orders.canceled');
     Route::get('transaction/print', [OrderController::class, 'printOrder'])->name('orders.print');
+    Route::get('transaction/print_do', [OrderController::class, 'printDeliveryOrder'])->name('orders.print_do');
+
+    Route::get('transaction/{transaction}/print_card_message', [OrderController::class, 'printCardMessage'])->name('orders.print_card_message');
+    Route::get('transaction/{transaction}/delivered', [OrderController::class, 'statusDelivered'])->name('orders.update_delivered');
+
+
 
     Route::resource('transaction', OrderController::class)->names('orders');
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');

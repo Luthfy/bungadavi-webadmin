@@ -12,12 +12,15 @@ use App\Models\Location\ZipCode;
 use App\Models\Location\District;
 use App\Models\Location\Province;
 use App\Models\Transaction\Order;
+use App\Models\Courier\CourierTask;
 use App\Models\Transaction\Payment;
 use App\Models\Transaction\Product;
+use App\Models\Transaction\Receipt;
 use App\Http\Controllers\Controller;
 use App\Models\BasicSetting\OurBank;
 use App\Models\Transaction\Delivery;
 use App\Models\Transaction\Schedule;
+use App\Models\BasicSetting\TimeSlot;
 use App\Models\Client\FloristRecipient;
 use App\DataTables\Order\OrderDataTable;
 use App\Models\Client\PersonalRecipient;
@@ -26,16 +29,15 @@ use App\Models\Transaction\ProductCustom;
 use App\Models\Transaction\SenderReceiver;
 use App\DataTables\Order\NewOrderDataTable;
 use App\Models\BasicSetting\DeliveryRemark;
+use App\DataTables\Product\ProductDataTable;
+use App\DataTables\Order\OnDeliveryDataTable;
 use App\DataTables\Order\AcceptOrderDataTable;
 use App\DataTables\Order\CancelOrderDataTable;
-use App\DataTables\Order\DeliveredOrderDataTable;
-use App\DataTables\Order\OnDeliveryDataTable;
-use App\DataTables\Order\OnDeliveryOrderDataTable;
-use App\DataTables\Product\ProductDataTable;
-use App\Models\BasicSetting\TimeSlot;
-use App\Models\Courier\CourierTask;
 use App\Models\Product\Product as ProductStock;
-use App\Models\Transaction\Receipt;
+use App\DataTables\Order\DeliveredOrderDataTable;
+use App\DataTables\Order\OnDeliveryOrderDataTable;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
@@ -496,6 +498,61 @@ class OrderController extends Controller
 
     public function printOrder()
     {
+
+    }
+
+    public function printDeliveryOrder()
+    {
+        $order = Order::findOrFail("194f6216-9e56-4410-9a8b-c4127a2007f9");
+
+        $data = [ 'order' => $order];
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper(array(0,0, 100, 200));
+        $pdf->setWarnings(false);
+        $pdf->loadView('bungadavi.orders.print_do', $data);
+        return $pdf->stream();
+    }
+
+    public function printCardMessage($id)
+    {
+        $productUuid  = $id;
+        $productOrder = Product::where('product_uuid', $productUuid)->first()->order()->first();
+
+        $product     = ProductStock::findOrFail($productUuid);
+
+        switch ($product->printcmmode_product) {
+            case '0':
+                $data = [ 'align' => 'center', 'position' => '90%', 'product' => $productOrder];
+
+                $pdf = App::make('dompdf.wrapper');
+                $pdf->setPaper('A5', 'Potrait');
+                $pdf->setWarnings(false);
+                $pdf->loadView('bungadavi.orders.print_card_message', $data);
+                return $pdf->stream();
+                break;
+
+            case '1':
+                $data = [ 'align' => 'center', 'position' => '50%', 'product' => $productOrder];
+
+                $pdf = App::make('dompdf.wrapper');
+                $pdf->setPaper('A5', 'Potrait');
+                $pdf->setWarnings(false);
+                $pdf->loadView('bungadavi.orders.print_card_message', $data);
+                return $pdf->stream();
+                break;
+
+            default:
+                $data = [ 'align' => 'center', 'position' => '50%', 'product' => $productOrder];
+
+                $pdf = App::make('dompdf.wrapper');
+                $pdf->setPaper('a4', 'landscape');
+                $pdf->setWarnings(false);
+                $pdf->loadView('bungadavi.orders.print_card_message', $data);
+                return $pdf->stream();
+                break;
+        }
+
 
     }
 }

@@ -266,25 +266,25 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <strong>Product Price</strong>
-                                    <div id="productList">
+                                    <div id="productList" class="mb-2">
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Delivery Charge</strong>
-                                    <div id="deliveryChargeSummary">
+                                    <div id="deliveryChargeSummary" class="mb-2">
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Timeslot Charge</strong>
-                                    <div id="deliveryTimeslotSummary">
+                                    <div id="deliveryTimeslotSummary" class="mb-2">
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <strong>Total Price</strong>
-                                    <div id="totalPriceSummary">
+                                    <div id="totalPriceSummary" class="mb-2">
 
                                     </div>
                                 </div>
@@ -368,6 +368,10 @@
         var currency_result;
         var deliveryRemark = "";
         var stock_result;
+
+        var textDeliveryResult = {message: "-", price: "-"};
+        var textScheduleResult = {message: "-", price: "-"};
+
 
         $(document).ready(function (e) {
             getCardMessageCategoryAjax("{{route('bungadavi.cardmessagecategory.ajax.list')}}");
@@ -661,9 +665,10 @@
                 html_recipient += "</table>";
             $("#recipientData").html(html_recipient);
 
-            let text = "Delivery Charge From " + receiverData.sender_village + " To " + receiverData.receiver_village;
+            textDeliveryResult.message = "Delivery Charge From " + receiverData.sender_village + " To " + receiverData.receiver_village;
+            textDeliveryResult.price   = 0;
 
-            writeSummaryHTML({message: text, price: 0}, 'deliverycharge');
+            writeSummaryHTML();
 
         }
 
@@ -722,7 +727,10 @@
             var timeslot_selected = timeslot_result.find(x => x.id === Number($("#selectTimeSlot option:selected").val()));
             $("#deliveryChargeTimeslot").val(timeslot_selected.price);
 
-            writeSummaryHTML({message:timeslot_selected.time_slot_name, price:timeslot_selected.price}, 'timeslotcharge')
+            textScheduleResult.message = timeslot_selected.time_slot_name;
+            textScheduleResult.price = timeslot_selected.price;
+
+            writeSummaryHTML();
         });
 
         $("#currencyCode").change(function (e) {
@@ -747,7 +755,7 @@
             $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected));
             $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected));
 
-            writeSummaryHTML(product_result, 'product')
+            writeSummaryHTML()
         });
 
         $('#addStock').on('show.bs.modal', function (event) {
@@ -948,7 +956,7 @@
                 html += '</div>';
                 html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" required>';
                 html += '</div>';
-                html += '<input type="checkbox" class="form-control" id="createNewCustomerProduct" > Custom Product'';
+                html += '<input type="checkbox" class="form-control" id="createNewCustomerProduct" > Custom Product';
                 html += '</div>';
                 html += '</div>';
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
@@ -999,50 +1007,34 @@
                 html += '</div>';
 
             })
-
             $("#productData").html(html);
-            writeSummaryHTML(result, 'product');
+            writeSummaryHTML();
         }
 
-        function writeSummaryHTML(res, type)
+        function writeSummaryHTML()
         {
-            console.log(res.message)
-            // let html  = "<table class='table'>";
+            var totalPriceSummary = 0;
+            if (product_result != undefined) {
+                htmlProductList = "";
+                product_result.forEach((x, i) => {
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+(x.qty_product * x.cost_product)+"</div></div>";
+                    totalPriceSummary += (x.qty_product * x.cost_product);
+                });
 
-            // switch (type) {
-            //     case 'product':
-            //         let htmlForProduct = "<div class='row mt-2'>";
+                $("#productList").html(htmlProductList);
+            }
 
-            //         res.forEach( (x, i) => {
-            //             // html += "<tr><td>"+ x.name_product +"</td></tr><tr><td>"+ x.cost_product +"</td></tr>";
-            //             htmlForProduct += "<div class='col-lg-12 col-md-12 col-sm-12'>";
-            //             htmlForProduct += x.qty_product + " x " + x.name_product + " @ " + x.cost_product;
-            //             htmlForProduct += "</div>";
-            //             htmlForProduct += "<div class='col-lg-12 col-md-12 col-sm-12 text-right'>";
-            //             htmlForProduct += "("+currencyToActive+") " + (x.qty_product * x.cost_product);
-            //             htmlForProduct += "</div>";
-            //         })
+            htmlDeliverySchedule = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textDeliveryResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+textDeliveryResult.price+"</div></div>";
+            $("#deliveryChargeSummary").html(htmlDeliverySchedule);
 
-            //         htmlForProduct += "</div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textScheduleResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+textScheduleResult.price+"</div></div>";
+            $("#deliveryTimeslotSummary").html(htmlTimeslot);
 
-            //         $("#productList").html(htmlForProduct);
-            //         break;
+            totalPriceSummary += (textDeliveryResult.price == '-') ? 0 : Number(textDeliveryResult.price);
+            totalPriceSummary += (textScheduleResult.price == '-') ? 0 : Number(textScheduleResult.price);
 
-            //     case 'deliverycharge':
-            //         html += "<tr><td>"+res.message+"</td></tr><tr><td>"+res.price+"</td></tr>"
-            //         html += "</table>";
-            //         $("#deliveryChargeSummary").append(html);
-            //         break;
-
-            //     case 'timeslotcharge':
-            //         html += "<tr><td>"+res.message+"</td></tr><tr><td>"+res.price+"</td></tr>"
-            //         html += "</table>";
-            //         $("#deliveryTimeslotSummary").append(html);
-            //         break;
-
-            //     default:
-            //         break;
-            // }
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'></div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+totalPriceSummary+"</div></div>";
+            $("#totalPriceSummary").html(htmlTimeslot);
 
         }
 
