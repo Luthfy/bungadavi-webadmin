@@ -501,9 +501,10 @@ class OrderController extends Controller
 
     }
 
-    public function printDeliveryOrder()
+    public function printDeliveryOrder($id)
     {
-        $order = Order::findOrFail("194f6216-9e56-4410-9a8b-c4127a2007f9");
+        $order = Order::findOrFail($id);
+
         $logo = "";
         $data = ['logo' => $logo,'order' => $order];
 
@@ -514,12 +515,22 @@ class OrderController extends Controller
         return $pdf->stream();
     }
 
+    public function printInvoiceOrder($id)
+    {
+        $order = Order::findOrFail($id)->first();
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper('A4', 'Potrait');
+        $pdf->setWarnings(false);
+        $pdf->loadView('bungadavi.orders.print_invoice', ['order' => $order]);
+        return $pdf->stream();
+    }
+
     public function printCardMessage($id)
     {
-        $productUuid  = $id;
-        $productOrder = Product::where('product_uuid', $productUuid)->first()->order()->first();
+        $productOrder = Order::findOrFail($id)->first();
+        $product     = ProductStock::findOrFail($productOrder->products()->first()->product_uuid);
 
-        $product     = ProductStock::findOrFail($productUuid);
 
         switch ($product->printcmmode_product) {
             case '0':
