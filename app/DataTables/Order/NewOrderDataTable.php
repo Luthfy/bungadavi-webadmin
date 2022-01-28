@@ -124,7 +124,9 @@ class NewOrderDataTable extends DataTable
                     $html .= "<a href='".route('bungadavi.orders.edit', ['transaction' => $datatable->uuid])."' class='text-success m-1'><span class='fa fa-edit'></span></a>";
                     $html .= "<a href='".route('bungadavi.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                     $html .= "<a href='".route('bungadavi.orders.update_delivered', ['transaction' => $datatable->uuid])."' class='text-info m-1' id='deliveredOrder'><span class='fa fa-check'></span></a>";
-                    $html .= "<a href='".route('bungadavi.orders.print', ['transaction' => $datatable->uuid])."' class='text-warning m-1'><span class='fa fa-print'></span></a>";
+                    $html .= "<a href='".route('bungadavi.orders.print_do', ['transaction' => $datatable->uuid])."' class='badge badge-success m-1' target='_blank'><span class='fa fa-print'></span> Print DO</a>";
+                    $html .= "<a href='".route('bungadavi.orders.print_card_message', ['transaction' => $datatable->uuid])."' class='badge badge-info m-1' target='_blank'><span class='fa fa-print'></span> Print Card Message</a>";
+                    $html .= "<a href='".route('bungadavi.orders.print_invoice', ['transaction' => $datatable->uuid])."' class='badge badge-secondary m-1' target='_blank'><span class='fa fa-print'></span> Print Invoice</a>";
                 } else if(auth()->user()->hasRole('corporate')){
                     $html .= "<a href='".route('corporate.orders.show', ['transaction' => $datatable->uuid])."' class='text-primary m-1'><span class='fa fa-eye'></span></a>";
                 } else {

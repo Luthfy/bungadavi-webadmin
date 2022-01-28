@@ -128,7 +128,7 @@
                 data: JSON.stringify({
                     "_token" : "{{ csrf_token() }}",
                     "courier_uuid" : $("#courier_uuid option:selected").val(),
-                    "status" : "ASSIGNED",
+                    "status" : "Assigned",
                     "notes" : $("#notes").val(),
                     "browse_image" : $("#browse_image option:selected").val()
                 }),

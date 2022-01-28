@@ -51,10 +51,10 @@
                                   <a class="nav-link" id="pills-recipient-tab" data-toggle="pill" href="#pills-recipient" role="tab" aria-controls="pills-recipient" aria-selected="false">Recipient</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pills-delivery-tab" data-toggle="pill" href="#pills-delivery" role="tab" aria-controls="pills-delivery" aria-selected="false">Delivery Schedule</a>
-                                  </li>
-                                <li class="nav-item" role="presentation">
                                   <a class="nav-link" id="pills-products-tab" data-toggle="pill" href="#pills-products" role="tab" aria-controls="pills-products" aria-selected="false">Products</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-delivery-tab" data-toggle="pill" href="#pills-delivery" role="tab" aria-controls="pills-delivery" aria-selected="false">Delivery Schedule</a>
                                 </li>
                             </ul>
                         </div>
@@ -503,8 +503,21 @@
         function qtyStockChange(value, code_product)
         {
             $('.qty-stock-'+code_product).text(value + ' x ');
+
+            let productIndex = product_result.findIndex(x => x.code_product == code_product);
+            product_result[productIndex].qty_product = Number(value)
+
+            writeSummaryHTML();
         }
 
+        // set selling stock
+        function sellingPriceChange(value, code_product)
+        {
+            let productIndex = product_result.findIndex(x => x.code_product == code_product);
+            product_result[productIndex].selling_price_product = Number(value)
+
+            writeSummaryHTML();
+        }
 
         // EVENT HANDLE
 
@@ -925,6 +938,7 @@
                 html += '</div>';
 
                 html += '<div class="row">';
+
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
                 html += '<img src="'+image_url+'" class="img-thumbnail" style="width=80px;" />';
                 html += '<div class="custom-file mb-3 mt-2">';
@@ -932,13 +946,16 @@
                 html += '<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>';
                 html += '</div>';
                 html += '</div>';
+
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
+
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">QTY</label>';
                 html += '<div class="form-group">';
                 html += '<input type="number" class="form-control" onchange="qtyStockChange(this.value, \''+x.code_product+'\')" value="1" min="1" data-code-product="'+x.code_product+'" required>';
                 html += '</div>';
                 html += '</div>';
+
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Cost Selling</label>';
                 html += '<div class="input-group is-invalid">';
@@ -948,26 +965,33 @@
                 html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required>';
                 html += '</div>';
                 html += '</div>';
+
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Cost Selling Florist</label>';
                 html += '<div class="input-group is-invalid">';
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" required>';
-                html += '</div>';
-                html += '<input type="checkbox" class="form-control" id="createNewCustomerProduct" > Custom Product';
+                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required>';
                 html += '</div>';
                 html += '</div>';
+
+                html += '<input type="checkbox" class="mb-4" id="createNewCustomerProduct" > Custom Product';
+
+                html += '</div>';
+
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
+
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Description</label>';
                 html += '<textarea class="form-control" id="productDescription" rows="3">'+x.description_product+'</textarea>';
                 html += '</div>';
+
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Remarks</label>';
-                html += '<textarea class="form-control" id="productRemark" rows="3"></textarea>';
+                html += '<textarea class="form-control" id="remarkProduct" rows="3"></textarea>';
                 html += '</div>';
+
                 html += '</div>';
                 html += '</div>';
 
@@ -1017,8 +1041,8 @@
             if (product_result != undefined) {
                 htmlProductList = "";
                 product_result.forEach((x, i) => {
-                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+(x.qty_product * x.cost_product)+"</div></div>";
-                    totalPriceSummary += (x.qty_product * x.cost_product);
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+(x.qty_product * x.selling_price_product)+"</div></div>";
+                    totalPriceSummary += (x.qty_product * x.selling_price_product);
                 });
 
                 $("#productList").html(htmlProductList);
@@ -1033,9 +1057,8 @@
             totalPriceSummary += (textDeliveryResult.price == '-') ? 0 : Number(textDeliveryResult.price);
             totalPriceSummary += (textScheduleResult.price == '-') ? 0 : Number(textScheduleResult.price);
 
-            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'></div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+totalPriceSummary+"</div></div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+totalPriceSummary+"</div></div>";
             $("#totalPriceSummary").html(htmlTimeslot);
-
         }
 
         function getCardMessageSubCategoryAjax(url)
@@ -1092,8 +1115,7 @@
 
                 if (x.materials.length > 0) {
                     x.materials.forEach((material, index) => {
-                        materials[index] = {
-                            list_product_uuid       : x.uuid,
+                        product_result[i].materials[index] = {
                             name_stock              : material.stock.name_stock,
                             products_material_uuid  : material.stocks_uuid,
                             qty_stock               : material.qty_used_products_material
@@ -1101,16 +1123,20 @@
                     })
                 }
 
+                let status_product = x.status_product;
+
                 listProductOrder[i] = {
-                    product_uuid    : x.uuid,
-                    code_product    : x.code_product,
-                    name_product    : x.name_product,
-                    qty_product     : x.qty_product,
-                    price_product   : x.cost_product,
-                    from_message_product    : $("#fromMessageProduct").val(),
-                    to_message_product      : $("#romMessageProduct").val(),
+                    product_uuid            : x.uuid,
+                    code_product            : x.code_product,
+                    name_product            : x.name_product,
+                    qty_product             : x.qty_product,
+                    price_product           : x.selling_price_product,
                     remarks_product         : $("#remarkProduct").val(),
-                    custom_product : materials
+                    custom_product          : product_result[i].materials,
+                    image_product           : x.image_main_product,
+                    description_product     : $("#productDescription").val(),
+                    status_product          : status_product,
+                    city_product            : senderRecipientOrder.receiver_city
                 };
             });
 
@@ -1126,6 +1152,8 @@
                                             card_message_category       : $('#cardMessageCategory option:selected').text(),
                                             card_message_subcategory    : $('#cardMessageSubCategory option:selected').text(),
                                             card_message_message        : $("#cardMessage").val(),
+                                            from_message_order          : $("#fromMessageProduct").val(),
+                                            to_message_order            : $("#romMessageProduct").val(),
                                             is_guest : false,
                                         },
                 "sender_recipient"      : senderRecipientOrder,
@@ -1133,6 +1161,8 @@
                 "delivery_schedule"     : setDeliverySchedule(),
                 "payment_order"         : setPaymentOrder(),
             };
+
+            console.log(listProductOrder)
 
             $.ajax({
                 url: "{{ route('bungadavi.orders.store') }}",

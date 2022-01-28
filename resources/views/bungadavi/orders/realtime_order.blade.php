@@ -48,7 +48,16 @@
                                         <div class="col-9">
                                             <h4 class="h4">{{ $today['name_product'] }}</h4>
                                             <h4 class="h6">{{ $today['code_product'] }}</h4>
+                                            <h4 class="h6">QTY : {{ $today['qty_product'] }}</h4>
                                             <hr>
+                                            <h4>Material</h4>
+                                            <ul class="pl-4">
+                                                @forelse ($today['materials'] as $material)
+                                                <li >{{ $material['name_stock'] }} - {{ $today['qty_product'] }} x {{ $material['qty_stock'] }}</li>
+                                                @empty
+                                                <li> <i>Stock Belum Diatur</i></li>
+                                                @endforelse
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +87,16 @@
                                         <div class="col-9">
                                             <h4 class="h4">{{ $tomorrow['name_product'] }}</h4>
                                             <h4 class="h6">{{ $tomorrow['code_product'] }}</h4>
+                                            <h4 class="h6">QTY : {{ $tomorrow['qty_product'] }}</h4>
                                             <hr>
+                                            <h4>Material</h4>
+                                            <ul class="pl-4">
+                                                @forelse ($tomorrow['materials'] as $material)
+                                                <li class="{{ $material['stock']['qty_stock'] > ($tomorrow['qty_product'] * $material['qty_stock']) ? 'text-success' : 'text-danger'  }}">{{ $material['name_stock'] }} - {{ $tomorrow['qty_product'] }} x {{ $material['qty_stock'] }} ({{ $material['stock']['qty_stock'] }})</li>
+                                                @empty
+                                                <li> <i>Stock Belum Diatur</i></li>
+                                                @endforelse
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

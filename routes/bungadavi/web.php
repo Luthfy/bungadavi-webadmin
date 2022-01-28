@@ -158,14 +158,14 @@ Route::group([
     Route::get('transaction/delivered', [OrderController::class, 'deliveredList'])->name('orders.delivered');
     Route::get('transaction/canceled', [OrderController::class, 'cancelList'])->name('orders.canceled');
     Route::get('transaction/print', [OrderController::class, 'printOrder'])->name('orders.print');
-    Route::get('transaction/print_do', [OrderController::class, 'printDeliveryOrder'])->name('orders.print_do');
 
+    Route::get('transaction/{transaction}/print_invoice', [OrderController::class, 'printInvoiceOrder'])->name('orders.print_invoice');
+    Route::get('transaction/{transaction}/print_do', [OrderController::class, 'printDeliveryOrder'])->name('orders.print_do');
     Route::get('transaction/{transaction}/print_card_message', [OrderController::class, 'printCardMessage'])->name('orders.print_card_message');
     Route::get('transaction/{transaction}/delivered', [OrderController::class, 'statusDelivered'])->name('orders.update_delivered');
 
-
-
     Route::resource('transaction', OrderController::class)->names('orders');
+
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
     Route::post('realtime_order', [OrderController::class, 'productStatusOrder'])->name('orders.status_product');
 

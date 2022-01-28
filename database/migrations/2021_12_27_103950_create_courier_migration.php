@@ -35,6 +35,8 @@ class CreateCourierMigration extends Migration
             $table->string('license_image')->nullable();
             $table->date('license_expired_date')->nullable();
             $table->string('address', 255)->nullable();
+            $table->string('current_lat')->nullable();
+            $table->string('current_lng')->nullable();
             $table->foreignId('country')->nullable()->index();
             $table->foreignId('province')->nullable()->index();
             $table->foreignId('city')->nullable()->index();

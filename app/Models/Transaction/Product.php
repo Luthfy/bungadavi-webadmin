@@ -5,6 +5,7 @@ namespace App\Models\Transaction;
 use Ramsey\Uuid\Uuid;
 use App\Models\Transaction\Order;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaction\ProductCustom;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Product\Product as ProductStock;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,8 @@ class Product extends Model
         'qty_product',
         'price_product',
         'remarks_product',
+        'description_product',
+        'status_product',
     ];
 
     protected $casts = [
@@ -57,5 +60,15 @@ class Product extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_transactions_uuid', 'uuid');
+    }
+
+    /**
+     * Get all of the materials for the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function materials()
+    {
+        return $this->hasMany(ProductCustom::class, 'list_product_uuid');
     }
 }

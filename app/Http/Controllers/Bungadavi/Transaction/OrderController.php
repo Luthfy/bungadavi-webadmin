@@ -414,7 +414,7 @@ class OrderController extends Controller
 
         // get product order tomorrow process
         $tomorrow = Carbon::now()->add(1, 'day')->format('Y-m-d');
-        $scheduleTomorrow = Schedule::whereDate('delivery_date', ">", $tomorrow)->with('order.products');
+        $scheduleTomorrow = Schedule::whereDate('delivery_date', $tomorrow)->with('order.products');
         $productTomorrow  = Product::whereIn('order_transactions_uuid', $scheduleTomorrow->pluck('order_transactions_uuid'))->where('status_progress_product', '!=', 'done');
 
         $data = [
@@ -425,8 +425,8 @@ class OrderController extends Controller
             'button'        => ['name' => 'Add Order', 'link' => 'bungadavi.orders.create'],
             'data'          => [
                 'link'          => route('bungadavi.orders.status_product'),
-                'orderToday'    => $productToday->with('product')->orderBy('name_product', 'asc')->get()->toArray(),
-                'orderTomorrow' => $productTomorrow->with('product')->orderBy('name_product', 'asc')->get()->toArray()
+                'orderToday'    => $productToday->with('product')->with('materials')->orderBy('name_product', 'asc')->get()->toArray(),
+                'orderTomorrow' => $productTomorrow->with('product')->with('materials')->with('materials.stock')->orderBy('name_product', 'asc')->get()->toArray()
             ]
         ];
 
@@ -501,25 +501,36 @@ class OrderController extends Controller
 
     }
 
-    public function printDeliveryOrder()
+    public function printDeliveryOrder($id)
     {
-        $order = Order::findOrFail("194f6216-9e56-4410-9a8b-c4127a2007f9");
+        $order = Order::findOrFail($id);
 
-        $data = [ 'order' => $order];
+        $logo = "";
+        $data = ['logo' => $logo,'order' => $order];
 
         $pdf = App::make('dompdf.wrapper');
-        $pdf->setPaper(array(0,0, 100, 200));
+        $pdf->setPaper(array(0,0, 609, 382));
         $pdf->setWarnings(false);
         $pdf->loadView('bungadavi.orders.print_do', $data);
         return $pdf->stream();
     }
 
+    public function printInvoiceOrder($id)
+    {
+        $order = Order::findOrFail($id)->first();
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper('A4', 'Potrait');
+        $pdf->setWarnings(false);
+        $pdf->loadView('bungadavi.orders.print_invoice', ['order' => $order]);
+        return $pdf->stream();
+    }
+
     public function printCardMessage($id)
     {
-        $productUuid  = $id;
-        $productOrder = Product::where('product_uuid', $productUuid)->first()->order()->first();
+        $productOrder = Order::findOrFail($id)->first();
+        $product     = ProductStock::findOrFail($productOrder->products()->first()->product_uuid);
 
-        $product     = ProductStock::findOrFail($productUuid);
 
         switch ($product->printcmmode_product) {
             case '0':
