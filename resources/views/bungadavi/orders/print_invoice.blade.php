@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         body {
-            font-size: 13px;
+            font-size: 11ch;
         }
 
         .table {
@@ -94,28 +94,6 @@
                 @endforeach
             </table>
 
-            <table class="table">
-                <tr>
-                    <td style="width: 50%">
-                        <p class="mt-2">{{ $order->sender_receiver()->first()->receiver_name }} <br>
-                        {{ $order->sender_receiver()->first()->receiver_address_info }} <br>
-                        {{ $order->sender_receiver()->first()->receiver_address }}
-                        {{ $order->sender_receiver()->first()->receiver_country }}
-                        {{ $order->sender_receiver()->first()->receiver_province }}
-                        {{ $order->sender_receiver()->first()->receiver_city }}
-                        {{ $order->sender_receiver()->first()->receiver_district }}
-                        {{ $order->sender_receiver()->first()->receiver_village }}
-                        {{ $order->sender_receiver()->first()->receiver_zipcode }} <br>
-                        {{ $order->sender_receiver()->first()->receiver_phone_number }} </p>
-                    </td>
-                    <td style="width: 50%">
-                        <h3>Delivery Remarks : </h3>
-                        {{ $order->delivery_schedule()->first()->delivery_remarks }} <br>
-                    </td>
-                </tr>
-            </table>
-
-            <p><strong>IMPORTANT!</strong> Acceptance by the signatory confirms that all goods mentioned above were received in good condition.</p>
 
             <table class="table">
                 <tr>
