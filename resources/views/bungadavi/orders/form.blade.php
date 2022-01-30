@@ -957,22 +957,22 @@
                 html += '</div>';
 
                 html += '<div class="mb-3">';
-                html += '<label for="validationTextarea">Cost Selling</label>';
+                html += '<label for="validationTextarea">Cost Product</label>';
                 html += '<div class="input-group is-invalid">';
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required>';
+                html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
                 html += '<div class="mb-3">';
-                html += '<label for="validationTextarea">Cost Selling Florist</label>';
+                html += '<label for="validationTextarea">Cost Selling Product</label>';
                 html += '<div class="input-group is-invalid">';
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_florist_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required>';
+                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
