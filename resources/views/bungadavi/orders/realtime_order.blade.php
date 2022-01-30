@@ -48,16 +48,23 @@
                                         <div class="col-9">
                                             <h4 class="h4">{{ $today['name_product'] }}</h4>
                                             <h4 class="h6">{{ $today['code_product'] }}</h4>
-                                            <h4 class="h6">QTY : {{ $today['qty_product'] }}</h4>
+                                            <h4 class="h6">Delivery Date : <span class="text-danger" style="font-style: weight">{{ $today['order']['delivery_schedule'][0]['delivery_date'] }}</span></h4>
+                                            <h4 class="h6">Timeslot : <span class="text-danger" style="font-style: weight">{{ $today['order']['delivery_schedule'][0]['time_slot_name'] }}</span></h4>
+                                            <h4 class="h6">QTY :  <span class="text-danger" style="font-style: weight">{{ $today['qty_product'] }} Product </span></h4>
+                                            <h4 class="h6">Cost Product : <span style="font-style: weight">{{ $today['product']['cost_product'] }}</span></h4>
                                             <hr>
                                             <h4>Material</h4>
                                             <ul class="pl-4">
                                                 @forelse ($today['materials'] as $material)
-                                                <li >{{ $material['name_stock'] }} - {{ $today['qty_product'] }} x {{ $material['qty_stock'] }}</li>
+                                                <li class="{{ $material['stock']['qty_stock'] > ($today['qty_product'] * $material['qty_stock']) ? 'text-success' : 'text-danger'  }}">{{ $material['name_stock'] }} - {{ $today['qty_product'] }} x {{ $material['qty_stock'] }} ({{ $material['stock']['qty_stock'] }})</li>
                                                 @empty
                                                 <li> <i>Stock Belum Diatur</i></li>
                                                 @endforelse
                                             </ul>
+                                            <h4>Product Description</h4>
+                                            <div class="table-bordered p-2 mb-2" style="background: #FFE0E3; border-radius: 4px; width=100%">{{ $today['description_product'] }}</div>
+                                            <h4>Product Remarks</h4>
+                                            <div class="table-bordered p-2 mb-2" style="background: #FFE0E3; border-radius: 4px; width=100%">{{ $today['remarks_product'] }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +94,10 @@
                                         <div class="col-9">
                                             <h4 class="h4">{{ $tomorrow['name_product'] }}</h4>
                                             <h4 class="h6">{{ $tomorrow['code_product'] }}</h4>
-                                            <h4 class="h6">QTY : {{ $tomorrow['qty_product'] }}</h4>
+                                            <h4 class="h6">Delivery Date : <span class="text-danger" style="font-style: weight">{{ $tomorrow['order']['delivery_schedule'][0]['delivery_date'] }}</span></h4>
+                                            <h4 class="h6">Timeslot : <span class="text-danger" style="font-style: weight">{{ $tomorrow['order']['delivery_schedule'][0]['time_slot_name'] }}</span></h4>
+                                            <h4 class="h6">QTY :  <span class="text-danger" style="font-style: weight">{{ $tomorrow['qty_product'] }} Product </span></h4>
+                                            <h4 class="h6">Cost Product : <span style="font-style: weight">{{ $tomorrow['product']['cost_product'] }}</span></h4>
                                             <hr>
                                             <h4>Material</h4>
                                             <ul class="pl-4">
@@ -97,6 +107,10 @@
                                                 <li> <i>Stock Belum Diatur</i></li>
                                                 @endforelse
                                             </ul>
+                                            <h4>Product Description</h4>
+                                            <div class="table-bordered p-2 mb-2" style="background: #FFE0E3; border-radius: 4px; width=100%">{{ $tomorrow['description_product'] }}</div>
+                                            <h4>Product Remarks</h4>
+                                            <div class="table-bordered p-2 mb-2" style="background: #FFE0E3; border-radius: 4px; width=100%">{{ $tomorrow['remarks_product'] }}</div>
                                         </div>
                                     </div>
                                 </div>

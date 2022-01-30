@@ -7,8 +7,25 @@
     <title>Document</title>
     <style>
         body {
-            font-size: 13px;
+            font-size: 11px;
         }
+
+        .table-order {
+            border-left: 1px solid #333;
+            border-right: 0;
+            border-top: 1px solid #333;
+            border-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .table-order td,
+        .table-order th {
+            border-left: 0;
+            border-right: 1px solid #333;
+            border-top: 0;
+            border-bottom: 1px solid #333;
+        }
+
 
         .table {
             border-collapse: collapse;
@@ -48,7 +65,7 @@
                         {{-- <img src="data:image/png;base64,{{$logo}}" alt="" style="width: 100px;"> --}}
                     </td>
                     <td>
-                        <p class="text-right" style="padding-bottom: 0px; margin-bottom: 0px;">PT. BUNGA DAVI INDONESIA <br>Jl. Sasak II NO. 69B, Kelapa Dua - Kebon Jeruk <br>Jakarta Barat 11550, Indonesia, Call Center : 021 - 22530466</p>
+                        <p class="text-right" style="padding-bottom: 0px; margin-bottom: 0px;"> <strong>PT. BUNGA DAVI INDONESIA</strong> <br>Jl. Sasak II NO. 69B, Kelapa Dua - Kebon Jeruk <br>Jakarta Barat 11550, Indonesia, Call Center : 021 - 22530466</p>
 
                         <h3 class="text-right">DELIVERY ORDER</h3>
                     </td>
@@ -60,31 +77,29 @@
                     <td><strong>DO Number</strong></td>
                     <td>{{ $order->code_order_transaction }}</td>
                     <td><strong>Delivery Date</strong></td>
-                    <td>{{ $order->delivery_schedule()->first()->delivery_date }}</td>
+                    <td>{{ Carbon\Carbon::parse($order->delivery_schedule()->first()->delivery_date)->format('d M Y') }}</td>
                 </tr>
                 <tr>
                     <td><strong>Sender</strong></td>
-                    <td>{{ $order->from_message_order }}</td>
+                    <td>{{ $order->sender_receiver()->first()->sender_name }}</td>
                     <td><strong>Timeslot</strong></td>
                     <td>{{ $order->delivery_schedule()->first()->time_slot_name }}</td>
                 </tr>
             </table>
 
-            <table class="table table-bordered">
+            <table class="table table-bordered table-order">
                 <tr>
                     <th>No</th>
                     <th>Code</th>
                     <th>Item</th>
                     <th>QTY</th>
                 </tr>
-            </table>
-            <table class="table table-bordered">
                 @foreach ($order->products()->get() as $key => $item)
-                <tr>
-                    <td class="text-center">{{ ++$key }}</td>
-                    <td class="text-center">{{ $item->code_product }}</td>
-                    <td class="text-center">{{ $item->name_product }}</td>
-                    <td class="text-center">{{ $item->qty_product }}</td>
+                <tr style="text-align: center; padding: 1px;">
+                    <td>{{ ++$key }}</td>
+                    <td>{{ $item->code_product }}</td>
+                    <td>{{ $item->name_product }}</td>
+                    <td>{{ $item->qty_product }}</td>
                 </tr>
                 @endforeach
             </table>
@@ -100,12 +115,14 @@
                         {{ $order->sender_receiver()->first()->receiver_city }}
                         {{ $order->sender_receiver()->first()->receiver_district }}
                         {{ $order->sender_receiver()->first()->receiver_village }}
-                        {{ $order->sender_receiver()->first()->receiver_zipcode }} <br>
+                        {{ $order->sender_receiver()->first()->receiver_zipcode }}
                         {{ $order->sender_receiver()->first()->receiver_phone_number }} </p>
                     </td>
                     <td style="width: 50%">
                         <h3>Delivery Remarks : </h3>
-                        {{ $order->delivery_schedule()->first()->delivery_remarks }} <br>
+                        <div class="table-bordered" style="border-radius: 4px; padding:8px;">
+                            {{ $order->delivery_schedule()->first()->delivery_remarks }}
+                        </div>
                     </td>
                 </tr>
             </table>
