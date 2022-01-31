@@ -25,6 +25,12 @@
         text-align: center;
         font-family: Arial, Helvetica, sans-serif;
     }
+
+    .text-message {
+        font-size: 0.9em;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 </style>
 
 <div class="centered">
@@ -33,6 +39,9 @@
     </p>
     <p class="text-style">
         {{ Str::upper($product->to_message_order) }}
+    </p>
+    <p class="text-message">
+        Note : {{ Str::ucfirst($product->card_message_message) }}
     </p>
 </div>
 
