@@ -5,6 +5,7 @@ namespace App\Models;
 use Ramsey\Uuid\Uuid;
 use App\Models\Menu\Position;
 use App\Models\Client\Florist;
+use App\Models\Client\Corporate;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -82,6 +83,16 @@ class User extends Authenticatable
     public function affiliate()
     {
         return $this->belongsTo(Florist::class, 'customer_uuid', 'uuid');
+    }
+
+    /**
+     * Get the florist or affiliate that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer_admin()
+    {
+        return $this->belongsTo(Corporate::class, 'customer_uuid', 'uuid');
     }
 
     /**
