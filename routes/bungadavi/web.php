@@ -93,6 +93,8 @@ Route::group([
         Route::get('ajax/district', [DistrictController::class, 'getDistricts'])->name('district.ajax.list');
         Route::get('ajax/village', [VillageController::class, 'getVillages'])->name('village.ajax.list');
         Route::get('ajax/zipcode', [ZipCodeController::class, 'getZipCodes'])->name('zipcode.ajax.list');
+        Route::get('ajax/zipcode-by-id', [ZipCodeController::class, 'getZipCodeById'])->name('zipcode.ajax.getbyid');
+        Route::get('ajax/zipcode-by-search', [ZipCodeController::class, 'getZipCodeBySearch'])->name('zipcode.ajax.search');
         // web
         Route::resource('city', CityController::class)->names('city');
         Route::resource('country', CountryController::class)->names('country');

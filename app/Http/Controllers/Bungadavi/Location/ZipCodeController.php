@@ -6,6 +6,7 @@ use App\DataTables\Location\ZipCodeDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Location\ZipCode;
 use App\Http\Requests\Location\ZipCodeRequest;
+use Illuminate\Http\Request;
 
 class ZipCodeController extends Controller
 {
@@ -89,6 +90,37 @@ class ZipCodeController extends Controller
     {
         $this->authorize("delete zipcode");
         return ZipCode::find($id)->delete();
+    }
+
+    public function getZipCodeById($id)
+    {
+        return response()
+            ->json(
+                ZipCode::find($id),
+            200);
+    }
+
+    public function getZipCodeBySearch(Request $request)
+    {
+        // $search = $request->input('search');
+        // $villageId = $request->input('villageId');
+
+        $query = ZipCode::with('village');
+        
+        if ($search = $request->input('search')) {
+            $query->where('postal_code','LIKE','%'.$search.'%');
+        }
+
+        if ($villageId = $request->input('villageId')) {
+            $query->where('village_id', $villageId);
+        }
+
+        $zipcode = $query->offset(0)->limit(50)->get();
+
+        return response()
+            ->json(
+                $zipcode,
+            200);
     }
 
     public function getZipCodes()

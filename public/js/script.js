@@ -34,7 +34,7 @@ function delete_ajax(id)
     })
 }
 
-function getProvincesAjax(urlAbsolute)
+function getProvincesAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -43,14 +43,15 @@ function getProvincesAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select Province -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.name+"</option>";
             })
             $("#province-id").html(html);
         }
     })
 }
 
-function getCountriesAjax(urlAbsolute)
+function getCountriesAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -59,7 +60,8 @@ function getCountriesAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select Country -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.name+"</option>";
 
             })
             $("#country-id").html(html);
@@ -67,7 +69,7 @@ function getCountriesAjax(urlAbsolute)
     })
 }
 
-function getCitiesAjax(urlAbsolute)
+function getCitiesAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -76,14 +78,15 @@ function getCitiesAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select City -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.name+"</option>";
             })
             $("#city-id").html(html);
         }
     })
 }
 
-function getDistrictsAjax(urlAbsolute)
+function getDistrictsAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -92,32 +95,15 @@ function getDistrictsAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select District -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.name+"</option>";
             })
             $("#district-id").html(html);
         }
     })
 }
 
-
-function getDistrictsAjax(urlAbsolute)
-{
-    $.ajax({
-        url : urlAbsolute,
-        type : 'get',
-        success: (result) => {
-            let html = "";
-                html += "<option value='' disabled readonly selected>- Select District -</option>";
-            result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
-            })
-            $("#district-id").html(html);
-        }
-    })
-}
-
-
-function getZipCodesAjax(urlAbsolute)
+function getZipCodesAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -126,7 +112,8 @@ function getZipCodesAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select Zip Code -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.postal_code+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.postal_code+"</option>";
             })
             $("#zipcode-id").html(html);
         }
@@ -134,7 +121,7 @@ function getZipCodesAjax(urlAbsolute)
 }
 
 
-function getVillagesAjax(urlAbsolute)
+function getVillagesAjax(urlAbsolute, id = '')
 {
     $.ajax({
         url : urlAbsolute,
@@ -143,7 +130,8 @@ function getVillagesAjax(urlAbsolute)
             let html = "";
                 html += "<option value='' disabled readonly selected>- Select Village -</option>";
             result.forEach((res) => {
-                html += "<option value='"+res.id+"'>"+res.name+"</option>";
+                var selected = (id == res.id) ? 'selected' : '';
+                html += "<option value='"+res.id+"' "+ selected + ">"+res.name+"</option>";
             })
             $("#village-id").append(html);
         }

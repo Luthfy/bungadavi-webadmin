@@ -108,7 +108,7 @@ class OrderController extends Controller
             'ourBank'           => OurBank::all()
         ];
 
-        return view('bungadavi.orders.form', $data);
+        return view('bungadavi.orders.form_new', $data);
     }
 
     /**
