@@ -412,7 +412,8 @@
                     let html = "";
                     html += "<option value='' disabled readonly selected>- Currency -</option>";
                     result.forEach((res) => {
-                        html += "<option value='"+res.currency_code_to_id+"' data-from='"+res.currency_code_from_id+"' data-to='"+res.currency_code_to_id+"'>"+res.currency_code_from_id+" - "+res.currency_code_to_id+"</option>";
+                        var selected = (currencyToActive == res.currency_code_to_id) ? 'selected' : '';
+                        html += "<option value='"+res.currency_code_to_id+"' data-from='"+res.currency_code_from_id+"' data-to='"+res.currency_code_to_id+"' "+ selected +">"+res.currency_code_to_id+"</option>";
                     })
                     $("#currencyCode").html(html);
                 },
@@ -564,14 +565,14 @@
                     is_secret: false,
                     receiver_name           : $("#recipientName").val(),
                     receiver_phone_number   : $("#recipientPhone").val(),
-                    receiver_email      : $("#recipientEmail").val(),
-                    receiver_address    : $("#recipientPhone").val(),
-                    receiver_country    : $("#country-id option:checked").text(),
-                    receiver_province   : $("#province-id option:checked").text(),
-                    receiver_city       : $("#city-id option:checked").text(),
-                    receiver_district   : $("#district-id option:checked").text(),
-                    receiver_village    : $("#village-id option:checked").text(),
-                    receiver_zipcode    : $("#zipcode-id option:checked").text(),
+                    receiver_email          : $("#recipientEmail").val(),
+                    receiver_address        : $("#recipientPhone").val(),
+                    receiver_country        : $("#country-id option:checked").text(),
+                    receiver_province       : $("#province-id option:checked").text(),
+                    receiver_city           : $("#city-id option:checked").text(),
+                    receiver_district       : $("#district-id option:checked").text(),
+                    receiver_village        : $("#village-id option:checked").text(),
+                    receiver_zipcode        : $("#zipcode-id option:checked").text(),
                 });
 
                 setRecipientData(senderRecipientOrder)
@@ -737,27 +738,28 @@
             writeSummaryHTML();
         });
 
-        $("#currencyCode").change(function (e) {
-            let currencyFrom = $("#currencyCode option:selected").data("from");
+        $("#currencyCode").change(function (e) {            
+            let currencyFrom = 'IDR'; // $("#currencyCode option:selected").data("from");
             let currencyTo   = $("#currencyCode option:selected").data("to");
 
-            let currency_selected = currency_result.find(x => (x.currency_code_to_id == currencyTo) && (x.currency_code_from_id == currencyFrom));
+            let currency_selected_from = currency_result.find(x => (x.currency_code_to_id == currencyToActive) && (x.currency_code_from_id == currencyFrom));
+            let currency_selected_to = currency_result.find(x => (x.currency_code_to_id == currencyTo) && (x.currency_code_from_id == currencyFrom));
 
-            currencyFromActive = currency_selected.currency_code_from_id;
-            currencyToActive   = currency_selected.currency_code_to_id;
-            ratesCurrency      = currency_selected.value;
+            currencyFromActive = currency_selected_to.currency_code_from_id;
+            currencyToActive   = currency_selected_to.currency_code_to_id;
+            ratesCurrency      = currency_selected_to.value;
 
-            $("#currencyRates").text("1 "+currency_selected.currency_code_from_id+" -> " + currency_selected.value + " " + currency_selected.currency_code_to_id);
+            $("#currencyRates").text("1 IDR -> " + currency_selected_to.value + " " + currency_selected_to.currency_code_to_id);
 
-            $(".currency-symbol").text(currency_selected.currency_code_to_id);
-            $(".currency-symbol").text(currency_selected.currency_code_to_id);
-            $("#deliveryChargeSymbol").text(currency_selected.currency_code_to_id);
-            $("#deliveryChargeTimeslotSymbol").text(currency_selected.currency_code_to_id);
+            $(".currency-symbol").text(currency_selected_to.currency_code_to_id);
+            $(".currency-symbol").text(currency_selected_to.currency_code_to_id);
+            $("#deliveryChargeSymbol").text(currency_selected_to.currency_code_to_id);
+            $("#deliveryChargeTimeslotSymbol").text(currency_selected_to.currency_code_to_id);
 
-            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected));
-            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected));
-            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected));
-            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected));
+            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected_from, currency_selected_to));
+            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected_from, currency_selected_to));
+            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected_from, currency_selected_to));
+            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected_from, currency_selected_to));
 
             writeSummaryHTML()
         });
@@ -798,9 +800,13 @@
             getStockProduct("{{route('bungadavi.stocks.ajax.list')}}");
         });
 
-        function konversiMataUang(nilaiAwal, currency)
+        function konversiMataUang(nilaiAwal, currency_selected_from, currency_selected_to)
         {
-            return (currency.value * nilaiAwal / 1).toFixed(2)
+            // konversi currency_selected_from ke IDR
+            var idr = nilaiAwal / currency_selected_from.value;
+            // Konversi IDR ke currency_selected_to ?
+            var result = (currency_selected_to.value * idr).toFixed(2);
+            return result;
         }
 
         function numberDefaultZero(value)
@@ -931,10 +937,10 @@
                 html += '<div class="row">';
 
                 html += '<div class="col-lg-4 col-md-4 col-sm-12">';
-                html += '<img src="'+image_url+'" class="img-thumbnail" style="width=80px;" />';
+                html += '<img id="product_image_'+ i +'_preview" src="'+image_url+'" class="img-thumbnail" style="width=80px;" />';
                 html += '<div class="custom-file mb-3 mt-2">';
-                html += '<input type="file" class="custom-file-input" id="validatedCustomFile">';
-                html += '<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>';
+                html += '<input type="file" onchange="product_image_preview(event, '+ i +')" class="custom-file-input product_image_'+ i +'" id="validatedCustomFile">';
+                html += '<label class="custom-file-label product_image_label_'+ i +'" for="validatedCustomFile">Choose file...</label>';
                 html += '</div>';
                 html += '</div>';
 
@@ -953,7 +959,7 @@
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control" id="costSellingPrice" value="'+x.cost_product+'" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
+                html += '<input type="text" class="form-control currency" id="costSellingPrice" value="'+x.cost_product+'" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
@@ -963,7 +969,7 @@
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control" id="costSellingFloristPrice" value="'+x.selling_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
+                html += '<input type="text" class="form-control currency" id="costSellingFloristPrice" value="'+x.selling_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
@@ -1024,6 +1030,20 @@
             })
             $("#productData").html(html);
             writeSummaryHTML();
+        }
+
+        function product_image_preview(e, i)
+        {
+            e = e || window.event;
+            let fileData = e.target.files[0];
+            $('.product_image_label_'+ i).text(fileData.name);
+
+            var oFReader = new FileReader();
+                oFReader.readAsDataURL(fileData);
+
+            oFReader.onload = function(oFREvent) {
+                document.getElementById("product_image_"+ i +"_preview").src = oFREvent.target.result;
+            };
         }
 
         function writeSummaryHTML()
