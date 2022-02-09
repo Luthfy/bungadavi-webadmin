@@ -174,7 +174,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text currency-symbol" id="deliveryChargeSymbol">IDR</span>
                                                         </div>
-                                                        <input name="delivery_charge" type="text" class="form-control" aria-describedby="validatedInputGroupPrepend" id="deliveryCharge" required>
+                                                        <input name="delivery_charge " type="text" class="form-control currency" aria-describedby="validatedInputGroupPrepend" id="deliveryCharge" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,7 +185,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text currency-symbol" id="deliveryChargeTimeslotSymbol">IDR</span>
                                                         </div>
-                                                        <input name="delivery_charge_timeslot" type="text" class="form-control" id="deliveryChargeTimeslot" required>
+                                                        <input name="delivery_charge_timeslot" type="text" class="form-control currency" id="deliveryChargeTimeslot" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -756,10 +756,15 @@
             $("#deliveryChargeSymbol").text(currency_selected_to.currency_code_to_id);
             $("#deliveryChargeTimeslotSymbol").text(currency_selected_to.currency_code_to_id);
 
-            $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected_from, currency_selected_to));
-            $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected_from, currency_selected_to));
-            $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected_from, currency_selected_to));
-            $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected_from, currency_selected_to));
+            $(".currency").each(function( index ) {
+                var cost = $(this).val();
+                $(this).val(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
+            });
+
+            // $("#costSellingPrice").val(konversiMataUang(numberDefaultZero($("#costSellingPrice").val()), currency_selected_from, currency_selected_to));
+            // $("#costSellingFloristPrice").val(konversiMataUang(numberDefaultZero($("#costSellingFloristPrice").val()), currency_selected_from, currency_selected_to));
+            // $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected_from, currency_selected_to));
+            // $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected_from, currency_selected_to));
 
             writeSummaryHTML()
         });
