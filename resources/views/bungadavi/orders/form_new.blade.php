@@ -767,6 +767,12 @@
             // $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected_from, currency_selected_to));
 
             writeSummaryHTML()
+
+            $(".text-currency").each(function( index ) {
+                var cost = $(this).text();
+                if (cost != '-')
+                $(this).text(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
+            });
         });
 
         $('#addStock').on('show.bs.modal', function (event) {
@@ -1057,23 +1063,23 @@
             if (product_result != undefined) {
                 htmlProductList = "";
                 product_result.forEach((x, i) => {
-                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+(x.qty_product * x.selling_price_product)+"</div></div>";
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+(x.qty_product * x.selling_price_product)+"</div></div>";
                     totalPriceSummary += (x.qty_product * x.selling_price_product);
                 });
 
                 $("#productList").html(htmlProductList);
             }
 
-            htmlDeliverySchedule = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textDeliveryResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+textDeliveryResult.price+"</div></div>";
+            htmlDeliverySchedule = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textDeliveryResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+textDeliveryResult.price+"</div></div>";
             $("#deliveryChargeSummary").html(htmlDeliverySchedule);
 
-            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textScheduleResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+textScheduleResult.price+"</div></div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textScheduleResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+textScheduleResult.price+"</div></div>";
             $("#deliveryTimeslotSummary").html(htmlTimeslot);
 
             totalPriceSummary += (textDeliveryResult.price == '-') ? 0 : Number(textDeliveryResult.price);
             totalPriceSummary += (textScheduleResult.price == '-') ? 0 : Number(textScheduleResult.price);
 
-            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right'>"+totalPriceSummary+"</div></div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+totalPriceSummary+"</div></div>";
             $("#totalPriceSummary").html(htmlTimeslot);
         }
 
