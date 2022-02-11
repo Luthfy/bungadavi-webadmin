@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bungadavi\Transaction;
 
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
@@ -38,6 +39,7 @@ use App\DataTables\Order\DeliveredOrderDataTable;
 use App\DataTables\Order\OnDeliveryOrderDataTable;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -249,9 +251,9 @@ class OrderController extends Controller
                 'order_transactions_uuid'   => $orderTransaction->uuid,
                 'sender_receiver_uuid'      => $sender->uuid,
                 'delivery_date'             => $request->delivery_schedule['delivery_date'],
-                'delivery_charge'           => $request->delivery_schedule['delivery_charge'],
+                'delivery_charge'           => str_replace(",", ".", str_replace(".", "", $request->delivery_schedule['delivery_charge'])),
                 'time_slot_name'            => $request->delivery_schedule['time_slot_name'],
-                'time_slot_charge'          => $request->delivery_schedule['time_slot_charge'],
+                'time_slot_charge'          => str_replace(",", ".", str_replace(".", "", $request->delivery_schedule['time_slot_charge'])),
                 'time_slot_id'              => $request->delivery_schedule['time_slot_id'],
                 'delivery_remarks'          => $request->delivery_schedule['delivery_remarks'],
                 'internal_notes'            => $request->delivery_schedule['delivery_remarks'],
@@ -281,6 +283,7 @@ class OrderController extends Controller
                     'qty_product'               => $product['qty_product'] ?? 1,
                     'price_product'             => $product['price_product'],
                     'remarks_product'           => $product['remarks_product'] ?? "",
+                    'image_product'             => $product['custom_image_product'] ?? $product['image_product'],
                 ];
 
                 $orderProduct = Product::create($productData);
@@ -305,6 +308,23 @@ class OrderController extends Controller
         } else {
             return redirect()->back();
         }
+
+        return response(['message' => 'ok']);
+    }
+
+    function upload(Request $request)
+    {
+        $path = '';
+        if ($request->hasFile('product_image')) {
+            $name = Str::random(4) . '_' . str_replace(' ', '', $request->file('product_image')->getClientOriginalName());
+            $path = $request->file('product_image')->storeAs('products_main', $name, 'public');
+        }
+
+        return response()->json([
+            'status' => true,
+            'path' => $path,
+            'url' => asset(Storage::url($path)),
+        ], 200);
     }
 
     /**

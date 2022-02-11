@@ -964,6 +964,7 @@
                 html += '<img id="product_image_'+ i +'_preview" src="'+image_url+'" class="img-thumbnail" style="width=80px;" />';
                 html += '<div class="custom-file mb-3 mt-2">';
                 html += '<input type="file" onchange="product_image_preview(event, '+ i +')" class="custom-file-input product_image_'+ i +'" id="validatedCustomFile">';
+                html += '<input type="hidden" name="custom_product_image_'+ x.id +'" class="custom_product_image_'+ i +'" id="custom_product_image_'+ x.id +'">';
                 html += '<label class="custom-file-label product_image_label_'+ i +'" for="validatedCustomFile">Choose file...</label>';
                 html += '</div>';
                 html += '</div>';
@@ -1068,18 +1069,46 @@
             writeSummaryHTML();
         }
 
+        // function product_image_preview(e, i)
+        // {
+        //     e = e || window.event;
+        //     let fileData = e.target.files[0];
+        //     $('.product_image_label_'+ i).text(fileData.name);
+
+        //     var oFReader = new FileReader();
+        //         oFReader.readAsDataURL(fileData);
+
+        //     oFReader.onload = function(oFREvent) {
+        //         document.getElementById("product_image_"+ i +"_preview").src = oFREvent.target.result;
+        //     };
+        // }
+
         function product_image_preview(e, i)
         {
             e = e || window.event;
             let fileData = e.target.files[0];
             $('.product_image_label_'+ i).text(fileData.name);
 
-            var oFReader = new FileReader();
-                oFReader.readAsDataURL(fileData);
+            var formData = new FormData();
+            formData.append('product_image', fileData);
+            formData.append('_token', '{{ csrf_token() }}');
 
-            oFReader.onload = function(oFREvent) {
-                document.getElementById("product_image_"+ i +"_preview").src = oFREvent.target.result;
-            };
+            $.ajax({
+                type: "POST",
+                url: "{{ route('bungadavi.orders.upload') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function(data, textStatus, jqXHR) {
+                    document.getElementById("product_image_"+ i +"_preview").src = data.url;
+                    $('.custom_product_image_'+ i).val(data.path);
+                    console.log(data.path + ' Success!');
+                },
+                error: function(data, textStatus, jqXHR) {
+                    console.log(jqXHR + ' , Proses Dibatalkan!');
+                },
+            });
         }
 
         function writeSummaryHTML()
@@ -1180,6 +1209,7 @@
                     remarks_product         : $("#remarkProduct").val(),
                     custom_product          : product_result[i].materials,
                     image_product           : x.image_main_product,
+                    custom_image_product    : $("#custom_product_image_"+ x.id).val(),
                     description_product     : $("#productDescription").val(),
                     status_product          : status_product,
                     city_product            : senderRecipientOrder.receiver_city

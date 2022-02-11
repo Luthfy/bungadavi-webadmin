@@ -30,6 +30,7 @@ class Product extends Model
         'remarks_product',
         'description_product',
         'status_product',
+        'image_product'
     ];
 
     protected $casts = [
