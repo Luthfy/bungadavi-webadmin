@@ -511,7 +511,7 @@
         function sellingPriceChange(value, code_product)
         {
             let productIndex = product_result.findIndex(x => x.code_product == code_product);
-            product_result[productIndex].selling_price_product = Number(value)
+            product_result[productIndex].selling_price_product = curr_to_netral(value)
 
             writeSummaryHTML();
         }
@@ -761,6 +761,7 @@
 
             $(".currency").each(function( index ) {
                 var cost = $(this).val();
+                cost = curr_to_netral(cost);
                 $(this).val(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
             });
 
@@ -775,6 +776,7 @@
                 var cost = $(this).text();
                 if (cost != '-') {
                     cost = curr_to_netral(cost);
+                    alert(cost);
                     $(this).text(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
                 }
             });
@@ -975,7 +977,7 @@
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control currency" id="costSellingPrice" value="'+x.cost_product+'" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
+                html += '<input type="text" class="form-control currency" id="costSellingPrice" value="'+to_curr_normal(x.cost_product)+'" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
@@ -985,7 +987,7 @@
                 html += '<div class="input-group-prepend">';
                 html += '<span class="input-group-text currency-symbol" id="costSellingFloristSymbol">IDR</span>';
                 html += '</div>';
-                html += '<input type="text" class="form-control currency" id="costSellingFloristPrice" value="'+x.selling_price_product+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
+                html += '<input type="text" class="form-control currency" id="costSellingFloristPrice" value="'+to_curr_normal(x.selling_price_product)+'" onchange="sellingPriceChange(this.value, \''+x.code_product+'\')" required {{(auth()->user()->can("change price") ? "" : "disabled" )}}>';
                 html += '</div>';
                 html += '</div>';
 
@@ -1068,7 +1070,7 @@
             if (product_result != undefined) {
                 htmlProductList = "";
                 product_result.forEach((x, i) => {
-                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+to_curr_normal((x.qty_product * x.selling_price_product), 2)+"</div></div>";
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+to_curr_normal((x.qty_product * x.selling_price_product))+"</div></div>";
                     totalPriceSummary += (x.qty_product * x.selling_price_product);
                 });
 
