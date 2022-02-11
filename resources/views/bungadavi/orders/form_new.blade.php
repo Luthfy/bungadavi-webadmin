@@ -349,6 +349,9 @@
     
     <script src="{{asset('theme_be/js/select2.min.js') }}"></script>
 
+    <script src="{{ asset('js/format_number.min.js') }}"></script>
+    <script src="{{ asset('js/plugin.js') }}"></script>
+
     {!! $products->scripts() !!}
 
     <script>
@@ -770,8 +773,10 @@
 
             $(".text-currency").each(function( index ) {
                 var cost = $(this).text();
-                if (cost != '-')
-                $(this).text(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
+                if (cost != '-') {
+                    cost = curr_to_netral(cost);
+                    $(this).text(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
+                }
             });
         });
 
@@ -1063,23 +1068,23 @@
             if (product_result != undefined) {
                 htmlProductList = "";
                 product_result.forEach((x, i) => {
-                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+(x.qty_product * x.selling_price_product)+"</div></div>";
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+to_curr_normal((x.qty_product * x.selling_price_product), 2)+"</div></div>";
                     totalPriceSummary += (x.qty_product * x.selling_price_product);
                 });
 
                 $("#productList").html(htmlProductList);
             }
 
-            htmlDeliverySchedule = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textDeliveryResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+textDeliveryResult.price+"</div></div>";
+            htmlDeliverySchedule = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textDeliveryResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+to_curr_normal(textDeliveryResult.price)+"</div></div>";
             $("#deliveryChargeSummary").html(htmlDeliverySchedule);
 
-            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textScheduleResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+textScheduleResult.price+"</div></div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+textScheduleResult.message+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+to_curr_normal(textScheduleResult.price)+"</div></div>";
             $("#deliveryTimeslotSummary").html(htmlTimeslot);
 
             totalPriceSummary += (textDeliveryResult.price == '-') ? 0 : Number(textDeliveryResult.price);
             totalPriceSummary += (textScheduleResult.price == '-') ? 0 : Number(textScheduleResult.price);
 
-            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+totalPriceSummary+"</div></div>";
+            htmlTimeslot = "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'></div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+to_curr_normal(totalPriceSummary)+"</div></div>";
             $("#totalPriceSummary").html(htmlTimeslot);
         }
 
