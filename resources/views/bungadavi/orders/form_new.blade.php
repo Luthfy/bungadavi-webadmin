@@ -338,8 +338,12 @@
 @endsection
 @push('css')
     <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 @endpush
 @push('js')
+    
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
     <!-- Datatable JS -->
     <script src="{{ asset('theme_be/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('theme_be/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -1001,12 +1005,12 @@
 
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Description</label>';
-                html += '<textarea class="form-control" id="productDescription" rows="3">'+x.description_product+'</textarea>';
+                html += '<textarea class="form-control summernote" id="productDescription" rows="3">'+x.description_product+'</textarea>';
                 html += '</div>';
 
                 html += '<div class="mb-3">';
                 html += '<label for="validationTextarea">Product Remarks</label>';
-                html += '<textarea class="form-control" id="remarkProduct" rows="3"></textarea>';
+                html += '<textarea class="form-control summernote" id="remarkProduct" rows="3"></textarea>';
                 html += '</div>';
 
                 html += '</div>';
@@ -1048,7 +1052,19 @@
                 html += '</div>';
 
             })
+
             $("#productData").html(html);
+
+            $("#productData").find('.summernote').summernote({
+                dialogsInBody: true,
+                minHeight: 100,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough']],
+                    ['para', ['paragraph']]
+                ]
+            });
+
             writeSummaryHTML();
         }
 
