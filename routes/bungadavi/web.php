@@ -155,6 +155,7 @@ Route::group([
     Route::get('ajax/transaction/cancel', [OrderController::class, 'getTabCancelOrderDataTable'])->name('orders.ajax.cancel');
 
     // TRANSACTION ORDER
+    Route::post('transaction/upload', [OrderController::class, 'upload'])->name('orders.upload');
     Route::post('transaction/{id}', [OrderController::class, 'assignFlorist'])->name('orders.florist');
     Route::post('transaction/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update_status');
     Route::get('transaction/delivered', [OrderController::class, 'deliveredList'])->name('orders.delivered');
@@ -167,7 +168,7 @@ Route::group([
     Route::get('transaction/{transaction}/delivered', [OrderController::class, 'statusDelivered'])->name('orders.update_delivered');
 
     Route::resource('transaction', OrderController::class)->names('orders');
-
+    
     Route::get('realtime_order', [OrderController::class, 'realTimeOrder'])->name('orders.realtimeorder');
     Route::post('realtime_order', [OrderController::class, 'productStatusOrder'])->name('orders.status_product');
 
