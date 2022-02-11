@@ -770,14 +770,16 @@
             // $("#deliveryCharge").val(konversiMataUang(numberDefaultZero($("#deliveryCharge").val()), currency_selected_from, currency_selected_to));
             // $("#deliveryChargeTimeslot").val(konversiMataUang(numberDefaultZero($("#deliveryChargeTimeslot").val()), currency_selected_from, currency_selected_to));
 
-            writeSummaryHTML()
+            // writeSummaryHTML();
 
             $(".text-currency").each(function( index ) {
                 var cost = $(this).text();
+                //alert(cost);
                 if (cost != '-') {
                     cost = curr_to_netral(cost);
-                    alert(cost);
-                    $(this).text(konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to));
+                    cost = konversiMataUang(numberDefaultZero(cost), currency_selected_from, currency_selected_to)
+                    //alert(cost);
+                    $(this).text(cost);
                 }
             });
         });
@@ -824,7 +826,7 @@
             var idr = nilaiAwal / currency_selected_from.value;
             // Konversi IDR ke currency_selected_to ?
             var result = (currency_selected_to.value * idr).toFixed(2);
-            return result;
+            return to_curr_normal(result);
         }
 
         function numberDefaultZero(value)
@@ -1070,10 +1072,9 @@
             if (product_result != undefined) {
                 htmlProductList = "";
                 product_result.forEach((x, i) => {
-                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency' id='text-currency'>"+to_curr_normal((x.qty_product * x.selling_price_product))+"</div></div>";
+                    htmlProductList += "<div class='row mb-1'><div class='col-lg-6 col-md-6 col-sm-6'>"+x.name_product+" ( QTY : "+ x.qty_product +" )</div><div class='col-lg-3 col-md-3 col-sm-3 text-center'>"+currencyToActive+"</div><div class='col-lg-3 col-md-3 col-sm-3 text-right text-currency'>"+to_curr_normal((x.qty_product * x.selling_price_product))+"</div></div>";
                     totalPriceSummary += (x.qty_product * x.selling_price_product);
                 });
-
                 $("#productList").html(htmlProductList);
             }
 
