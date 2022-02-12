@@ -1069,20 +1069,6 @@
             writeSummaryHTML();
         }
 
-        // function product_image_preview(e, i)
-        // {
-        //     e = e || window.event;
-        //     let fileData = e.target.files[0];
-        //     $('.product_image_label_'+ i).text(fileData.name);
-
-        //     var oFReader = new FileReader();
-        //         oFReader.readAsDataURL(fileData);
-
-        //     oFReader.onload = function(oFREvent) {
-        //         document.getElementById("product_image_"+ i +"_preview").src = oFREvent.target.result;
-        //     };
-        // }
-
         function product_image_preview(e, i)
         {
             e = e || window.event;
@@ -1251,17 +1237,20 @@
                 data: JSON.stringify(data),
                 success: function (e) {
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'New Order Created',
-                        text: 'New Order Has Been Created!',
-                    });
-
-                    $("#createNewOrder").val("Create New Order");
-                    $("#createNewOrder").removeClass("disabled");
-
-                    window.location.href = "{{ route('bungadavi.orders.index') }}";
-
+                    if (e['status'] == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'New Order Created',
+                            text: 'New Order Has Been Created!',
+                        });
+                        $("#createNewOrder").val("Create New Order");
+                        $("#createNewOrder").removeClass("disabled");
+                        window.location.href = "{{ route('bungadavi.orders.index') }}";
+                    }
+                    else {
+                        console.log(e.errors);
+                    } 
+                     
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $("#createNewOrder").val("Create New Order");

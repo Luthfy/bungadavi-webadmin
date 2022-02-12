@@ -40,6 +40,7 @@ use App\DataTables\Order\OnDeliveryOrderDataTable;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -124,6 +125,21 @@ class OrderController extends Controller
         if ($request->ajax()) {
 
             // validasi
+            $validasi = [
+                'sender_recipient'     => 'required',
+                'list_product_order'   => 'required',
+                'delivery_schedule'    => 'required',
+                'payment_order'        => 'required',
+            ];
+    
+            $validator = Validator::make($request->all(), $validasi);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
 
             if ($request->sender_recipient['is_create_new']) {
                 switch ($request->sender_recipient['client_type']) {
@@ -304,12 +320,17 @@ class OrderController extends Controller
                 }
             }
 
-            return response(['message' => 'ok']);
+            return response([
+                'status' => true,
+                'message' => 'ok'
+            ]);
         } else {
             return redirect()->back();
         }
 
-        return response(['message' => 'ok']);
+        // return response(['status' => true,
+        //     'message' => 'ok'
+        // ]);
     }
 
     function upload(Request $request)
